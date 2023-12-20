@@ -3,3 +3,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer. Can build an
 * On initial server configuration screen, make URL field have `.URL` keyboard type for easier entry.
 * Album titles are sorted without regard for diacritics (like the Finder).
 * Nav bar above current playlist is no longer transparent.
+* Album track tap changed to mean “enqueue”.
