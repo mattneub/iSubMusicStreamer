@@ -233,15 +233,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (!indexPath) return;
 	
-    if (indexPath.row < self.dataModel.albumsCount) {
+    if (indexPath.row < self.dataModel.albumsCount) { // ? Apparently one can have nested albums?
         ISMSAlbum *anAlbum = [self.dataModel albumForTableViewRow:indexPath.row];
         AlbumViewController *albumViewController = [[AlbumViewController alloc] initWithArtist:nil orAlbum:anAlbum];
         [self pushViewControllerCustom:albumViewController];
     } else {
+        // change the meaning of simple tap on a song in an album so that it enqueues that song
+        // this is basically what was happening with the swipe action queue button before
+        ISMSSong *song = [self.dataModel songForTableViewRow:indexPath.row];
+        [song addToCurrentPlaylistDbQueue];
+        // may as well provide the same feedback as before; had to translate from Swift back into ObjC
+        [SlidingNotification showOnMainWindowWithMessage: @"Added to play queue" duration: 1.0];
+        [[[UINotificationFeedbackGenerator alloc] init] notificationOccurred: UINotificationFeedbackTypeSuccess];
+        // would be nice to deselect at this point, but I can wait until I've translated this into Swift
+        // old code:
+        /*
         ISMSSong *playedSong = [self.dataModel playSongAtTableViewRow:indexPath.row];
         if (!playedSong.isVideo) {
             [self showPlayer];
         }
+         */
     }
 }
 
