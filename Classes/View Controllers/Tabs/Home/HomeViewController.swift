@@ -172,7 +172,6 @@ import SnapKit
                 Settings.shared().isJukeboxEnabled = false
                 AppDelegate.shared().window.backgroundColor = ViewObjects.shared().windowColor
                 NotificationCenter.postNotificationToMainThread(name: ISMSNotification_JukeboxDisabled)
-                Flurry.logEvent("JukeboxDisabled")
             } else {
                 AudioEngine.shared().player?.stop()
                 self.jukeboxButton.setIcon(image: UIImage(named: "home-jukebox-on"))
@@ -180,7 +179,6 @@ import SnapKit
                 Jukebox.shared().getInfo()
                 AppDelegate.shared().window.backgroundColor = ViewObjects.shared().jukeboxColor
                 NotificationCenter.postNotificationToMainThread(name: ISMSNotification_JukeboxEnabled)
-                Flurry.logEvent("JukeboxEnabled")
             }
             self.initSongInfo()
         }
@@ -268,8 +266,6 @@ import SnapKit
         searchSegmentContainer.alpha = 0.0
         
         initSongInfo()
-        
-        Flurry.logEvent("HomeTab")
     }
     
     @objc private func initSongInfo() {

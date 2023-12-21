@@ -14,7 +14,6 @@
 #import "NSMutableURLRequest+SUS.h"
 #import "ViewObjectsSingleton.h"
 #import "ZipKit.h"
-#import "Flurry.h"
 #import "AudioEngine.h"
 #import "SavedSettings.h"
 #import "PlaylistSingleton.h"
@@ -152,9 +151,7 @@ LOG_LEVEL_ISUB_DEFAULT
 			self.showIntro = YES;
 		}
 	}
-				
-	[self loadFlurryAnalytics];
-    
+
 	// Create and display UI
 	if (UIDevice.isPad) {
 		self.padRootViewController = [[PadRootViewController alloc] initWithNibName:nil bundle:nil];
@@ -335,22 +332,6 @@ LOG_LEVEL_ISUB_DEFAULT
     }
 }
 
-- (void)loadFlurryAnalytics {
-	BOOL isSessionStarted = NO;
-#if defined(RELEASE)
-    [Flurry startSession:@"3KK4KKD2PSEU5APF7PNX"];
-    isSessionStarted = YES;
-#elif defined(BETA)
-    [Flurry startSession:@"KNN9DUXQEENZUG4Q12UA"];
-    isSessionStarted = YES;
-#endif
-	
-	if (isSessionStarted) {
-		// Send the firmware version
-        [Flurry logEvent:@"DeviceInfo" withParameters:@{@"FirmwareVersion": UIDevice.completeVersionString, @"HardwareVersion": UIDevice.platform}];
-	}
-}
-
 - (NSString *)latestLogFileName {
     NSString *logsFolder = [settingsS.cachesPath stringByAppendingPathComponent:@"Logs"];
 	NSArray *logFiles = [NSFileManager.defaultManager contentsOfDirectoryAtPath:logsFolder error:nil];
@@ -528,8 +509,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	
     settingsS.isJukeboxEnabled = NO;
     self.window.backgroundColor = viewObjectsS.windowColor;
-    [Flurry logEvent:@"JukeboxDisabled"];
-    
+
 	settingsS.isOfflineMode = YES;
     
 	[audioEngineS.player stop];

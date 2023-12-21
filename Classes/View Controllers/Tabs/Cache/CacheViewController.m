@@ -15,7 +15,6 @@
 #import "ViewObjectsSingleton.h"
 #import "Defines.h"
 #import "FMDatabaseQueueAdditions.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "PlaylistSingleton.h"
 #import "MusicSingleton.h"
@@ -147,9 +146,7 @@
 	
 	[self updateQueueDownloadProgress];
 	[self updateCacheSizeLabel];
-	
-	[Flurry logEvent:@"CacheTab"];
-	
+
 	// Reload the data in case it changed
     self.tableView.tableHeaderView.hidden = NO;
     [self segmentAction:nil];

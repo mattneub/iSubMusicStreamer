@@ -11,7 +11,6 @@
 #import "EqualizerPointView.h"
 #import "EqualizerPathView.h"
 #import "SnappySlider.h"
-#import "Flurry.h"
 #import "AudioEngine.h"
 #import "SavedSettings.h"
 #import "EX2Kit.h"
@@ -187,8 +186,6 @@
         [self.closeButton addTarget:self action:@selector(dismiss:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.closeButton];
     }
-    
-	[Flurry logEvent:@"Equalizer"];
 }
 
 - (void)swipeLeft {

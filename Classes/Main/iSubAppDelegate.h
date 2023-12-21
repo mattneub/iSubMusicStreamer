@@ -73,8 +73,6 @@ NS_SWIFT_NAME(AppDelegate)
 - (void)enterOnlineModeForce;
 - (void)enterOfflineModeForce;
 
-- (void)loadFlurryAnalytics;
-
 - (void)reachabilityChanged:(nullable NSNotification *)note;
 
 - (void)showSettings;

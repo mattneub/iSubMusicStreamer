@@ -13,7 +13,6 @@
 #import "iSubAppDelegate.h"
 #import "ViewObjectsSingleton.h"
 #import "FMDatabaseQueueAdditions.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "MusicSingleton.h"
 #import "CacheSingleton.h"
@@ -125,9 +124,7 @@
 	[super viewWillAppear:animated];
 		
 	[self registerForNotifications];
-				
-	[Flurry logEvent:@"CacheTab"];
-	
+
 	// Reload the data in case it changed
     [self reloadTable];
     

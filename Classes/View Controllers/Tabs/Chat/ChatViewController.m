@@ -13,7 +13,6 @@
 #import "iSubAppDelegate.h"
 #import "ViewObjectsSingleton.h"
 #import "Defines.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "MusicSingleton.h"
 #import "ISMSErrorDomain.h"
@@ -114,8 +113,6 @@
 	}
 		
 	[self loadData];
-	
-	[Flurry logEvent:@"ChatTab"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

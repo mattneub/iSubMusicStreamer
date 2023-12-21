@@ -296,7 +296,6 @@ import CocoaLumberjackSwift
             let value = self.progressSlider.value - Float(Settings.shared().quickSkipNumberOfSeconds);
             self.progressSlider.value = value > 0.0 ? value : 0.0;
             seekedAction()
-            Flurry.logEvent("QuickSkip")
         }
         
         let quickSkipForwardButtonConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light, scale: .large)
@@ -311,7 +310,6 @@ import CocoaLumberjackSwift
             } else {
                 self.progressSlider.value = value
                 seekedAction()
-                Flurry.logEvent("QuickSkip")
             }
         }
         

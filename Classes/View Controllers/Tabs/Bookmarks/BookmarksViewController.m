@@ -13,7 +13,6 @@
 #import "ViewObjectsSingleton.h"
 #import "Defines.h"
 #import "FMDatabaseQueueAdditions.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "PlaylistSingleton.h"
 #import "MusicSingleton.h"
@@ -119,8 +118,6 @@
 	[self loadBookmarkIds];
 	
 	[self.tableView reloadData];
-	
-	[Flurry logEvent:@"BookmarksTab"];
 }
 
 - (void)removeSaveEditButtons {

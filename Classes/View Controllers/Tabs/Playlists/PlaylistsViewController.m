@@ -16,7 +16,6 @@
 #import "Defines.h"
 #import "RXMLElement.h"
 #import "FMDatabaseQueueAdditions.h"
-#import "Flurry.h"
 #import "AudioEngine.h"
 #import "SavedSettings.h"
 #import "PlaylistSingleton.h"
@@ -170,8 +169,6 @@ LOG_LEVEL_ISUB_DEFAULT
     // Reload the data in case it changed
     self.tableView.tableHeaderView.hidden = NO;
     [self segmentAction:nil];
-	
-	[Flurry logEvent:@"PlaylistsTab"];
 
 	[self registerForNotifications];
 	

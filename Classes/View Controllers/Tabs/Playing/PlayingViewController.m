@@ -12,7 +12,6 @@
 #import "iSubAppDelegate.h"
 #import "ViewObjectsSingleton.h"
 #import "Defines.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "MusicSingleton.h"
 #import "SUSNowPlayingDAO.h"
@@ -67,8 +66,6 @@
 	[viewObjectsS showAlbumLoadingScreen:appDelegateS.window sender:self];
 	
 	[self.dataModel startLoad];
-	
-	[Flurry logEvent:@"NowPlayingTab"];
 }
 
 - (void)cancelLoad {

@@ -15,7 +15,6 @@
 #import "iSubAppDelegate.h"
 #import "ViewObjectsSingleton.h"
 #import "Defines.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "MusicSingleton.h"
 #import "SUSRootFoldersDAO.h"
@@ -87,8 +86,6 @@
 			[self loadData:[settingsS rootFoldersSelectedFolderId]];
 		}
 	}
-	
-	[Flurry logEvent:@"FoldersTab"];
 }
 
 - (void)dealloc {

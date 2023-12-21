@@ -17,7 +17,6 @@
 #import "ViewObjectsSingleton.h"
 #import "Defines.h"
 #import "FMDatabaseQueueAdditions.h"
-#import "Flurry.h"
 #import "SavedSettings.h"
 #import "PlaylistSingleton.h"
 #import "MusicSingleton.h"
@@ -135,8 +134,6 @@
 	}
 	
 	[self.tableView reloadData];
-	
-	[Flurry logEvent:@"AllSongsTab"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
