@@ -4,3 +4,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer. Can build an
 * Album titles are sorted without regard for diacritics (like the Finder).
 * Nav bar above current playlist is no longer transparent.
 * Album track tap changed to mean “enqueue”.
+* Remove Flurry support.
