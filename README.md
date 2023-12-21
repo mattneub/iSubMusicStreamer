@@ -5,3 +5,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer. Can build an
 * Nav bar above current playlist is no longer transparent.
 * Album track tap changed to mean “enqueue”.
 * Remove Flurry support.
+* Remove Lumberjack.
