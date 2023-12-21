@@ -12,6 +12,12 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28C286E10D94DF7D0034E888 /* FoldersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* FoldersViewController.m */; };
+		3F808D322B3485F100FDF660 /* bass.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D302B34857A00FDF660 /* bass.xcframework */; };
+		3F808D332B3485F100FDF660 /* bass.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D302B34857A00FDF660 /* bass.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3F808D3B2B348A4A00FDF660 /* bass_fx.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D352B3489D800FDF660 /* bass_fx.xcframework */; };
+		3F808D3C2B348A4A00FDF660 /* bass_fx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D352B3489D800FDF660 /* bass_fx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3F808D3D2B348A4D00FDF660 /* bassmix.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D382B348A0100FDF660 /* bassmix.xcframework */; };
+		3F808D3E2B348A4D00FDF660 /* bassmix.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D382B348A0100FDF660 /* bassmix.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		530388A9116571920043292D /* AllSongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530388A8116571920043292D /* AllSongsViewController.m */; };
 		5306236D14D3295300D320A8 /* EqualizerPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306236C14D3295300D320A8 /* EqualizerPathView.m */; };
 		5306236F14D3295300D320A8 /* EqualizerPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306236C14D3295300D320A8 /* EqualizerPathView.m */; };
@@ -324,22 +330,6 @@
 		53FE35C91EA961540058B925 /* EX2Dispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE349C1EA961540058B925 /* EX2Dispatch.m */; };
 		53FE35EB1EA961540058B925 /* SnappySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE34B41EA961540058B925 /* SnappySlider.m */; };
 		53FE35ED1EA961540058B925 /* SnappySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE34B41EA961540058B925 /* SnappySlider.m */; };
-		53FE360B1EA961670058B925 /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36031EA961670058B925 /* libbass.a */; };
-		53FE360D1EA961670058B925 /* libbass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36031EA961670058B925 /* libbass.a */; };
-		53FE360E1EA961670058B925 /* libbass_ape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36041EA961670058B925 /* libbass_ape.a */; };
-		53FE36101EA961670058B925 /* libbass_ape.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36041EA961670058B925 /* libbass_ape.a */; };
-		53FE36111EA961670058B925 /* libbass_fx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36051EA961670058B925 /* libbass_fx.a */; };
-		53FE36131EA961670058B925 /* libbass_fx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36051EA961670058B925 /* libbass_fx.a */; };
-		53FE36141EA961670058B925 /* libbass_mpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36061EA961670058B925 /* libbass_mpc.a */; };
-		53FE36161EA961670058B925 /* libbass_mpc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36061EA961670058B925 /* libbass_mpc.a */; };
-		53FE36171EA961670058B925 /* libbassflac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36071EA961670058B925 /* libbassflac.a */; };
-		53FE36191EA961670058B925 /* libbassflac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36071EA961670058B925 /* libbassflac.a */; };
-		53FE361A1EA961670058B925 /* libbassmix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36081EA961670058B925 /* libbassmix.a */; };
-		53FE361C1EA961670058B925 /* libbassmix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36081EA961670058B925 /* libbassmix.a */; };
-		53FE361D1EA961670058B925 /* libbassopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36091EA961670058B925 /* libbassopus.a */; };
-		53FE361F1EA961670058B925 /* libbassopus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE36091EA961670058B925 /* libbassopus.a */; };
-		53FE36201EA961670058B925 /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE360A1EA961670058B925 /* libbasswv.a */; };
-		53FE36221EA961680058B925 /* libbasswv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FE360A1EA961670058B925 /* libbasswv.a */; };
 		53FE36E31EA961720058B925 /* AudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36251EA961710058B925 /* AudioEngine.m */; };
 		53FE36E51EA961720058B925 /* AudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36251EA961710058B925 /* AudioEngine.m */; };
 		53FE36E61EA961720058B925 /* BassEffectDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36271EA961710058B925 /* BassEffectDAO.m */; };
@@ -524,6 +514,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3F808D3C2B348A4A00FDF660 /* bass_fx.xcframework in Embed Frameworks */,
+				3F808D332B3485F100FDF660 /* bass.xcframework in Embed Frameworks */,
+				3F808D3E2B348A4D00FDF660 /* bassmix.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,6 +543,12 @@
 		28C286DF0D94DF7D0034E888 /* FoldersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoldersViewController.h; sourceTree = "<group>"; };
 		28C286E00D94DF7D0034E888 /* FoldersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoldersViewController.m; sourceTree = "<group>"; };
 		28F335F01007B36200424DE2 /* FoldersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoldersViewController.xib; sourceTree = "<group>"; };
+		3F808D2F2B34855700FDF660 /* bass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
+		3F808D302B34857A00FDF660 /* bass.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = bass.xcframework; sourceTree = "<group>"; };
+		3F808D352B3489D800FDF660 /* bass_fx.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = bass_fx.xcframework; sourceTree = "<group>"; };
+		3F808D372B3489E900FDF660 /* bass_fx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass_fx.h; sourceTree = "<group>"; };
+		3F808D382B348A0100FDF660 /* bassmix.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = bassmix.xcframework; sourceTree = "<group>"; };
+		3F808D3A2B348A0F00FDF660 /* bassmix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bassmix.h; sourceTree = "<group>"; };
 		530388A7116571920043292D /* AllSongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSongsViewController.h; sourceTree = "<group>"; };
 		530388A8116571920043292D /* AllSongsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AllSongsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5306236B14D3295300D320A8 /* EqualizerPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqualizerPathView.h; sourceTree = "<group>"; };
@@ -797,22 +796,6 @@
 		53FE349C1EA961540058B925 /* EX2Dispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EX2Dispatch.m; sourceTree = "<group>"; };
 		53FE34B31EA961540058B925 /* SnappySlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnappySlider.h; sourceTree = "<group>"; };
 		53FE34B41EA961540058B925 /* SnappySlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnappySlider.m; sourceTree = "<group>"; };
-		53FE35FB1EA961670058B925 /* bass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
-		53FE35FC1EA961670058B925 /* bass_ape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass_ape.h; sourceTree = "<group>"; };
-		53FE35FD1EA961670058B925 /* bass_fx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass_fx.h; sourceTree = "<group>"; };
-		53FE35FE1EA961670058B925 /* bass_mpc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bass_mpc.h; sourceTree = "<group>"; };
-		53FE35FF1EA961670058B925 /* bassflac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassflac.h; sourceTree = "<group>"; };
-		53FE36001EA961670058B925 /* bassmix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassmix.h; sourceTree = "<group>"; };
-		53FE36011EA961670058B925 /* bassopus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bassopus.h; sourceTree = "<group>"; };
-		53FE36021EA961670058B925 /* basswv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basswv.h; sourceTree = "<group>"; };
-		53FE36031EA961670058B925 /* libbass.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass.a; sourceTree = "<group>"; };
-		53FE36041EA961670058B925 /* libbass_ape.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass_ape.a; sourceTree = "<group>"; };
-		53FE36051EA961670058B925 /* libbass_fx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass_fx.a; sourceTree = "<group>"; };
-		53FE36061EA961670058B925 /* libbass_mpc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbass_mpc.a; sourceTree = "<group>"; };
-		53FE36071EA961670058B925 /* libbassflac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassflac.a; sourceTree = "<group>"; };
-		53FE36081EA961670058B925 /* libbassmix.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassmix.a; sourceTree = "<group>"; };
-		53FE36091EA961670058B925 /* libbassopus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbassopus.a; sourceTree = "<group>"; };
-		53FE360A1EA961670058B925 /* libbasswv.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbasswv.a; sourceTree = "<group>"; };
 		53FE36241EA961710058B925 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
 		53FE36251EA961710058B925 /* AudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEngine.m; sourceTree = "<group>"; };
 		53FE36261EA961710058B925 /* BassEffectDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BassEffectDAO.h; sourceTree = "<group>"; };
@@ -1003,14 +986,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53FE360B1EA961670058B925 /* libbass.a in Frameworks */,
-				53FE361A1EA961670058B925 /* libbassmix.a in Frameworks */,
-				53FE36111EA961670058B925 /* libbass_fx.a in Frameworks */,
-				53FE36171EA961670058B925 /* libbassflac.a in Frameworks */,
-				53FE361D1EA961670058B925 /* libbassopus.a in Frameworks */,
-				53FE360E1EA961670058B925 /* libbass_ape.a in Frameworks */,
-				53FE36141EA961670058B925 /* libbass_mpc.a in Frameworks */,
-				53FE36201EA961670058B925 /* libbasswv.a in Frameworks */,
 				53329607255EF21D0027C51A /* libsqlite3.tbd in Frameworks */,
 				53F8917B1EB1351D00B3F131 /* libSystem.tbd in Frameworks */,
 				53D9740A255BFDE900AABF7F /* SnapKit in Frameworks */,
@@ -1018,6 +993,7 @@
 				53F8917C1EB1352300B3F131 /* libz.tbd in Frameworks */,
 				5349DF87161E408A0044A781 /* Accelerate.framework in Frameworks */,
 				53F8917F1EB137F300B3F131 /* AudioToolbox.framework in Frameworks */,
+				3F808D322B3485F100FDF660 /* bass.xcframework in Frameworks */,
 				53B38C141475940700CD8A99 /* AVFoundation.framework in Frameworks */,
 				53F675DC113B093900822059 /* CFNetwork.framework in Frameworks */,
 				537DE2D9113F008C00875852 /* CoreFoundation.framework in Frameworks */,
@@ -1029,6 +1005,8 @@
 				53A2BE2A147DF14600E44822 /* OpenGLES.framework in Frameworks */,
 				53F8917D1EB1354B00B3F131 /* Photos.framework in Frameworks */,
 				53F675E2113B095900822059 /* QuartzCore.framework in Frameworks */,
+				3F808D3B2B348A4A00FDF660 /* bass_fx.xcframework in Frameworks */,
+				3F808D3D2B348A4D00FDF660 /* bassmix.xcframework in Frameworks */,
 				53F7A128131B7F3B002C829D /* Security.framework in Frameworks */,
 				536D620B1144495400DFCE56 /* SystemConfiguration.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -1040,14 +1018,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53FE360D1EA961670058B925 /* libbass.a in Frameworks */,
-				53FE361C1EA961670058B925 /* libbassmix.a in Frameworks */,
-				53FE36131EA961670058B925 /* libbass_fx.a in Frameworks */,
-				53FE36191EA961670058B925 /* libbassflac.a in Frameworks */,
-				53FE361F1EA961670058B925 /* libbassopus.a in Frameworks */,
-				53FE36101EA961670058B925 /* libbass_ape.a in Frameworks */,
-				53FE36161EA961670058B925 /* libbass_mpc.a in Frameworks */,
-				53FE36221EA961680058B925 /* libbasswv.a in Frameworks */,
 				53329611255EF23B0027C51A /* libsqlite3.tbd in Frameworks */,
 				5367C6D71EA92D3000B1C242 /* libSystem.tbd in Frameworks */,
 				53D97406255BFD9100AABF7F /* SnapKit in Frameworks */,
@@ -1791,22 +1761,12 @@
 		53FE35FA1EA961670058B925 /* libBASS */ = {
 			isa = PBXGroup;
 			children = (
-				53FE35FB1EA961670058B925 /* bass.h */,
-				53FE35FC1EA961670058B925 /* bass_ape.h */,
-				53FE35FD1EA961670058B925 /* bass_fx.h */,
-				53FE35FE1EA961670058B925 /* bass_mpc.h */,
-				53FE35FF1EA961670058B925 /* bassflac.h */,
-				53FE36001EA961670058B925 /* bassmix.h */,
-				53FE36011EA961670058B925 /* bassopus.h */,
-				53FE36021EA961670058B925 /* basswv.h */,
-				53FE36031EA961670058B925 /* libbass.a */,
-				53FE36041EA961670058B925 /* libbass_ape.a */,
-				53FE36051EA961670058B925 /* libbass_fx.a */,
-				53FE36061EA961670058B925 /* libbass_mpc.a */,
-				53FE36071EA961670058B925 /* libbassflac.a */,
-				53FE36081EA961670058B925 /* libbassmix.a */,
-				53FE36091EA961670058B925 /* libbassopus.a */,
-				53FE360A1EA961670058B925 /* libbasswv.a */,
+				3F808D2F2B34855700FDF660 /* bass.h */,
+				3F808D372B3489E900FDF660 /* bass_fx.h */,
+				3F808D3A2B348A0F00FDF660 /* bassmix.h */,
+				3F808D302B34857A00FDF660 /* bass.xcframework */,
+				3F808D352B3489D800FDF660 /* bass_fx.xcframework */,
+				3F808D382B348A0100FDF660 /* bassmix.xcframework */,
 			);
 			name = libBASS;
 			path = Frameworks/libBASS;
