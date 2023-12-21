@@ -18,7 +18,7 @@
 
 @implementation BassWrapper
 
-extern void BASSFLACplugin, BASSWVplugin, BASSAPEplugin, BASS_MPCplugin, BASSOPUSplugin;
+// extern void BASSFLACplugin, BASSWVplugin, BASS_APEplugin, BASS_MPCplugin, BASSOPUSplugin;
 
 static NSUInteger _bassOutputBufferLengthMillis = 0;
 
@@ -40,11 +40,11 @@ static NSUInteger _bassOutputBufferLengthMillis = 0;
 	{
         _bassOutputBufferLengthMillis = BASS_GetConfig(BASS_CONFIG_BUFFER);
         
-        BASS_PluginLoad(&BASSFLACplugin, 0); // load the Flac plugin
-        BASS_PluginLoad(&BASSWVplugin, 0); // load the WavePack plugin
-        BASS_PluginLoad(&BASSAPEplugin, 0); // load the Monkey's Audio plugin
+//        BASS_PluginLoad(&BASSFLACplugin, 0); // load the Flac plugin
+//        BASS_PluginLoad(&BASSWVplugin, 0); // load the WavePack plugin
+//        BASS_PluginLoad(&BASS_APEplugin, 0); // load the Monkey's Audio plugin
         //BASS_PluginLoad(&BASS_MPCplugin, 0); // load the MusePack plugin
-        BASS_PluginLoad(&BASSOPUSplugin, 0); // load the OPUS plugin
+//        BASS_PluginLoad(&BASSOPUSplugin, 0); // load the OPUS plugin
 	}
     else
     {
@@ -98,17 +98,17 @@ static NSUInteger _bassOutputBufferLengthMillis = 0;
 	 }
 	 }*/ 
 	// check built-in stream formats...
-    if (i.ctype==BASS_CTYPE_STREAM_WV) return @"WV";
-	if (i.ctype==BASS_CTYPE_STREAM_MPC) return @"MPC";
-	if (i.ctype==BASS_CTYPE_STREAM_APE) return @"APE";
-	if (i.ctype==BASS_CTYPE_STREAM_FLAC) return @"FLAC";
-	if (i.ctype==BASS_CTYPE_STREAM_FLAC_OGG) return @"FLAC";
+//    if (i.ctype==BASS_CTYPE_STREAM_WV) return @"WV";
+//	if (i.ctype==BASS_CTYPE_STREAM_MPC) return @"MPC";
+//	if (i.ctype==BASS_CTYPE_STREAM_APE) return @"APE";
+//	if (i.ctype==BASS_CTYPE_STREAM_FLAC) return @"FLAC";
+//	if (i.ctype==BASS_CTYPE_STREAM_FLAC_OGG) return @"FLAC";
 	if (i.ctype==BASS_CTYPE_STREAM_OGG) return @"OGG";
 	if (i.ctype==BASS_CTYPE_STREAM_MP1) return @"MP1";
 	if (i.ctype==BASS_CTYPE_STREAM_MP2) return @"MP2";
 	if (i.ctype==BASS_CTYPE_STREAM_MP3) return @"MP3";
 	if (i.ctype==BASS_CTYPE_STREAM_AIFF) return @"AIFF";
-    if (i.ctype==BASS_CTYPE_STREAM_OPUS) return @"Opus";
+//    if (i.ctype==BASS_CTYPE_STREAM_OPUS) return @"Opus";
 	if (i.ctype==BASS_CTYPE_STREAM_WAV_PCM) return @"PCM WAV";
 	if (i.ctype==BASS_CTYPE_STREAM_WAV_FLOAT) return @"Float WAV";
 	if (i.ctype&BASS_CTYPE_STREAM_WAV) return @"WAV";
