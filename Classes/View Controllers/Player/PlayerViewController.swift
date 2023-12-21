@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import CocoaLumberjackSwift
 
 // TODO: Add bitrate and file type labels
 // TODO: Add bookmark button
@@ -651,13 +650,13 @@ import CocoaLumberjackSwift
                                 make.width.equalTo(width)
                             }
                         } catch {
-                            DDLogError("[PlayerViewController] Failed to update constraints for download progress: \(error)")
+                            print("[PlayerViewController] Failed to update constraints for download progress: \(error)")
                         }
                     }
                     self.downloadProgressView.superview?.layoutIfNeeded()
                 }
             } catch {
-                DDLogError("[PlayerViewController] Failed to update constraints for download progress: \(error)")
+                print("[PlayerViewController] Failed to update constraints for download progress: \(error)")
             }
         }
         
@@ -767,7 +766,7 @@ import CocoaLumberjackSwift
                     }
                     result.close()
                 } catch {
-                    DDLogError("[PlayerViewController] Failed to query the bookmark count: \(error)")
+                    print("[PlayerViewController] Failed to query the bookmark count: \(error)")
                 }
             }
         }

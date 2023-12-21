@@ -10,12 +10,6 @@
 #define EX2Kit_EX2Kit_h
 
 //
-// Frameworks
-//
-
-#import <CocoaLumberjack/CocoaLumberjack.h>
-
-//
 // Models
 //
 

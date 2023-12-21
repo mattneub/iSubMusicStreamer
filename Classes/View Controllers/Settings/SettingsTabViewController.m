@@ -19,7 +19,7 @@
 #import <Accounts/Accounts.h>
 #import <Social/Social.h>
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation SettingsTabViewController
 
@@ -390,23 +390,7 @@ LOG_LEVEL_ISUB_DEFAULT
 }
 
 - (IBAction)shareAppLogsAction {
-    NSString *path = [appDelegateS zipAllLogFiles];
-    NSURL *pathURL = [NSURL fileURLWithPath:path];
-    UIActivityViewController *shareSheet = [[UIActivityViewController alloc] initWithActivityItems:@[pathURL] applicationActivities:nil];
-    if (shareSheet.popoverPresentationController) {
-        // Fix exception on iPad
-        shareSheet.popoverPresentationController.sourceView = self.shareLogsButton;
-        shareSheet.popoverPresentationController.sourceRect = self.shareLogsButton.bounds;
-    }
-    shareSheet.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        // Delete the zip file since we're done with it
-        NSError *error = nil;
-        BOOL success = [NSFileManager.defaultManager removeItemAtURL:pathURL error:&error];
-        if (!success || error) {
-            DDLogError(@"[SettingsTabViewController] Failed to remove log file at path %@ with error: %@", path, error.localizedDescription);
-        }
-    };
-    [self presentViewController:shareSheet animated:YES completion:nil];
+    // does nothing
 }
 
 - (IBAction)viewOpenSourceLicensesAction {

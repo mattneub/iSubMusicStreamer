@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CocoaLumberjackSwift
 
 @objc final class ServerEditViewController: UIViewController {    
     let backgroundImageView = UIImageView(image: UIImage(named: "settings-page"))
@@ -278,7 +277,7 @@ extension ServerEditViewController: SUSLoaderDelegate {
                 let archivedServerList = try NSKeyedArchiver.archivedData(withRootObject: serverList, requiringSecureCoding: true)
                 UserDefaults.standard.set(archivedServerList, forKey: "servers")
             } catch {
-                DDLogError("Error archiving the server list: \(error)")
+                print("Error archiving the server list: \(error)")
             }
             UserDefaults.standard.synchronize()
             
@@ -311,7 +310,7 @@ extension ServerEditViewController: SUSLoaderDelegate {
                 let archivedServerList = try NSKeyedArchiver.archivedData(withRootObject: serverList, requiringSecureCoding: true)
                 UserDefaults.standard.set(archivedServerList, forKey: "servers")
             } catch {
-                DDLogError("Error archiving the server list: \(error)")
+                print("Error archiving the server list: \(error)")
             }
             UserDefaults.standard.synchronize()
             

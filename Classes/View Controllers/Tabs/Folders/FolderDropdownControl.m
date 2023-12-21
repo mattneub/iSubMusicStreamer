@@ -13,7 +13,7 @@
 #import "SUSRootFoldersDAO.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 #define HEIGHT 40
 
@@ -256,7 +256,7 @@ NSInteger folderSort2(id keyVal1, id keyVal2, void *context) {
         } else {
             // TODO: Handle error
             // failed.  how to report this to the user?
-            DDLogError(@"[FolderDropdownControl] failed to update folders: %@", error.localizedDescription);
+            NSLog(@"[FolderDropdownControl] failed to update folders: %@", error.localizedDescription);
         }
     }];
     [loader startLoad];

@@ -25,7 +25,7 @@
 #import "CacheSingleton.h"
 #import "ISMSSong+DAO.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation CacheAlbumViewController
 
@@ -528,7 +528,7 @@ static NSInteger trackSort(id obj1, id obj2, void *context) {
                     [query appendFormat:@" AND seg%i = ? ", i];
                 }
                 
-                DDLogVerbose(@"[CacheAlbumViewController] query: %@, parameter: %@", query, newSegments);
+                NSLog(@"[CacheAlbumViewController] query: %@, parameter: %@", query, newSegments);
                 NSMutableArray *songMd5s = [[NSMutableArray alloc] initWithCapacity:0];
                 [databaseS.songCacheDbQueue inDatabase:^(FMDatabase *db) {
                     FMResultSet *result = [db executeQuery:query withArgumentsInArray:newSegments];
@@ -541,7 +541,7 @@ static NSInteger trackSort(id obj1, id obj2, void *context) {
                     [result close];
                 }];
                 
-                DDLogVerbose(@"[CacheAlbumViewController] songMd5s: %@", songMd5s);
+                NSLog(@"[CacheAlbumViewController] songMd5s: %@", songMd5s);
                 for (NSString *md5 in songMd5s) {
                     @autoreleasepool {
                         [ISMSSong removeSongFromCacheDbQueueByMD5:md5];

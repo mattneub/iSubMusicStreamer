@@ -17,7 +17,7 @@
 #import "ISMSSong+DAO.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation CacheSingleton
 
@@ -144,10 +144,10 @@ LOG_LEVEL_ISUB_DEFAULT
             NSString *path = [settingsS.songCachePath stringByAppendingPathComponent:[result stringForColumn:@"md5"]];
             NSDictionary *attr = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
             size += [attr fileSize];
-//            DDLogInfo(@"[CacheSingleton] Added %llu to size for partially downloaded song", [attr fileSize]);
+//            NSLog(@"[CacheSingleton] Added %llu to size for partially downloaded song", [attr fileSize]);
         }
         
-        DDLogInfo(@"[CacheSingleton] Total cache size was found to be: %llu", size);
+        NSLog(@"[CacheSingleton] Total cache size was found to be: %llu", size);
         self->_cacheSize = size;
         
     }];
@@ -266,11 +266,11 @@ LOG_LEVEL_ISUB_DEFAULT
             
             if (error)
             {
-                DDLogError(@"[CacheSingleton] Error moving cache path from %@ to %@", oldPath, settingsS.songCachePath);
+                NSLog(@"[CacheSingleton] Error moving cache path from %@ to %@", oldPath, settingsS.songCachePath);
             }
             else
             {
-                DDLogInfo(@"[CacheSingleton] Moved cache path from %@ to %@", oldPath, settingsS.songCachePath);
+                NSLog(@"[CacheSingleton] Moved cache path from %@ to %@", oldPath, settingsS.songCachePath);
                 
                 // Now set all of the files to not be backed up
                 if (!settingsS.isBackupCacheEnabled)
@@ -301,7 +301,7 @@ LOG_LEVEL_ISUB_DEFAULT
         if (range.location != NSNotFound)
         {
             NSString *filenameNew = [[filename componentsSeparatedByString:@"."] firstObject];
-            DDLogInfo(@"[CacheSingleton] Moving filename: %@ to new filename: %@", filename, filenameNew);
+            NSLog(@"[CacheSingleton] Moving filename: %@ to new filename: %@", filename, filenameNew);
             if (filenameNew)
             {
                 NSString *fromPath = [settingsS.songCachePath stringByAppendingPathComponent:filename];
@@ -310,7 +310,7 @@ LOG_LEVEL_ISUB_DEFAULT
                 
                 if (![[NSFileManager defaultManager] moveItemAtPath:fromPath toPath:toPath error:&error])
                 {
-                    DDLogError(@"[CacheSingleton] ERROR Moving filename: %@ to new filename: %@", filename, filenameNew);
+                    NSLog(@"[CacheSingleton] ERROR Moving filename: %@ to new filename: %@", filename, filenameNew);
                 }
             }
         }

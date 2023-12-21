@@ -14,7 +14,7 @@
 #import "EX2Kit.h"
 #import "Defines.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation SUSCoverArtLoader
 
@@ -122,13 +122,13 @@ static void initialize_navigationBarImages() {
     
     // Check to see if the data is a valid image. If so, use it; if not, use the default image.
     if ([UIImage imageWithData:self.receivedData]) {
-        DDLogInfo(@"[SUSCoverArtLoader] art loading completed for: %@", self.coverArtId);
+        NSLog(@"[SUSCoverArtLoader] art loading completed for: %@", self.coverArtId);
         [self.dbQueue inDatabase:^(FMDatabase *db) {
             [db executeUpdate:@"REPLACE INTO coverArtCache (id, data) VALUES (?, ?)", self.coverArtId.md5, self.receivedData];
         }];
         [NSNotificationCenter postNotificationToMainThreadWithName:ISMSNotification_CoverArtFinishedInternal object:self.coverArtId];
     } else {
-        DDLogError(@"[SUSCoverArtLoader] art loading failed for: %@", self.coverArtId);
+        NSLog(@"[SUSCoverArtLoader] art loading failed for: %@", self.coverArtId);
         [NSNotificationCenter postNotificationToMainThreadWithName:ISMSNotification_CoverArtFinishedInternal object:self.coverArtId];
     }
 }

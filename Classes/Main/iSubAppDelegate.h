@@ -81,8 +81,6 @@ NS_SWIFT_NAME(AppDelegate)
 
 - (void)checkServer;
 
-- (NSString *)zipAllLogFiles;
-
 
 @end
 

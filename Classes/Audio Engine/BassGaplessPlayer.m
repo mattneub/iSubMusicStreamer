@@ -23,7 +23,7 @@
 
 @implementation BassGaplessPlayer
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 #define ISMS_BassDeviceNumber 1
 
@@ -99,7 +99,7 @@ void CALLBACK MyStreamEndCallback(HSYNC handle, DWORD channel, DWORD data, void 
     
 	@autoreleasepool
 	{
-        DDLogInfo(@"[BassGaplessPlayer] Stream End Callback called");
+        NSLog(@"[BassGaplessPlayer] Stream End Callback called");
         
         // This must be done in the stream GCD queue because if we do it in this thread
         // it will pause the audio output momentarily while it's loading the stream
@@ -110,11 +110,11 @@ void CALLBACK MyStreamEndCallback(HSYNC handle, DWORD channel, DWORD data, void 
              {
                  // Prepare the next song in the queue
                  ISMSSong *nextSong = [userInfo.player nextSong];
-                 DDLogInfo(@"[BassGaplessPlayer]  Preparing stream for: %@", nextSong);
+                 NSLog(@"[BassGaplessPlayer]  Preparing stream for: %@", nextSong);
                  BassStream *nextStream = [userInfo.player prepareStreamForSong:nextSong];
                  if (nextStream)
                  {
-                     DDLogInfo(@"[BassGaplessPlayer] Stream prepared successfully for: %@", nextSong);
+                     NSLog(@"[BassGaplessPlayer] Stream prepared successfully for: %@", nextSong);
                      @synchronized(userInfo.player.streamQueue)
                      {
                          [userInfo.player.streamQueue addObject:nextStream];
@@ -123,7 +123,7 @@ void CALLBACK MyStreamEndCallback(HSYNC handle, DWORD channel, DWORD data, void 
                  }
                  else
                  {
-                     DDLogInfo(@"[BassGaplessPlayer] Could NOT create stream for: %@", nextSong);
+                     NSLog(@"[BassGaplessPlayer] Could NOT create stream for: %@", nextSong);
                      userInfo.isNextSongStreamFailed = YES;
                  }
                  
@@ -186,7 +186,7 @@ QWORD CALLBACK MyFileLenProc(void *user)
 			length = [theSong.size longLongValue];
 		}
 		
-        DDLogInfo(@"[BassGaplessPlayer] checking %@ length: %llu", theSong.title, length);
+        NSLog(@"[BassGaplessPlayer] checking %@ length: %llu", theSong.title, length);
 		return length;
 	}
 }
@@ -260,7 +260,7 @@ BOOL CALLBACK MyFileSeekProc(QWORD offset, void *user)
             }
         }
 		
-        DDLogInfo(@"[BassGaplessPlayer] seeking to %llu  success: %@", offset, NSStringFromBOOL(success));
+        NSLog(@"[BassGaplessPlayer] seeking to %llu  success: %@", offset, NSStringFromBOOL(success));
 		
 		return success;
 	}
@@ -313,7 +313,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 		// The stream should end, because there is no more music to play
 		[NSNotificationCenter postNotificationToMainThreadWithName:ISMSNotification_SongPlaybackEnded];
 		
-        DDLogInfo(@"[BassGaplessPlayer] Stream not active, freeing BASS");
+        NSLog(@"[BassGaplessPlayer] Stream not active, freeing BASS");
         [EX2Dispatch runInMainThreadAsync:^{
             [self cleanup];
         }];
@@ -382,7 +382,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 		
 		if (self.isPlaying)
 		{
-			DDLogInfo(@"[BassGaplessPlayer] songEnded: self.isPlaying = YES");
+			NSLog(@"[BassGaplessPlayer] songEnded: self.isPlaying = YES");
 			self.startSecondsOffset = 0;
 			self.startByteOffset = 0;
 			
@@ -394,7 +394,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 		}
         /*else
         {
-            DDLogInfo(@"[BassGaplessPlayer] songEnded: self.isPlaying = NO");
+            NSLog(@"[BassGaplessPlayer] songEnded: self.isPlaying = NO");
             [self.delegate bassRetrySongAtIndex:self.currentPlaylistIndex player:self];
         }*/
         
@@ -429,7 +429,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
     // Calculate the amount of seconds to start as a factor of how many seconds of audio are being downloaded per second
     double secondsPerSecondFactor = kiloBytesPerSec / kiloBytesForOneSecond;
     
-    DDLogInfo(@"secondsPerSecondsFactor: %f", secondsPerSecondFactor);
+    NSLog(@"secondsPerSecondsFactor: %f", secondsPerSecondFactor);
     
     double numberOfSecondsToBuffer;
     if (secondsPerSecondFactor < .5)
@@ -561,8 +561,8 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
                                     									
 									userInfo.neededSize = size + bytesToWait;
 									
-                                    DDLogInfo(@"[BassGaplessPlayer] AUDIO ENGINE - calculating wait, bitrate: %lu, recentBytesPerSec: %lu, bytesToWait: %lu", (unsigned long)bitrate, (unsigned long)handler.recentDownloadSpeedInBytesPerSec, (unsigned long)bytesToWait);
-                                    DDLogInfo(@"[BassGaplessPlayer] AUDIO ENGINE - waiting for %lu   neededSize: %llu", (unsigned long)bytesToWait, userInfo.neededSize);
+                                    NSLog(@"[BassGaplessPlayer] AUDIO ENGINE - calculating wait, bitrate: %lu, recentBytesPerSec: %lu, bytesToWait: %lu", (unsigned long)bitrate, (unsigned long)handler.recentDownloadSpeedInBytesPerSec, (unsigned long)bytesToWait);
+                                    NSLog(@"[BassGaplessPlayer] AUDIO ENGINE - waiting for %lu   neededSize: %llu", (unsigned long)bytesToWait, userInfo.neededSize);
 									
 									// Sleep for 10000 microseconds, or 1/100th of a second
                                     static const QWORD sleepTime = 10000;
@@ -614,7 +614,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 											}
 										}
 									}
-									DDLogInfo(@"[BassGaplessPlayer] done waiting");
+									NSLog(@"[BassGaplessPlayer] done waiting");
 								}
 							}
 							
@@ -685,7 +685,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
         NSError *audioSessionError = nil;
         [AVAudioSession.sharedInstance setActive:NO error:&audioSessionError];
         if (audioSessionError) {
-            DDLogError(@"[BassGaplessPlayer] Failed to deactivate audio session for audio playback: %@", audioSessionError.localizedDescription);
+            NSLog(@"[BassGaplessPlayer] Failed to deactivate audio session for audio playback: %@", audioSessionError.localizedDescription);
         }
 		
 		[NSNotificationCenter postNotificationToMainThreadWithName:ISMSNotification_BassFreed];		
@@ -697,7 +697,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
     // Make sure we're using the right device
     BASS_SetDevice(ISMS_BassDeviceNumber);
     
-    DDLogInfo(@"[BassGaplessPlayer] testing stream for %@  file: %@", aSong.title, aSong.currentPath);
+    NSLog(@"[BassGaplessPlayer] testing stream for %@  file: %@", aSong.title, aSong.currentPath);
 	if (aSong.fileExists)
 	{
 		// Create the stream
@@ -713,7 +713,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 		}
 		
 		// Failed to create the stream
-		DDLogError(@"[BassGaplessPlayer] failed to create test stream for song: %@  filename: %@", aSong.title, aSong.currentPath);
+		NSLog(@"[BassGaplessPlayer] failed to create test stream for song: %@  filename: %@", aSong.title, aSong.currentPath);
 		return NO;
 	}
 	
@@ -726,7 +726,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
     // Make sure we're using the right device
     BASS_SetDevice(ISMS_BassDeviceNumber);
     
-    DDLogInfo(@"[BassGaplessPlayer] preparing stream for %@  file: %@", aSong.title, aSong.currentPath);
+    NSLog(@"[BassGaplessPlayer] preparing stream for %@  file: %@", aSong.title, aSong.currentPath);
 	if (aSong.fileExists)
 	{	
 		// Create the user info object for the stream
@@ -738,7 +738,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 		if (!userInfo.fileHandle)
 		{
 			// File failed to open
-			DDLogError(@"[BassGaplessPlayer] File failed to open");
+			NSLog(@"[BassGaplessPlayer] File failed to open");
 			return nil;
 		}
 		
@@ -749,7 +749,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
         if (!fileStream && BASS_ErrorGetCode() == BASS_ERROR_INIT)
         {
             // Retry the regular hardware sampling stream
-            DDLogError(@"[BassGaplessPlayer] Failed to create stream for %@ with hardware sampling because BASS is not initialized, initializing BASS and trying again with hardware sampling", aSong.title);
+            NSLog(@"[BassGaplessPlayer] Failed to create stream for %@ with hardware sampling because BASS is not initialized, initializing BASS and trying again with hardware sampling", aSong.title);
             
             [BassWrapper bassInit];
             fileStream = BASS_StreamCreateFileUser(STREAMFILE_NOBUFFER, BASS_STREAM_DECODE|BASS_SAMPLE_FLOAT, &fileProcs, (__bridge void*)userInfo);
@@ -757,7 +757,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
         
 		if (!fileStream)
         {
-            DDLogError(@"[BassGaplessPlayer] Failed to create stream for %@ with hardware sampling, trying again with software sampling", aSong.title);
+            NSLog(@"[BassGaplessPlayer] Failed to create stream for %@ with hardware sampling, trying again with software sampling", aSong.title);
             [BassWrapper logError];
             
             fileStream = BASS_StreamCreateFileUser(STREAMFILE_NOBUFFER, BASS_STREAM_DECODE|BASS_SAMPLE_SOFTWARE|BASS_SAMPLE_FLOAT, &fileProcs, (__bridge void *)userInfo);
@@ -781,14 +781,14 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 		}
         
         // Failed to create the stream
-        DDLogError(@"[BassGaplessPlayer] failed to create stream for song: %@  filename: %@", aSong.title, aSong.currentPath);
+        NSLog(@"[BassGaplessPlayer] failed to create stream for song: %@  filename: %@", aSong.title, aSong.currentPath);
         [BassWrapper logError];
 		
 		return nil;
 	}
 	
 	// File doesn't exist
-    DDLogError(@"[BassGaplessPlayer] failed to create stream because file doesn't exist for song: %@  filename: %@", aSong.title, aSong.currentPath);
+    NSLog(@"[BassGaplessPlayer] failed to create stream because file doesn't exist for song: %@  filename: %@", aSong.title, aSong.currentPath);
 	return nil;
 }
 
@@ -800,12 +800,12 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
     NSError *audioSessionError = nil;
     [AVAudioSession.sharedInstance setActive:YES error:&audioSessionError];
     if (audioSessionError) {
-        DDLogError(@"[BassGaplessPlayer] Failed to activate audio session for audio playback: %@", audioSessionError.localizedDescription);
+        NSLog(@"[BassGaplessPlayer] Failed to activate audio session for audio playback: %@", audioSessionError.localizedDescription);
     }
     
     [AVAudioSession.sharedInstance setCategory:AVAudioSessionCategoryPlayback mode:AVAudioSessionModeDefault options:0 error:&audioSessionError];
     if (audioSessionError) {
-        DDLogError(@"[BassGaplessPlayer] Failed to set audio session category/mode for audio playback: %@", audioSessionError.localizedDescription);
+        NSLog(@"[BassGaplessPlayer] Failed to set audio session category/mode for audio playback: %@", audioSessionError.localizedDescription);
     }
     
 	[EX2Dispatch runInQueue:_streamGcdQueue waitUntilDone:NO block:^
@@ -920,7 +920,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 				 }
 				 else if (!aSong.fileExists)
 				 {
-					 DDLogError(@"[BassGaplessPlayer] Stream for song %@ failed, file is not on disk, so calling retrying the song", userInfo.song.title);
+					 NSLog(@"[BassGaplessPlayer] Stream for song %@ failed, file is not on disk, so calling retrying the song", userInfo.song.title);
 					 // File was removed, most likely because the decryption failed, so start again normally
 					 [aSong removeFromCachedSongsTableDbQueue];
                      
@@ -929,7 +929,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 				 else
 				 {
 					 // Failed to create the stream, retrying
-					 DDLogError(@"[BassGaplessPlayer] ------failed to create stream, retrying in 2 seconds------");
+					 NSLog(@"[BassGaplessPlayer] ------failed to create stream, retrying in 2 seconds------");
 					 
                      [self cancelRetrySongOperation];
                      
@@ -975,7 +975,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 - (void)updatePlaylistIndex:(NSNotification *)notification
 {
     self.currentPlaylistIndex = [self.delegate bassCurrentPlaylistIndex:self];
-    DDLogInfo(@"[BassGaplessPlayer] Updating playlist index to: %lu", (unsigned long)self.currentPlaylistIndex);
+    NSLog(@"[BassGaplessPlayer] Updating playlist index to: %lu", (unsigned long)self.currentPlaylistIndex);
 }
 
 #pragma mark - Audio Engine Properties
@@ -1011,7 +1011,7 @@ DWORD CALLBACK MyStreamProc(HSTREAM handle, void *buffer, DWORD length, void *us
 	//double seconds = BASS_ChannelBytes2Seconds(self.currentStream.stream, pcmBytePosition);
     double seconds = BASS_ChannelBytes2Seconds(self.currentStream.stream, self.ringBuffer.totalBytesDrained * sampleRateRatio * chanCount);
     //ALog(@"seconds: %f", seconds);
-    //DDLogVerbose(@"[BassGaplessPlayer] progress seconds: %f", seconds);
+    //NSLog(@"[BassGaplessPlayer] progress seconds: %f", seconds);
 	if (seconds < 0)
     {
         // Use the previous song (i.e the one still coming out of the speakers), since we're actually finishing it right now

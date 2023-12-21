@@ -18,7 +18,7 @@
 #import "ISMSSong+DAO.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation SUSSubFolderLoader
 
@@ -110,7 +110,7 @@ LOG_LEVEL_ISUB_DEFAULT
         
         hadError = [db hadError];
         if (hadError)
-            DDLogError(@"[SUSSubFolderLoader] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[SUSSubFolderLoader] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
     }];
     
     return !hadError;
@@ -123,7 +123,7 @@ LOG_LEVEL_ISUB_DEFAULT
         
         hadError = [db hadError];
         if (hadError)
-            DDLogError(@"[SUSSubFolderLoader] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[SUSSubFolderLoader] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
     }];
     
     return !hadError;
@@ -134,11 +134,11 @@ LOG_LEVEL_ISUB_DEFAULT
     [self.dbQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:[NSString stringWithFormat:@"INSERT INTO songsCache (folderId, %@) VALUES (?, %@)", [ISMSSong standardSongColumnNames], [ISMSSong standardSongColumnQMarks]], self.myId.md5, aSong.title, aSong.songId, aSong.artist, aSong.album, aSong.genre, aSong.coverArtId, aSong.path, aSong.suffix, aSong.transcodedSuffix, aSong.duration, aSong.bitRate, aSong.track, aSong.year, aSong.size, aSong.parentId, NSStringFromBOOL(aSong.isVideo), aSong.discNumber];
         
-        DDLogInfo(@"[SUSSubFolderLoader] Added to folderCache with discNumber: %@", aSong.discNumber);
+        NSLog(@"[SUSSubFolderLoader] Added to folderCache with discNumber: %@", aSong.discNumber);
         
         hadError = [db hadError];
         if (hadError)
-            DDLogError(@"[SUSSubFolderLoader] Err inserting song %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[SUSSubFolderLoader] Err inserting song %d: %@", [db lastErrorCode], [db lastErrorMessage]);
     }];
     
     return !hadError;
@@ -151,7 +151,7 @@ LOG_LEVEL_ISUB_DEFAULT
         
         hadError = [db hadError];
         if ([db hadError])
-            DDLogError(@"[SUSSubFolderLoader] Err inserting album count %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[SUSSubFolderLoader] Err inserting album count %d: %@", [db lastErrorCode], [db lastErrorMessage]);
     }];
     
     return !hadError;
@@ -164,7 +164,7 @@ LOG_LEVEL_ISUB_DEFAULT
         
         hadError = [db hadError];
         if (hadError)
-            DDLogError(@"[SUSSubFolderLoader] Err inserting song count %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[SUSSubFolderLoader] Err inserting song count %d: %@", [db lastErrorCode], [db lastErrorMessage]);
     }];
         
     return !hadError;
@@ -177,7 +177,7 @@ LOG_LEVEL_ISUB_DEFAULT
         
         hadError = [db hadError];
         if ([db hadError])
-            DDLogError(@"[SUSSubFolderLoader] Err inserting folder length %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[SUSSubFolderLoader] Err inserting folder length %d: %@", [db lastErrorCode], [db lastErrorMessage]);
     }];
    
     return !hadError;

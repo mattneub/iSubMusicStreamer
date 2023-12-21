@@ -30,7 +30,7 @@
 #import "Swift.h"
 #import "ISMSLocalPlaylist.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @interface PlaylistsViewController()
 @property (nonatomic, strong) NSURLSession *sharedSession;
@@ -884,7 +884,7 @@ LOG_LEVEL_ISUB_DEFAULT
                     [db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE playlist%@ (%@)", name.md5, ISMSSong.standardSongColumnSchema]];
                     
                     [db executeUpdate:@"ATTACH DATABASE ? AS ?", [databaseS.databaseFolderPath stringByAppendingPathComponent:databaseName], @"currentPlaylistDb"];
-                    if (db.hadError) { DDLogError(@"[PlaylistsViewController] Err attaching the currentPlaylistDb %d: %@", db.lastErrorCode, db.lastErrorMessage); }
+                    if (db.hadError) { NSLog(@"[PlaylistsViewController] Err attaching the currentPlaylistDb %d: %@", db.lastErrorCode, db.lastErrorMessage); }
                     [db executeUpdate:[NSString stringWithFormat:@"INSERT INTO playlist%@ SELECT * FROM %@", name.md5, table]];
                     [db executeUpdate:@"DETACH DATABASE currentPlaylistDb"];
                 }];
@@ -919,7 +919,7 @@ LOG_LEVEL_ISUB_DEFAULT
                 [db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE playlist%@ (%@)", name.md5, ISMSSong.standardSongColumnSchema]];
                 
                 [db executeUpdate:@"ATTACH DATABASE ? AS ?", [databaseS.databaseFolderPath stringByAppendingPathComponent:databaseName], @"currentPlaylistDb"];
-                if (db.hadError) { DDLogError(@"[PlaylistsViewController] Err attaching the currentPlaylistDb %d: %@", db.lastErrorCode, db.lastErrorMessage); }
+                if (db.hadError) { NSLog(@"[PlaylistsViewController] Err attaching the currentPlaylistDb %d: %@", db.lastErrorCode, db.lastErrorMessage); }
                 [db executeUpdate:[NSString stringWithFormat:@"INSERT INTO playlist%@ SELECT * FROM %@", name.md5, table]];
                 [db executeUpdate:@"DETACH DATABASE currentPlaylistDb"];
             }];
@@ -966,7 +966,7 @@ LOG_LEVEL_ISUB_DEFAULT
 }
 
 - (void)subsonicErrorCode:(NSString *)errorCode message:(NSString *)message {
-    DDLogError(@"[PlaylistsViewController] subsonic error %@: %@", errorCode, message);
+    NSLog(@"[PlaylistsViewController] subsonic error %@: %@", errorCode, message);
     if (settingsS.isPopupsEnabled) {
         [EX2Dispatch runInMainThreadAsync:^{
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Subsonic Error" message:message preferredStyle:UIAlertControllerStyleAlert];

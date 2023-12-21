@@ -17,7 +17,7 @@
 #import "EX2Kit.h"
 #import "iSubAppDelegate.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 // Logging
 #define isProgressLoggingEnabled 0
@@ -50,7 +50,7 @@ LOG_LEVEL_ISUB_DEFAULT
         }
     }
     
-    DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Stream handler start:%@ for: %@", NSStringFromBOOL(resume), self.mySong.title);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler start:%@ for: %@", NSStringFromBOOL(resume), self.mySong.title);
     
     self.totalBytesTransferred = 0;
     self.bytesTransferred = 0;
@@ -88,7 +88,7 @@ LOG_LEVEL_ISUB_DEFAULT
     }
     self.request = [NSMutableURLRequest requestWithSUSAction:@"stream" parameters:parameters byteOffset:(NSUInteger)self.byteOffset];
     if (!self.request) {
-        DDLogError(@"[ISMSURLConnectionStreamHandler] start connection failed");
+        NSLog(@"[ISMSURLConnectionStreamHandler] start connection failed");
         NSError *error = [NSError errorWithISMSCode:ISMSErrorCode_CouldNotCreateConnection];
         if ([self.delegate respondsToSelector:@selector(ISMSStreamHandlerConnectionFailed:withError:)])
             [self.delegate ISMSStreamHandlerConnectionFailed:self withError:error];
@@ -104,7 +104,7 @@ LOG_LEVEL_ISUB_DEFAULT
 }
 
 - (void)connectionTimedOut {
-    DDLogError(@"[ISMSNSURLSessionStreamHandler] Stream handler connectionTimedOut for %@", self.mySong);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler connectionTimedOut for %@", self.mySong);
     
     [self cancel];
     [self didFailInternal:nil];
@@ -114,7 +114,7 @@ LOG_LEVEL_ISUB_DEFAULT
     self.dataTask = [self.session dataTaskWithRequest:self.request];
     [self.dataTask resume];
     self.isDownloading = YES;
-    DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Stream handler startConnectionInternalSuccess for %@", self.mySong);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler startConnectionInternalSuccess for %@", self.mySong);
 
     if (!self.isTempCache) {
         self.mySong.isPartiallyCached = YES;
@@ -145,7 +145,7 @@ LOG_LEVEL_ISUB_DEFAULT
     // Pop out of infinite loop if partially pre-cached
     self.partialPrecacheSleep = NO;
     
-    DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Stream handler request canceled for %@", self.mySong);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler request canceled for %@", self.mySong);
     [self.dataTask cancel];
     self.dataTask = nil;
     
@@ -165,7 +165,7 @@ LOG_LEVEL_ISUB_DEFAULT
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Stream handler didReceiveResponse for %@", self.mySong);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler didReceiveResponse for %@", self.mySong);
 
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -231,7 +231,7 @@ LOG_LEVEL_ISUB_DEFAULT
         
         // Log progress
         if (isProgressLoggingEnabled) {
-            DDLogInfo(@"[ISMSNSURLSessionStreamHandler] downloadedLengthA:  %llu   bytesRead: %lu", self.totalBytesTransferred, (unsigned long)dataLength);
+            NSLog(@"[ISMSNSURLSessionStreamHandler] downloadedLengthA:  %llu   bytesRead: %lu", self.totalBytesTransferred, (unsigned long)dataLength);
         }
         
         // If near beginning of file, don't throttle
@@ -256,7 +256,7 @@ LOG_LEVEL_ISUB_DEFAULT
                     delay = (speedDifferenceFactor * intervalSinceLastThrottle) - intervalSinceLastThrottle;
                     
                     if (isThrottleLoggingEnabled) {
-                        DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Pausing for %f  interval: %f  bytesTransferred: %llu maxBytes: %f", delay, intervalSinceLastThrottle, self.bytesTransferred, maxBytesPerTotalInterval);
+                        NSLog(@"[ISMSNSURLSessionStreamHandler] Pausing for %f  interval: %f  bytesTransferred: %llu maxBytes: %f", delay, intervalSinceLastThrottle, self.bytesTransferred, maxBytesPerTotalInterval);
                     }
                     
                     self.bytesTransferred = 0;
@@ -285,7 +285,7 @@ LOG_LEVEL_ISUB_DEFAULT
             }
         }
     } else {
-        DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Stream handler did receive data but file handle was nil for %@", self.mySong);
+        NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler did receive data but file handle was nil for %@", self.mySong);
 
         if (!self.isCanceled) {
             // There is no file handle for some reason, cancel the connection
@@ -305,7 +305,7 @@ LOG_LEVEL_ISUB_DEFAULT
             
             double speedInBytes = (double)transferredSinceLastCheck / speedInteval;
             double speedInKbytes = speedInBytes / 1024.;
-            DDLogInfo(@"[ISMSNSURLSessionStreamHandler] rate: %f  speedInterval: %f  transferredSinceLastCheck: %llu", speedInKbytes, speedInteval, transferredSinceLastCheck);
+            NSLog(@"[ISMSNSURLSessionStreamHandler] rate: %f  speedInterval: %f  transferredSinceLastCheck: %llu", speedInKbytes, speedInteval, transferredSinceLastCheck);
             
             self.speedLoggingLastSize = self.totalBytesTransferred;
             self.speedLoggingDate = [NSDate date];
@@ -365,12 +365,12 @@ LOG_LEVEL_ISUB_DEFAULT
 
 // Main Thread
 - (void)didFailInternal:(NSError *)error {
-    DDLogError(@"[ISMSNSURLSessionStreamHandler] Stream handler didFailInternal for %@", self.mySong);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler didFailInternal for %@", self.mySong);
     NSAssert(NSThread.isMainThread, @"didFailInternal must be called from the main thread");
     [self stopTimeOutTimer];
     
-    DDLogError(@"[ISMSNSURLSessionStreamHandler] Connection Failed for %@", self.mySong.title);
-    DDLogError(@"[ISMSNSURLSessionStreamHandler] error domain: %@  code: %ld description: %@", error.domain, (long)error.code, error.description);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Connection Failed for %@", self.mySong.title);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] error domain: %@  code: %ld description: %@", error.domain, (long)error.code, error.description);
     
     self.isDownloading = NO;
     self.dataTask = nil;
@@ -388,7 +388,7 @@ LOG_LEVEL_ISUB_DEFAULT
 
 // Main Thread
 - (void)didFinishLoadingInternal {
-    DDLogInfo(@"[ISMSNSURLSessionStreamHandler] Stream handler didFinishLoadingInternal for %@", self.mySong);
+    NSLog(@"[ISMSNSURLSessionStreamHandler] Stream handler didFinishLoadingInternal for %@", self.mySong);
     NSAssert(NSThread.isMainThread, @"didFinishLoadingInternal must be called from the main thread");
     [self stopTimeOutTimer];
     

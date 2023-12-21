@@ -20,7 +20,7 @@
 #import "Swift.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation MusicSingleton
 
@@ -162,20 +162,20 @@ double startSongSeconds = 0.0;
 }
 
 - (void)prevSong {
-    DDLogInfo(@"[MusicSingleton] prevSong called");
+    NSLog(@"[MusicSingleton] prevSong called");
 	if (audioEngineS.player.progress > 10.0) {
 		// Past 10 seconds in the song, so restart playback instead of changing songs
-        DDLogInfo(@"[MusicSingleton] prevSong Past 10 seconds in the song, so restart playback instead of changing songs, calling playSongAtPosition:%lu", (unsigned long)playlistS.currentIndex);
+        NSLog(@"[MusicSingleton] prevSong Past 10 seconds in the song, so restart playback instead of changing songs, calling playSongAtPosition:%lu", (unsigned long)playlistS.currentIndex);
 		[self playSongAtPosition:playlistS.currentIndex];
 	} else {
 		// Within first 10 seconds, go to previous song
-        DDLogInfo(@"[MusicSingleton] prevSong within first 10 seconds, so go to previous, calling playSongAtPosition:%lu", (unsigned long)playlistS.prevIndex);
+        NSLog(@"[MusicSingleton] prevSong within first 10 seconds, so go to previous, calling playSongAtPosition:%lu", (unsigned long)playlistS.prevIndex);
 		[self playSongAtPosition:playlistS.prevIndex];
 	}
 }
 
 - (void)nextSong {
-    DDLogInfo(@"[MusicSingleton] nextSong called, calling playSongAtPosition:%lu", (unsigned long)playlistS.nextIndex);
+    NSLog(@"[MusicSingleton] nextSong called, calling playSongAtPosition:%lu", (unsigned long)playlistS.nextIndex);
 	[self playSongAtPosition:playlistS.nextIndex];
 }
 

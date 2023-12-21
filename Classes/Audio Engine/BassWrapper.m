@@ -11,7 +11,7 @@
 #import "Defines.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 #define ISMS_BASSBufferSize 800
 #define ISMS_defaultSampleRate 44100
@@ -49,7 +49,7 @@ static NSUInteger _bassOutputBufferLengthMillis = 0;
     else
     {
         _bassOutputBufferLengthMillis = 0;
-        DDLogError(@"[BassWrapper] Can't initialize device");
+        NSLog(@"[BassWrapper] Can't initialize device");
         [BassWrapper logError];
     }
 	
@@ -67,7 +67,7 @@ static NSUInteger _bassOutputBufferLengthMillis = 0;
 + (void)logError
 {
 	int errorCode = BASS_ErrorGetCode();
-	DDLogError(@"[BassWrapper] BASS error: %i - %@", errorCode, [BassWrapper stringFromErrorCode:errorCode]);
+	NSLog(@"[BassWrapper] BASS error: %i - %@", errorCode, [BassWrapper stringFromErrorCode:errorCode]);
 }
 
 + (void)printChannelInfo:(HSTREAM)channel
@@ -77,7 +77,7 @@ static NSUInteger _bassOutputBufferLengthMillis = 0;
 	//BASS_ChannelGetInfo(channel, &i);
 	//QWORD bytes = BASS_ChannelGetLength(channel, BASS_POS_BYTE);
 	//DWORD time = BASS_ChannelBytes2Seconds(channel, bytes);
-	//DDLogInfo("[BassWrapper] channel type = %x (%@)\nlength = %llu (%u:%02u)  flags: %i  freq: %i  origres: %i", i.ctype, [BassWrapper formatForChannel:channel], bytes, time/60, time%60, i.flags, i.freq, i.origres);
+	//NSLog("[BassWrapper] channel type = %x (%@)\nlength = %llu (%u:%02u)  flags: %i  freq: %i  origres: %i", i.ctype, [BassWrapper formatForChannel:channel], bytes, time/60, time%60, i.flags, i.freq, i.origres);
 #endif
 }
 

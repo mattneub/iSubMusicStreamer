@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import CocoaLumberjackSwift
 
 @objc final class AsyncImageView: UIImageView {
     @objc var isLarge: Bool = false
@@ -88,7 +87,7 @@ import CocoaLumberjackSwift
 
 extension AsyncImageView: SUSLoaderDelegate {
     func loadingFinished(_ loader: SUSLoader!) {
-        DDLogInfo("[AsyncImageView] async cover art loading finished for: \(coverArtId ?? "nil")")
+        print("[AsyncImageView] async cover art loading finished for: \(coverArtId ?? "nil")")
         activityIndicator?.removeFromSuperview()
         activityIndicator = nil
         image = coverArtDAO?.coverArtImage()
@@ -96,7 +95,7 @@ extension AsyncImageView: SUSLoaderDelegate {
     }
     
     func loadingFailed(_ loader: SUSLoader!, withError error: Error!) {
-        DDLogError("[AsyncImageView] async cover art loading failed: \(error?.localizedDescription ?? "unknown error")")
+        print("[AsyncImageView] async cover art loading failed: \(error?.localizedDescription ?? "unknown error")")
         activityIndicator?.removeFromSuperview()
         activityIndicator = nil
         coverArtDAO = nil

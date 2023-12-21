@@ -22,7 +22,7 @@
 @property HFX limiterFx;
 @end
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation BassEqualizer
 
@@ -111,7 +111,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	
 	if (self.isEqActive) {
 		BASS_DX8_PARAMEQ p = value.parameters;
-		DDLogVerbose(@"[BassEqualizer] updating eq for handle: %i   new freq: %f   new gain: %f", value.handle, p.fCenter, p.fGain);
+		NSLog(@"[BassEqualizer] updating eq for handle: %i   new freq: %f   new gain: %f", value.handle, p.fCenter, p.fGain);
 		BASS_FXSetParameters(value.handle, &p);
 	}
 }

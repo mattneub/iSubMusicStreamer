@@ -15,7 +15,7 @@
 #import "Defines.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation SUSAllAlbumsDAO
 
@@ -121,7 +121,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		[db executeUpdate:query, [NSString stringWithFormat:@"%%%@%%", name]];
 		//if ([db hadError])
 		//DLog(@"Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
-        DDLogVerbose(@"[SUSAllAlbumsDAO] allAlbumsNameSearch count: %i", [db intForQuery:@"SELECT count(*) FROM allAlbumsNameSearch"]);
+        NSLog(@"[SUSAllAlbumsDAO] allAlbumsNameSearch count: %i", [db intForQuery:@"SELECT count(*) FROM allAlbumsNameSearch"]);
 	}];
 }
 

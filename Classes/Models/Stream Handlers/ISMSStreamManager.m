@@ -21,7 +21,7 @@
 #import "ISMSSong+DAO.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 #define maxNumOfReconnects 5
 
 @implementation ISMSStreamManager
@@ -203,7 +203,7 @@ LOG_LEVEL_ISUB_DEFAULT
             
             if (!handler.mySong.isFullyCached && !handler.mySong.isTempCached && !([cacheQueueManagerS.currentQueuedSong isEqualToSong:handler.mySong] && cacheQueueManagerS.isQueueDownloading))
             {
-                DDLogInfo(@"[ISMSStreamManager] Removing song from cached songs table: %@", handler.mySong);
+                NSLog(@"[ISMSStreamManager] Removing song from cached songs table: %@", handler.mySong);
                 [handler.mySong removeFromCachedSongsTableDbQueue];
             }
 			//[handler.mySong removeFromCachedSongsTableDbQueue];
@@ -283,7 +283,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		ISMSStreamHandler *handler = [self.handlerStack objectAtIndex:index];
 		if (!handler.mySong.isFullyCached && !handler.mySong.isTempCached && !([cacheQueueManagerS.currentQueuedSong isEqualToSong:handler.mySong] && cacheQueueManagerS.isQueueDownloading))
         {
-            DDLogInfo(@"[ISMSStreamManager] Removing song from cached songs table: %@", handler.mySong);
+            NSLog(@"[ISMSStreamManager] Removing song from cached songs table: %@", handler.mySong);
             [handler.mySong removeFromCachedSongsTableDbQueue];
         }
         
@@ -384,7 +384,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	if (!handler)
 		return;
 	
-    DDLogInfo(@"[ISMSStreamManager] starting handler, handlerStack: %@", self.handlerStack);
+    NSLog(@"[ISMSStreamManager] starting handler, handlerStack: %@", self.handlerStack);
 	
 	[self startHandler:handler resume:NO];
 }
@@ -411,7 +411,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		handler.delegate = self;
 	}
 	
-    DDLogInfo(@"[ISMSStreamManager] load handler stack, handlerStack: %@", self.handlerStack);
+    NSLog(@"[ISMSStreamManager] load handler stack, handlerStack: %@", self.handlerStack);
 
 }
 
@@ -420,7 +420,7 @@ LOG_LEVEL_ISUB_DEFAULT
 // Hand of handler to cache queue
 - (void)stealHandlerForCacheQueue:(ISMSStreamHandler *)handler
 {
-	DDLogInfo(@"[ISMSStreamManager] cache queue manager stole handler for: %@", handler.mySong.title);
+	NSLog(@"[ISMSStreamManager] cache queue manager stole handler for: %@", handler.mySong.title);
 	handler.partialPrecacheSleep = NO;
 	[self.handlerStack removeObject:handler];
 	[self saveHandlerStack];
@@ -509,7 +509,7 @@ LOG_LEVEL_ISUB_DEFAULT
 			}
 		}
 		
-        DDLogInfo(@"[ISMSStreamManager] fill stream queue, handlerStack: %@", self.handlerStack);
+        NSLog(@"[ISMSStreamManager] fill stream queue, handlerStack: %@", self.handlerStack);
 	}
 }
 
@@ -644,7 +644,7 @@ LOG_LEVEL_ISUB_DEFAULT
                 [handler.mySong removeFromCacheQueueDbQueue];
             }
             
-            DDLogInfo(@"[ISMSStreamManager] Marking isFullyCached = YES for %@", handler.mySong);
+            NSLog(@"[ISMSStreamManager] Marking isFullyCached = YES for %@", handler.mySong);
 			handler.mySong.isFullyCached = YES;
 		}
 		
@@ -681,7 +681,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		// Resume any handlers that were downloading when iSub closed
 		if (handler.isDownloading && !handler.isTempCache)
 		{
-            DDLogInfo(@"[ISMSStreamManager] resuming starting handler");
+            NSLog(@"[ISMSStreamManager] resuming starting handler");
 			[handler start:YES];
 		}
 	}

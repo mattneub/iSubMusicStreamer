@@ -19,7 +19,7 @@
 #import "iSubAppDelegate.h"
 #import "Defines.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 // Test server details
 #define DEFAULT_SERVER_TYPE SUBSONIC
@@ -839,7 +839,7 @@ LOG_LEVEL_ISUB_DEFAULT
     }
     [settings removeObjectsForKeys:keysToDelete];
     
-    DDLogInfo(@"App Settings:\n%@", settings);
+    NSLog(@"App Settings:\n%@", settings);
 }
 
 #pragma mark - Singleton methods

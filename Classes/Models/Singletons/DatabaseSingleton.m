@@ -20,7 +20,7 @@
 #import "ISMSSong+DAO.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation DatabaseSingleton
 
@@ -59,8 +59,8 @@ LOG_LEVEL_ISUB_DEFAULT
 - (void)setupDatabases
 {
 	NSString *urlStringMd5 = [[settingsS urlString] md5];
-    DDLogVerbose(@"[DatabaseSingleton] Database path: %@", self.databaseFolderPath);
-    DDLogVerbose(@"[DatabaseSingleton] Database prefix: %@", urlStringMd5);
+    NSLog(@"[DatabaseSingleton] Database path: %@", self.databaseFolderPath);
+    NSLog(@"[DatabaseSingleton] Database prefix: %@", urlStringMd5);
 		
 	// Only load Albums, Songs, and Genre databases if this is a newer device
 	if (settingsS.isSongsTabEnabled)
@@ -94,7 +94,7 @@ LOG_LEVEL_ISUB_DEFAULT
         else if(![db columnExists:@"discNumber" inTableWithName:@"songsCache"])
         {
             BOOL success = [db executeUpdate:@"ALTER TABLE songsCache ADD COLUMN discNumber INTEGER"];
-            DDLogInfo(@"[DatabaseSingleton] songsCache has no discNumber and add worked: %d", success);
+            NSLog(@"[DatabaseSingleton] songsCache has no discNumber and add worked: %d", success);
         }
         
         if (![db tableExists:@"albumsCacheCount"])
@@ -181,7 +181,7 @@ LOG_LEVEL_ISUB_DEFAULT
         else if(![db columnExists:@"discNumber" inTableWithName:@"currentPlaylist"])
         {
             BOOL success = [db executeUpdate:@"ALTER TABLE currentPlaylist ADD COLUMN discNumber INTEGER"];
-            DDLogInfo(@"[DatabaseSingleton] currentPlaylist has no discNumber and add worked: %d", success);
+            NSLog(@"[DatabaseSingleton] currentPlaylist has no discNumber and add worked: %d", success);
         }
         
 		if (![db tableExists:@"shufflePlaylist"])
@@ -191,7 +191,7 @@ LOG_LEVEL_ISUB_DEFAULT
         else if(![db columnExists:@"discNumber" inTableWithName:@"shufflePlaylist"])
         {
             BOOL success = [db executeUpdate:@"ALTER TABLE shufflePlaylist ADD COLUMN discNumber INTEGER"];
-            DDLogInfo(@"[DatabaseSingleton] shufflePlaylist has no discNumber and add worked: %d", success);
+            NSLog(@"[DatabaseSingleton] shufflePlaylist has no discNumber and add worked: %d", success);
         }
         
 		if (![db tableExists:@"jukeboxCurrentPlaylist"])
@@ -201,7 +201,7 @@ LOG_LEVEL_ISUB_DEFAULT
         else if(![db columnExists:@"discNumber" inTableWithName:@"jukeboxCurrentPlaylist"])
         {
             BOOL success = [db executeUpdate:@"ALTER TABLE jukeboxCurrentPlaylist ADD COLUMN discNumber INTEGER"];
-            DDLogInfo(@"[DatabaseSingleton] jukeboxCurrentPlaylist has no discNumber and add worked: %d", success);
+            NSLog(@"[DatabaseSingleton] jukeboxCurrentPlaylist has no discNumber and add worked: %d", success);
         }
         
 		if (![db tableExists:@"jukeboxShufflePlaylist"]) 
@@ -211,7 +211,7 @@ LOG_LEVEL_ISUB_DEFAULT
         else if(![db columnExists:@"discNumber" inTableWithName:@"jukeboxShufflePlaylist"])
         {
             BOOL success = [db executeUpdate:@"ALTER TABLE jukeboxShufflePlaylist ADD COLUMN discNumber INTEGER"];
-            DDLogInfo(@"[DatabaseSingleton] jukeboxShufflePlaylist has no discNumber and add worked: %d", success);
+            NSLog(@"[DatabaseSingleton] jukeboxShufflePlaylist has no discNumber and add worked: %d", success);
         }
 	}];	
 	
@@ -259,11 +259,11 @@ LOG_LEVEL_ISUB_DEFAULT
             
             if (error)
             {
-                DDLogError(@"[DatabaseSingleton] Error moving cache path from %@ to %@", oldPath, path);
+                NSLog(@"[DatabaseSingleton] Error moving cache path from %@ to %@", oldPath, path);
             }
             else
             {
-                DDLogInfo(@"[DatabaseSingleton] Moved cache path from %@ to %@", oldPath, path);
+                NSLog(@"[DatabaseSingleton] Moved cache path from %@ to %@", oldPath, path);
                 
                 // Now set the file not to be backed up
                 [[NSURL fileURLWithPath:path] addSkipBackupAttribute];
@@ -284,7 +284,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		}
         else if(![db columnExists:@"discNumber" inTableWithName:@"cachedSongs"])
         {
-            DDLogInfo(@"[DatabaseSingleton] Added column discNumber on table cachedSongs");
+            NSLog(@"[DatabaseSingleton] Added column discNumber on table cachedSongs");
             [db executeUpdate:@"ALTER TABLE cachedSongs ADD COLUMN discNumber INTEGER"];
         }
         
@@ -303,10 +303,10 @@ LOG_LEVEL_ISUB_DEFAULT
 			[db executeUpdate:@"CREATE INDEX cachedSongsLayout_seg8 ON cachedSongsLayout (seg8)"];
 			[db executeUpdate:@"CREATE INDEX cachedSongsLayout_seg9 ON cachedSongsLayout (seg9)"];
 		}
-        DDLogInfo(@"[DatabaseSingleton] checking if genres table exists");
+        NSLog(@"[DatabaseSingleton] checking if genres table exists");
 		if (![db tableExists:@"genres"]) 
 		{
-            DDLogInfo(@"[DatabaseSingleton] doesn't exist, creating genres table");
+            NSLog(@"[DatabaseSingleton] doesn't exist, creating genres table");
 			[db executeUpdate:@"CREATE TABLE genres(genre TEXT UNIQUE)"];
 		}
 		if (![db tableExists:@"genresSongs"]) 
@@ -357,7 +357,7 @@ LOG_LEVEL_ISUB_DEFAULT
                           {
                               [db executeUpdate:@"INSERT OR IGNORE INTO sizesSongs VALUES(?, ?)", aSong.songId, attr[NSFileSize]];
                           }];
-                         DDLogInfo(@"[DatabaseSingleton] Added %@ to the size table (%llu)", aSong.title, [attr fileSize]);
+                         NSLog(@"[DatabaseSingleton] Added %@ to the size table (%llu)", aSong.title, [attr fileSize]);
                      }
                  }
              }
@@ -385,11 +385,11 @@ LOG_LEVEL_ISUB_DEFAULT
             
             if (error)
             {
-                DDLogError(@"[DatabaseSingleton] Error moving cache path from %@ to %@", oldPath, path);
+                NSLog(@"[DatabaseSingleton] Error moving cache path from %@ to %@", oldPath, path);
             }
             else
             {
-                DDLogInfo(@"[DatabaseSingleton] Moved cache path from %@ to %@", oldPath, path);
+                NSLog(@"[DatabaseSingleton] Moved cache path from %@ to %@", oldPath, path);
                 
                 // Now set the file not to be backed up
                 [[NSURL fileURLWithPath:path] addSkipBackupAttribute];
@@ -838,7 +838,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		hadError = [db hadError];
 		
 		if (hadError)
-            DDLogError(@"[DatabaseSingleton] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            NSLog(@"[DatabaseSingleton] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
 	}];
 	
 	return !hadError;

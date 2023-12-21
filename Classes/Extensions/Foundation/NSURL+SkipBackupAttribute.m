@@ -8,10 +8,9 @@
 
 #import "NSURL+SkipBackupAttribute.h"
 #import "Defines.h"
-#import <CocoaLumberjack/CocoaLumberjack.h>
 #import <sys/xattr.h>
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation NSURL (SkipBackupAttribute)
 
@@ -26,10 +25,10 @@ LOG_LEVEL_ISUB_DEFAULT
     @try {
         success = [self setResourceValue:@(isAdd) forKey:NSURLIsExcludedFromBackupKey error:&error];
         if (!success) {
-            DDLogError(@"Error excluding %@ from backup: %@", self.lastPathComponent, error);
+            NSLog(@"Error excluding %@ from backup: %@", self.lastPathComponent, error);
         }
     } @catch (NSException *exception) {
-        DDLogError(@"Exception excluding %@ from backup: %@", self.lastPathComponent, exception);
+        NSLog(@"Exception excluding %@ from backup: %@", self.lastPathComponent, exception);
     }
     return success;
 }

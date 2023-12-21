@@ -32,7 +32,7 @@
 #import <netdb.h>
 #import <arpa/inet.h>
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @interface iSubAppDelegate()
 @property (nonatomic) BOOL isNoNetworkAlertShowing;
@@ -79,25 +79,15 @@ LOG_LEVEL_ISUB_DEFAULT
         self.window.size = CGSizeMake(screenSize.width / screenScale, screenSize.height / screenScale);
     }
 	
-#if !defined(ADHOC) && !defined(RELEASE)
-    // Don't turn on console logging for adhoc or release builds
-    [DDLog addLogger:[DDOSLogger sharedInstance]];
-#endif
     // Use local time zone when formatting dates for logger
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
     [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm:ss:SSS"];
-	DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-    fileLogger.logFormatter = [[DDLogFileFormatterDefault alloc] initWithDateFormatter:dateFormatter];
-	fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-	fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-	[DDLog addLogger:fileLogger];
-    [Defines setupDefaultLogLevel];
-    
+
     // Log system information
     NSString *version = [NSBundle.mainBundle.infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *build = [NSBundle.mainBundle.infoDictionary objectForKey:(NSString*)kCFBundleVersionKey];
-    DDLogInfo(@"\n---------------------------------\niSub %@ build %@ launched\n---------------------------------", version, build);
+    NSLog(@"\n---------------------------------\niSub %@ build %@ launched\n---------------------------------", version, build);
     
 	// Setup network reachability notifications
 	self.wifiReach = [Reachability reachabilityForInternetConnection];
@@ -112,7 +102,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	
     // Request authorization to send background notifications
     [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:UNAuthorizationOptionAlert|UNAuthorizationOptionSound completionHandler:^(BOOL granted, NSError * _Nullable error) {
-        DDLogInfo(@"[iSubAppDelegate] Request for local notifications granted: %@", NSStringFromBOOL(granted));
+        NSLog(@"[iSubAppDelegate] Request for local notifications granted: %@", NSStringFromBOOL(granted));
     }];
     
 	// Handle offline mode
@@ -216,7 +206,7 @@ LOG_LEVEL_ISUB_DEFAULT
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     // Handle being openned by a URL
-    DDLogVerbose(@"[iSubAppDelegate] url host: %@ path components: %@", url.host, url.pathComponents );
+    NSLog(@"[iSubAppDelegate] url host: %@ path components: %@", url.host, url.pathComponents );
     
     if (url.host) {
         if ([[url.host lowercaseString] isEqualToString:@"play"]) {
@@ -295,7 +285,7 @@ LOG_LEVEL_ISUB_DEFAULT
         [viewObjectsS hideLoadingScreen];
         
         if (!settingsS.isOfflineMode) {
-            DDLogVerbose(@"[iSubAppDelegate] Loading failed for loading type %i, entering offline mode. Error: %@", theLoader.type, error);
+            NSLog(@"[iSubAppDelegate] Loading failed for loading type %i, entering offline mode. Error: %@", theLoader.type, error);
             [self enterOfflineMode];
         }
         
@@ -352,29 +342,6 @@ LOG_LEVEL_ISUB_DEFAULT
 	}
     
     return fileNameToUse;
-}
-
-- (NSString *)zipAllLogFiles {
-    // Log the app settings, excluding sensitive info
-    [settingsS logAppSettings];
-    
-    // Flush all logs to disk
-    [DDLog flushLog];
-    
-    NSString *zipFileName = @"iSub Logs.zip";
-    NSString *zipFilePath = [settingsS.cachesPath stringByAppendingPathComponent:zipFileName];
-    NSString *logsFolder = [settingsS.cachesPath stringByAppendingPathComponent:@"Logs"];
-    
-    // Delete the old zip if exists
-    [[NSFileManager defaultManager] removeItemAtPath:zipFilePath error:nil];
-    
-    // Zip the logs
-    ZKFileArchive *archive = [ZKFileArchive archiveWithArchivePath:zipFilePath];
-    NSInteger result = [archive deflateDirectory:logsFolder relativeToPath:settingsS.cachesPath usingResourceFork:NO];
-    if (result == zkSucceeded) {
-        return zipFilePath;
-    }
-    return nil;
 }
 
 - (void)batteryStateChanged:(NSNotification *)notification {
@@ -570,7 +537,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	if (currentReachabilityStatus == NotReachable) {
 		// Change over to offline mode
 		if (!settingsS.isOfflineMode) {
-            DDLogVerbose(@"[iSubAppDelegate] Reachability changed to NotReachable, prompting to go to offline mode");
+            NSLog(@"[iSubAppDelegate] Reachability changed to NotReachable, prompting to go to offline mode");
 			[self enterOfflineMode];
 		}
 	} else if (currentReachabilityStatus == ReachableViaWWAN && settingsS.isDisableUsageOver3G) {
@@ -693,13 +660,13 @@ LOG_LEVEL_ISUB_DEFAULT
         NSError *error = nil;
         [AVAudioSession.sharedInstance setActive:YES error:&error];
         if (error) {
-            DDLogError(@"[iSubAppDelegate] Failed to activate audio session for video playback: %@", error.localizedDescription);
+            NSLog(@"[iSubAppDelegate] Failed to activate audio session for video playback: %@", error.localizedDescription);
         }
         
         // Allow audio playback when mute switch is on
         [AVAudioSession.sharedInstance setCategory:AVAudioSessionCategoryPlayback mode:AVAudioSessionModeMoviePlayback options:0 error:&error];
         if (error) {
-            DDLogError(@"[iSubAppDelegate] Failed to set audio session category/mode for video playback: %@", error.localizedDescription);
+            NSLog(@"[iSubAppDelegate] Failed to set audio session category/mode for video playback: %@", error.localizedDescription);
         }
         
         // Auto-start playback
@@ -728,7 +695,7 @@ LOG_LEVEL_ISUB_DEFAULT
 //            NSError *error = nil;
 //            [AVAudioSession.sharedInstance setActive:NO error:&error];
 //            if (error) {
-//                DDLogError(@"[iSubAppDelegate] Failed to deactivate audio session for video playback: %@", error.localizedDescription);
+//                NSLog(@"[iSubAppDelegate] Failed to deactivate audio session for video playback: %@", error.localizedDescription);
 //            }
         }
     }];

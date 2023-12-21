@@ -24,7 +24,7 @@
 #import "Swift.h"
 #import "Reachability.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation ServerListViewController
 
@@ -397,7 +397,7 @@ LOG_LEVEL_ISUB_DEFAULT
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
         
-    DDLogError(@"[ServerListViewController] server verification failed, hiding loading screen");
+    NSLog(@"[ServerListViewController] server verification failed, hiding loading screen");
     [viewObjectsS hideLoadingScreen];
 }
 
@@ -414,7 +414,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	
 	[self switchServer:nil];
     
-    DDLogInfo(@"[ServerListViewController] server verification passed, hiding loading screen");
+    NSLog(@"[ServerListViewController] server verification passed, hiding loading screen");
     [viewObjectsS hideLoadingScreen];
 }
 

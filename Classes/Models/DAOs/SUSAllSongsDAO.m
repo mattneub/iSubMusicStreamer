@@ -15,7 +15,7 @@
 #import "Defines.h"
 #import "EX2Kit.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @implementation SUSAllSongsDAO
 
@@ -111,7 +111,7 @@ LOG_LEVEL_ISUB_DEFAULT
 		NSString *query = @"INSERT INTO allSongsNameSearch SELECT ROWID FROM allSongs WHERE title LIKE ? LIMIT 100";
 		[db executeUpdate:query, [NSString stringWithFormat:@"%%%@%%", name]];
 		if ([db hadError])
-			DDLogError(@"[SUSAllSongsDAO] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+			NSLog(@"[SUSAllSongsDAO] Err %d: %@", [db lastErrorCode], [db lastErrorMessage]);
 	}];
 }
 

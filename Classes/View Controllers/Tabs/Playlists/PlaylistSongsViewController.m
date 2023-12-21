@@ -26,7 +26,7 @@
 #import "Swift.h"
 #import "SUSLoader.h"
 
-LOG_LEVEL_ISUB_DEFAULT
+
 
 @interface PlaylistSongsViewController()
 @property (strong) NSURLSessionDataTask *dataTask;
@@ -213,7 +213,7 @@ LOG_LEVEL_ISUB_DEFAULT
                 }];
             }
         } else {
-            DDLogVerbose(@"[PlaylistSongsViewController] upload playlist response: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            NSLog(@"[PlaylistSongsViewController] upload playlist response: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             RXMLElement *root = [[RXMLElement alloc] initFromXMLData:data];
             if (!root.isValid) {
                 NSError *error = [NSError errorWithISMSCode:ISMSErrorCode_NotXML];
@@ -241,7 +241,7 @@ LOG_LEVEL_ISUB_DEFAULT
 }
 
 - (void)subsonicErrorCode:(NSString *)errorCode message:(NSString *)message {
-    DDLogError(@"[PlayistSongsViewController] subsonic error %@: %@", errorCode, message);
+    NSLog(@"[PlayistSongsViewController] subsonic error %@: %@", errorCode, message);
     if (settingsS.isPopupsEnabled) {
         [EX2Dispatch runInMainThreadAsync:^{
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Subsonic Error" message:message preferredStyle:UIAlertControllerStyleAlert];
@@ -319,7 +319,7 @@ LOG_LEVEL_ISUB_DEFAULT
 	NSString *playTableName = [NSString stringWithFormat:@"%@%@", self.isLocalPlaylist ? @"playlist" : @"splaylist", self.md5];
 	[databaseS.localPlaylistsDbQueue inDatabase:^(FMDatabase *db) {
 		 [db executeUpdate:@"ATTACH DATABASE ? AS ?", [databaseS.databaseFolderPath stringByAppendingPathComponent:databaseName], @"currentPlaylistDb"];
-		 if ([db hadError]) { DDLogError(@"[PlaylistSongsViewController] Err attaching the currentPlaylistDb %d: %@", [db lastErrorCode], [db lastErrorMessage]); }
+		 if ([db hadError]) { NSLog(@"[PlaylistSongsViewController] Err attaching the currentPlaylistDb %d: %@", [db lastErrorCode], [db lastErrorMessage]); }
 		 
 		 [db executeUpdate:[NSString stringWithFormat:@"INSERT INTO %@ SELECT * FROM %@", currTableName, playTableName]];
 		 [db executeUpdate:@"DETACH DATABASE currentPlaylistDb"];
