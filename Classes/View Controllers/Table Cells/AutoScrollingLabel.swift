@@ -123,36 +123,22 @@ private let labelGap = 25.0
         }
     }
     
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
+    override func willMove(toWindow: UIWindow?) {
+        super.willMove(toWindow: window)
         if window == nil {
             // If the view leaves the window, stop and reset all scrolling
             stopScrolling()
-        } else {
-            // Force the labels to re-layout or it won't always animate
-            label1.setNeedsLayout()
-            label2.setNeedsLayout()
-            scrollView.setNeedsLayout()
-            label1.layoutIfNeeded()
-            label2.layoutIfNeeded()
-            scrollView.layoutIfNeeded()
         }
     }
     
     override func layoutSubviews() {
         stopScrolling()
-        label1.setNeedsLayout()
-        label2.setNeedsLayout()
-        scrollView.setNeedsLayout()
-        label1.layoutIfNeeded()
-        label2.layoutIfNeeded()
-        scrollView.layoutIfNeeded()
-        
-        // Must call super AFTER updating scroll view or it will layout incorrectly
         super.layoutSubviews()
-                
         if autoScroll {
-            startScrolling()
+            Task {
+                try await Task.sleep(nanoseconds: 200_000_000)
+                startScrolling()
+            }
         }
     }
     
