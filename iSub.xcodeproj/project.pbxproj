@@ -238,8 +238,6 @@
 		53BC285F139AF0DD00A825F1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F7A127131B7F3B002C829D /* Security.framework */; };
 		53BCC51B181387B300442E86 /* CustomUINavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BCC51A181387B300442E86 /* CustomUINavigationController.m */; };
 		53BCC51D181387B300442E86 /* CustomUINavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BCC51A181387B300442E86 /* CustomUINavigationController.m */; };
-		53C3AB64257DA71000B35B99 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C3AB63257DA71000B35B99 /* Reachability.m */; };
-		53C3AB65257DA71000B35B99 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 53C3AB63257DA71000B35B99 /* Reachability.m */; };
 		53C3AB6D257DB7D200B35B99 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C3AB6C257DB7D200B35B99 /* AsyncImageView.swift */; };
 		53C3AB6E257DB7D200B35B99 /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C3AB6C257DB7D200B35B99 /* AsyncImageView.swift */; };
 		53C3AB70257DD38400B35B99 /* open_source_licenses.html in Resources */ = {isa = PBXBuildFile; fileRef = 53C3AB6F257DD38400B35B99 /* open_source_licenses.html */; };
@@ -715,8 +713,6 @@
 		53BCC519181387B300442E86 /* CustomUINavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUINavigationController.h; sourceTree = "<group>"; };
 		53BCC51A181387B300442E86 /* CustomUINavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUINavigationController.m; sourceTree = "<group>"; };
 		53BD84A52566F41F00F7A197 /* ISMSBassVisualType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ISMSBassVisualType.h; sourceTree = "<group>"; };
-		53C3AB5F257DA71000B35B99 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Frameworks/Reachability/Reachability/Reachability.h; sourceTree = "<group>"; };
-		53C3AB63257DA71000B35B99 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Frameworks/Reachability/Reachability/Reachability.m; sourceTree = "<group>"; };
 		53C3AB6C257DB7D200B35B99 /* AsyncImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
 		53C3AB6F257DD38400B35B99 /* open_source_licenses.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = open_source_licenses.html; sourceTree = "<group>"; };
 		53C3AB72257DDA1000B35B99 /* LicensesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesViewController.swift; sourceTree = "<group>"; };
@@ -1098,8 +1094,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				53C3AB5F257DA71000B35B99 /* Reachability.h */,
-				53C3AB63257DA71000B35B99 /* Reachability.m */,
 				53FE676E256DD0F00015FC83 /* GCDWebServer */,
 				53FE38551EA961C80058B925 /* ZipKit */,
 				53FE38011EA961970058B925 /* RaptureXML */,
@@ -2234,7 +2228,6 @@
 				535B727E134D273B003E0E1C /* SearchAllViewController.m in Sources */,
 				53246AA3256C209E00E11EC4 /* ServerEditViewController.swift in Sources */,
 				53FE356D1EA961540058B925 /* UIView+ObjCFrameHelper.m in Sources */,
-				53C3AB64257DA71000B35B99 /* Reachability.m in Sources */,
 				533295FA255EEFE50027C51A /* FMResultSet.m in Sources */,
 				53FE37671EA961720058B925 /* MusicSingleton.m in Sources */,
 				53EA2DE2257D7B4D0003F38D /* UIView+ViewController.swift in Sources */,
@@ -2450,7 +2443,6 @@
 				533295F3255EEFE50027C51A /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
 				53FE679B256DD0F00015FC83 /* GCDWebServerFileResponse.m in Sources */,
 				53EA2DD5257D6A2C0003F38D /* UIDevice+Info.m in Sources */,
-				53C3AB65257DA71000B35B99 /* Reachability.m in Sources */,
 				53FE37391EA961720058B925 /* ISMSServer.m in Sources */,
 				53FE378D1EA961720058B925 /* SearchXMLParser.m in Sources */,
 				53FE67A5256DD0F00015FC83 /* GCDWebServerDataRequest.m in Sources */,

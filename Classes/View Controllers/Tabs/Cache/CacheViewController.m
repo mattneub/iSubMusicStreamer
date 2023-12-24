@@ -26,7 +26,6 @@
 #import "EX2Kit.h"
 #import "Swift.h"
 #import "ISMSArtist.h"
-#import "Reachability.h"
 
 @interface CacheViewController ()
 @property NSUInteger cacheQueueCount;
@@ -63,16 +62,12 @@
 	
 	// Set notification receiver for when cached songs are deleted to reload the table
 	[NSNotificationCenter addObserverOnMainThread:self selector:@selector(reloadTable) name:@"cachedSongDeleted"];
-	
-	// Set notification receiver for when network status changes to reload the table
-	[NSNotificationCenter addObserverOnMainThread:self selector:@selector(segmentAction:) name:kReachabilityChangedNotification];
 }
 
 - (void)unregisterForNotifications {
 	[NSNotificationCenter removeObserverOnMainThread:self name:ISMSNotification_StreamHandlerSongDownloaded];
 	[NSNotificationCenter removeObserverOnMainThread:self name:ISMSNotification_CacheQueueSongDownloaded];
 	[NSNotificationCenter removeObserverOnMainThread:self name:@"cachedSongDeleted"];
-	[NSNotificationCenter removeObserverOnMainThread:self name:kReachabilityChangedNotification];
 }
 
 - (void)viewDidLoad  {

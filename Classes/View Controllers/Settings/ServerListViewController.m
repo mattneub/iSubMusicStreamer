@@ -22,7 +22,6 @@
 #import "ISMSServer.h"
 #import "EX2Kit.h"
 #import "Swift.h"
-#import "Reachability.h"
 
 
 
@@ -202,11 +201,7 @@
 		[self.navigationController.view removeFromSuperview];
 	} else {
 		[self.navigationController popToRootViewControllerAnimated:YES];
-		
-        if ([appDelegateS.wifiReach currentReachabilityStatus] == NotReachable) {
-			return;
-        }
-		
+				
 		// Cancel any caching
 		[streamManagerS removeAllStreams];
 		

@@ -25,7 +25,6 @@
 #import "ISMSSong+DAO.h"
 #import "EX2Kit.h"
 #import "Swift.h"
-#import "Reachability.h"
 #import <UserNotifications/UserNotifications.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <netinet/in.h>
@@ -89,12 +88,6 @@
     NSString *build = [NSBundle.mainBundle.infoDictionary objectForKey:(NSString*)kCFBundleVersionKey];
     NSLog(@"\n---------------------------------\niSub %@ build %@ launched\n---------------------------------", version, build);
     
-	// Setup network reachability notifications
-	self.wifiReach = [Reachability reachabilityForInternetConnection];
-	[self.wifiReach startNotifier];
-	[NSNotificationCenter addObserverOnMainThread:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification];
-	[self.wifiReach currentReachabilityStatus];
-    
 	// Check battery state and register for notifications
 	UIDevice.currentDevice.batteryMonitoringEnabled = YES;
 	[NSNotificationCenter addObserverOnMainThread:self selector:@selector(batteryStateChanged:) name:@"UIDeviceBatteryStateDidChangeNotification" object:UIDevice.currentDevice];
@@ -110,12 +103,6 @@
 	if (settingsS.isForceOfflineMode) {
 		settingsS.isOfflineMode = YES;
         offlineModeAlertMessage = @"Offline mode switch on, entering offline mode.";
-	} else if (self.wifiReach.currentReachabilityStatus == NotReachable) {
-		settingsS.isOfflineMode = YES;
-        offlineModeAlertMessage = @"No network detected, entering offline mode.";
-	} else if (self.wifiReach.currentReachabilityStatus == ReachableViaWWAN && settingsS.isDisableUsageOver3G) {
-        settingsS.isOfflineMode = YES;
-        offlineModeAlertMessage = @"You are not on Wifi, and have chosen to disable use over cellular. Entering offline mode.";
     } else {
 		settingsS.isOfflineMode = NO;
 	}
@@ -503,8 +490,6 @@
 }
 
 - (void)enterOnlineModeForce {
-	if (self.wifiReach.currentReachabilityStatus == NotReachable) return;
-	
 	[NSNotificationCenter postNotificationToMainThreadWithName:ISMSNotification_EnteringOnlineMode];
     
 	settingsS.isOfflineMode = NO;
@@ -530,54 +515,6 @@
 	}
 	
 	[musicS updateLockScreenInfo];
-}
-
-- (void)reachabilityChangedInternal {
-    NetworkStatus currentReachabilityStatus = self.wifiReach.currentReachabilityStatus;
-	if (currentReachabilityStatus == NotReachable) {
-		// Change over to offline mode
-		if (!settingsS.isOfflineMode) {
-            NSLog(@"[iSubAppDelegate] Reachability changed to NotReachable, prompting to go to offline mode");
-			[self enterOfflineMode];
-		}
-	} else if (currentReachabilityStatus == ReachableViaWWAN && settingsS.isDisableUsageOver3G) {
-        if (!settingsS.isOfflineMode) {
-			[self enterOfflineModeForce];
-            [SlidingNotification showOnMainWindowWithMessage:@"You have chosen to disable usage over cellular in settings and are no longer on Wifi. Entering offline mode."];
-		}
-    } else {
-		[self checkServer];
-		
-		if (settingsS.isOfflineMode) {
-			[self enterOnlineMode];
-		} else {
-            if (currentReachabilityStatus == ReachableViaWiFi || settingsS.isManualCachingOnWWANEnabled) {
-                if (!cacheQueueManagerS.isQueueDownloading) {
-                    [cacheQueueManagerS startDownloadQueue];
-                }
-            } else {
-                [cacheQueueManagerS stopDownloadQueue];
-            }
-		}
-	}
-}
-
-- (void)reachabilityChanged:(NSNotification *)note {
-    if (settingsS.isForceOfflineMode) return;
-    
-    [EX2Dispatch runInMainThreadAsync:^{
-        // Cancel any previous requests
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reachabilityChangedInternal) object:nil];
-        
-        // Perform the actual check after a few seconds to make sure it's the last message received
-        // this prevents a bug where the status changes from wifi to not reachable, but first it receives
-        // some messages saying it's still on wifi, then gets the not reachable messages
-        [self performSelector:@selector(reachabilityChangedInternal) withObject:nil afterDelay:6.0];
-    }];
-}
-
-- (BOOL)isWifi {
-    return self.wifiReach.currentReachabilityStatus == ReachableViaWiFi;
 }
 
 - (void)showSettings {
