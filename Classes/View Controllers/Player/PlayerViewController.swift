@@ -246,6 +246,10 @@ import SnapKit
         }
         
         let playButtonConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .ultraLight, scale: .large)
+        playPauseButton.snp.makeConstraints { make in
+            make.width.equalTo(40)
+        }
+        playPauseButton.imageView?.contentMode = .center
         playPauseButton.setImage(UIImage(systemName: "play.fill", withConfiguration: playButtonConfig), for: .normal)
         playPauseButton.tintColor = iconDefaultColor
         playPauseButton.addClosure(for: .touchUpInside) { [unowned self] in
@@ -776,6 +780,10 @@ import SnapKit
         let config = UIImage.SymbolConfiguration(pointSize: 21, weight: .light, scale: .large)
         bookmarksButton.setImage(UIImage(systemName: imageName, withConfiguration: config), for: .normal)
         bookmarksButton.tintColor = tintColor
+        bookmarksButton.snp.makeConstraints { make in
+            make.width.equalTo(40)
+        }
+        bookmarksButton.imageView?.contentMode = .center
     }
     
     @objc private func updateQuickSkipButtons() {
