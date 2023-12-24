@@ -12,3 +12,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Fix runtime warnings at launch.
 * Album track list cell is now self-sizing, displays full title and artist info.
 * Remove Reachability sample code.
+* Fix call-super and related howlers.
