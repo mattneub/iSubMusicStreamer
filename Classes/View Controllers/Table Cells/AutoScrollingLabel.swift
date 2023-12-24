@@ -84,19 +84,20 @@ private let labelGap = 25.0
         let contentView = UIView()
         scrollView.addSubview(contentView)
         contentView.snp.makeConstraints { make in
-            make.leading.trailing.top.bottom.equalToSuperview().priority(.required)
+            make.leading.trailing.top.bottom.equalTo(scrollView.contentLayoutGuide).priority(.required)
         }
 
         contentView.addSubview(label1)
         label1.snp.makeConstraints { make in
-            make.centerY.equalTo(scrollView)
+            make.leading.top.bottom.equalToSuperview()
         }
 
         label2.isHidden = true
         contentView.addSubview(label2)
         label2.snp.makeConstraints { make in
-            make.centerY.equalTo(scrollView)
+            make.centerY.equalToSuperview()
             make.leading.equalTo(label1.snp.trailing).offset(labelGap)
+            make.trailing.equalToSuperview().offset(labelGap)
         }
 
         NotificationCenter.addObserverOnMainThread(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification.rawValue)
