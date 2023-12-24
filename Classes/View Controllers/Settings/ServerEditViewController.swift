@@ -24,6 +24,7 @@ import UIKit
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = .black
         view.overrideUserInterfaceStyle = .dark
         

@@ -116,6 +116,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear: animated];
 	if (self.isNoChatMessagesScreenShowing == YES) {
 		[self.noChatMessagesScreen removeFromSuperview];
 		self.isNoChatMessagesScreenShowing = NO;
