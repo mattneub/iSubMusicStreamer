@@ -10,3 +10,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Modernize LibBASS. Can now run on simulator!!! Plug-ins to play formats such as flac, ape, etc. are currently disabled.
 * Fix all compile-time warnings.
 * Fix runtime warnings at launch.
+* Album track list cell is now self-sizing, displays full title and artist info.
