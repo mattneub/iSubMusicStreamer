@@ -131,6 +131,14 @@ private let labelGap = 25.0
             [unowned self] _ in if autoScroll { startScrolling() }
         }
         observers.insert(observer as! NSObject)
+        observer = NotificationCenter.default.addObserver(forName: .init("playlistAppearing"), object: nil, queue: nil) {
+            [unowned self] _ in stopScrolling()
+        }
+        observers.insert(observer as! NSObject)
+        observer = NotificationCenter.default.addObserver(forName: .init("playlistDisappearing"), object: nil, queue: nil) {
+            [unowned self] _ in if autoScroll { startScrolling() }
+        }
+        observers.insert(observer as! NSObject)
     }
     
     required init?(coder: NSCoder) {
@@ -204,6 +212,7 @@ private let labelGap = 25.0
             }
         }
         animator?.isInterruptible = true
+        isScrolling = true
     }
     
     private func resetScrollView() {
@@ -222,7 +231,6 @@ private let labelGap = 25.0
 
         createAnimator(delay: delay)
         animator?.startAnimation(afterDelay: delay)
-        isScrolling = true
     }
     
     @objc func stopScrolling() {
