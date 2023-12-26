@@ -169,8 +169,6 @@ import SnapKit
         songInfoContainer.addSubview(songNameLabel)
         songNameLabel.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.6)
-            // make.width.lessThanOrEqualToSuperview()
-            // make.centerX.top.equalToSuperview()
             make.leading.trailing.top.equalToSuperview()
         }
         
@@ -179,8 +177,6 @@ import SnapKit
         songInfoContainer.addSubview(artistNameLabel)
         artistNameLabel.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.4)
-            // make.width.lessThanOrEqualToSuperview()
-            // make.centerX.bottom.equalToSuperview()
             make.leading.trailing.bottom.equalToSuperview()
         }
         
@@ -227,7 +223,6 @@ import SnapKit
         downloadProgressView.backgroundColor = UIColor.systemGray4
         progressBarContainer.insertSubview(downloadProgressView, belowSubview: progressSlider)
         downloadProgressView.snp.makeConstraints { make in
-//            make.width.equalTo(0)
             make.width.equalTo(0)
             make.leading.equalTo(progressSlider).offset(-5)
             make.top.equalTo(progressSlider).offset(-3)
