@@ -12,14 +12,20 @@ import SnapKit
 private let labelGap = 25.0
 
 @objc final class AutoScrollingLabel: UIView {
+    private let centerIfPossible: Bool
     private let scrollView = UIScrollView()
     private let label1 = UILabel()
     private let label2 = UILabel()
+    private let label3 = UILabel()
     private var animator: UIViewPropertyAnimator?
-    
+
+    private var observers = Set<NSObject>()
+
     @objc var autoScroll = true
     @objc var repeatScroll = true
-    
+
+    private var isScrolling = false
+
     @objc var font: UIFont? {
         get {
             label1.font
@@ -27,6 +33,7 @@ private let labelGap = 25.0
         set {
             label1.font = newValue
             label2.font = newValue
+            label3.font = newValue
             if self.window != nil {
                 stopScrolling()
                 if autoScroll {
@@ -43,6 +50,7 @@ private let labelGap = 25.0
         set {
             label1.textColor = newValue
             label2.textColor = newValue
+            label3.textColor = newValue
         }
     }
     
@@ -53,23 +61,29 @@ private let labelGap = 25.0
         set {
             label1.text = newValue
             label2.text = newValue
-            invalidateIntrinsicContentSize()
+            label3.text = newValue
+            // invalidateIntrinsicContentSize()
+            setNeedsLayout()
             if self.window != nil {
                 stopScrolling()
                 if autoScroll {
-                    startScrolling()
+                    Task {
+                        try await Task.sleep(nanoseconds: 600_000_000)
+                        startScrolling()
+                    }
                 }
             }
         }
     }
     
-    override var intrinsicContentSize: CGSize {
-        return label1.intrinsicContentSize
-    }
+//    override var intrinsicContentSize: CGSize {
+//        return label1.intrinsicContentSize
+//    }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    init(centerIfPossible: Bool = false) {
+        self.centerIfPossible = centerIfPossible
+        super.init(frame: .zero)
+
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isUserInteractionEnabled = false
@@ -95,13 +109,34 @@ private let labelGap = 25.0
         label2.isHidden = true
         contentView.addSubview(label2)
         label2.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+            make.top.bottom.equalToSuperview()
             make.leading.equalTo(label1.snp.trailing).offset(labelGap)
             make.trailing.equalToSuperview().offset(labelGap)
         }
 
-        NotificationCenter.addObserverOnMainThread(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification.rawValue)
-        NotificationCenter.addObserverOnMainThread(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification.rawValue)
+        label3.isHidden = true
+        self.addSubview(label3)
+        label3.snp.makeConstraints { make in
+            make.leading.top.right.bottom.equalToSuperview()
+        }
+        label3.textAlignment = .center
+
+        var observer = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: nil) {
+            [unowned self] _ in stopScrolling()
+        }
+        observers.insert(observer as! NSObject)
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) {
+            [unowned self] _ in if autoScroll { startScrolling() }
+        }
+        observers.insert(observer as! NSObject)
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) {
+            [unowned self] _ in stopScrolling()
+        }
+        observers.insert(observer as! NSObject)
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) {
+            [unowned self] _ in if autoScroll { startScrolling() }
+        }
+        observers.insert(observer as! NSObject)
     }
     
     required init?(coder: NSCoder) {
@@ -110,37 +145,58 @@ private let labelGap = 25.0
     
     deinit {
         stopScrolling()
-        NotificationCenter.removeObserverOnMainThread(self)
-    }
-    
-    @objc private func didEnterBackground() {
-        stopScrolling()
-    }
-    
-    @objc private func willEnterForeground() {
-        if autoScroll {
-            startScrolling()
+        for observer in self.observers {
+            NotificationCenter.default.removeObserver(observer)
         }
+        self.observers.removeAll()
     }
     
-    override func willMove(toWindow: UIWindow?) {
-        super.willMove(toWindow: window)
-        if window == nil {
-            // If the view leaves the window, stop and reset all scrolling
-            stopScrolling()
-        }
-    }
-    
-    override func layoutSubviews() {
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
         stopScrolling()
-        super.layoutSubviews()
-        if autoScroll {
-            Task {
-                try await Task.sleep(nanoseconds: 200_000_000)
-                startScrolling()
+        if window != nil {
+            if autoScroll {
+                Task {
+                    try await Task.sleep(nanoseconds: 800_000_000)
+                    startScrolling()
+                }
             }
         }
     }
+
+    override func layoutSubviews() {
+        label1.isHidden = true
+        // label2.isHidden = true
+        label3.isHidden = true
+        super.layoutSubviews()
+        CATransaction.setCompletionBlock { [unowned self] in
+//        Task {
+//            try await Task.sleep(nanoseconds: 100_000_000)
+            if centerIfPossible {
+                if label1.bounds.width <= self.bounds.width {
+                    label1.isHidden = true
+                    label3.isHidden = false
+                } else {
+                    label1.isHidden = false
+                    label3.isHidden = true
+                }
+            } else {
+                label1.isHidden = false
+                label3.isHidden = true
+            }
+        }
+    }
+
+//    override func layoutSubviews() {
+//        stopScrolling()
+//        super.layoutSubviews()
+//        if autoScroll {
+//            Task {
+//                try await Task.sleep(nanoseconds: 300_000_000)
+//                startScrolling()
+//            }
+//        }
+//    }
     
     private func createAnimator(delay: TimeInterval) {
         guard scrollView.frame.width > 0, label1.frame.width > 0, scrollView.frame.width < label1.frame.width else { return }
@@ -164,12 +220,13 @@ private let labelGap = 25.0
             // Hack due to UIKit bug that causes the completion block to fire instantly
             // if animation starts before the view is fully displayed like in a table cell
             // which means we need to reschedule with the same delay instead of the longer repeat delay
-            let didAnimate = Date().timeIntervalSince(startTime) > (delay + duration) * 0.9
-            let repeatDelay = didAnimate ? delay * 2.5 : delay
-            
+            // let didAnimate = Date().timeIntervalSince(startTime) > (delay + duration) * 0.9
+            let repeatDelay = delay // didAnimate ? delay * 2.5 : delay
+
             // Reset scroll view before the next run
-            resetScrollView()
-            self.animator = nil;
+//            resetScrollView()
+//            self.animator = nil
+            stopScrolling()
             if self.repeatScroll {
                 self.startScrolling(delay: repeatDelay)
             }
@@ -189,14 +246,17 @@ private let labelGap = 25.0
         //       animations again which would short-circuit and eat up CPU.
         //       This check prevents any animation while in the background.
         guard UIApplication.shared.applicationState != .background else { return }
-        
+        guard !isScrolling else { return }
+
         createAnimator(delay: delay)
         animator?.startAnimation(afterDelay: delay)
+        isScrolling = true
     }
     
     @objc func stopScrolling() {
         animator?.stopAnimation(true)
         animator = nil
+        isScrolling = false
         resetScrollView()
     }
 }
