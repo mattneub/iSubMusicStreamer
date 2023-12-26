@@ -13,3 +13,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Album track list cell is now self-sizing, displays full title and artist info.
 * Remove Reachability sample code.
 * Fix call-super and related howlers.
+* Make some tap targets bigger on player view controller.
