@@ -340,7 +340,9 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application {
-    [self checkServer];
+    [EX2Dispatch runInMainThreadAfterDelay:1 block:^{ // let things warm up please
+        [self checkServer];
+    }];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
