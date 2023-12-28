@@ -9,6 +9,7 @@
 
 #import "CustomUINavigationController.h"
 #import "SavedSettings.h"
+#import "Swift.h"
 
 @implementation CustomUINavigationController
 
@@ -28,6 +29,9 @@
     
     // Make ourselves our own delegate to automatically fix view controllers going under the navigation bar
     self.delegate = self;
+
+    CustomUINavigationControllerHelper* helper = [[CustomUINavigationControllerHelper alloc] init];
+    [helper fixNavBar: self];
 }
 
 #pragma mark UINavigationControllerDelegate

@@ -15,8 +15,10 @@
 
 + (void)customizeMoreTabTableView:(UITabBarController *)tabBarController {
     // Customize more tab
-    tabBarController.moreNavigationController.navigationBar.barStyle = UIBarStyleBlack;
-    UIViewController *moreController = tabBarController.moreNavigationController.topViewController;
+    UINavigationController* nav = tabBarController.moreNavigationController;
+    CustomUINavigationControllerHelper* helper = [[CustomUINavigationControllerHelper alloc] init];
+    [helper fixNavBar: nav];
+    UIViewController *moreController = nav.topViewController;
     if ([moreController.view isKindOfClass:UITableView.class]) {
         UITableView *moreTableView = (UITableView *)moreController.view;
         moreTableView.backgroundColor = [UIColor colorNamed:@"isubBackgroundColor"];
@@ -40,7 +42,10 @@
     [super viewDidLoad];
     
     [viewObjectsS orderMainTabBarController];
-    
+
+    CustomUITabBarControllerHelper* helper = [[CustomUITabBarControllerHelper alloc] init];
+    [helper fixTabBar: self];
+
     [self.class customizeMoreTabTableView:self];
 }
 

@@ -18,6 +18,10 @@
 		3F808D3C2B348A4A00FDF660 /* bass_fx.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D352B3489D800FDF660 /* bass_fx.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3F808D3D2B348A4D00FDF660 /* bassmix.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D382B348A0100FDF660 /* bassmix.xcframework */; };
 		3F808D3E2B348A4D00FDF660 /* bassmix.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D382B348A0100FDF660 /* bassmix.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3FF341DB2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF341DA2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift */; };
+		3FF341DC2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF341DA2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift */; };
+		3FF341DE2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF341DD2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift */; };
+		3FF341DF2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF341DD2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift */; };
 		530388A9116571920043292D /* AllSongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530388A8116571920043292D /* AllSongsViewController.m */; };
 		5306236D14D3295300D320A8 /* EqualizerPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306236C14D3295300D320A8 /* EqualizerPathView.m */; };
 		5306236F14D3295300D320A8 /* EqualizerPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306236C14D3295300D320A8 /* EqualizerPathView.m */; };
@@ -547,6 +551,8 @@
 		3F808D372B3489E900FDF660 /* bass_fx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass_fx.h; sourceTree = "<group>"; };
 		3F808D382B348A0100FDF660 /* bassmix.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = bassmix.xcframework; sourceTree = "<group>"; };
 		3F808D3A2B348A0F00FDF660 /* bassmix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bassmix.h; sourceTree = "<group>"; };
+		3FF341DA2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITabBarControllerHelper.swift; sourceTree = "<group>"; };
+		3FF341DD2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUINavigationControllerHelper.swift; sourceTree = "<group>"; };
 		530388A7116571920043292D /* AllSongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSongsViewController.h; sourceTree = "<group>"; };
 		530388A8116571920043292D /* AllSongsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AllSongsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5306236B14D3295300D320A8 /* EqualizerPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqualizerPathView.h; sourceTree = "<group>"; };
@@ -1385,8 +1391,10 @@
 				536B5D5D11C8183D00CC1D69 /* LoadingScreen.xib */,
 				537E6C1C181208A200127E29 /* CustomUITabBarController.h */,
 				537E6C1D181208A200127E29 /* CustomUITabBarController.m */,
+				3FF341DA2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift */,
 				53BCC519181387B300442E86 /* CustomUINavigationController.h */,
 				53BCC51A181387B300442E86 /* CustomUINavigationController.m */,
+				3FF341DD2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift */,
 				53329651255F30220027C51A /* ClosureSleeve.swift */,
 				534B20DF25619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift */,
 				53246AA8256C324500E11EC4 /* InsetTextField.swift */,
@@ -2183,6 +2191,7 @@
 				53FE38AD1EA961C80058B925 /* ZKCDTrailer64Locator.m in Sources */,
 				53FE379D1EA961720058B925 /* SUSChatDAO.m in Sources */,
 				53D9743A255C0DA900AABF7F /* AutoScrollingLabel.swift in Sources */,
+				3FF341DB2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift in Sources */,
 				533295F6255EEFE50027C51A /* FMTokenizers.m in Sources */,
 				534B20E025619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift in Sources */,
 				53FE679C256DD0F00015FC83 /* GCDWebServerDataResponse.m in Sources */,
@@ -2201,6 +2210,7 @@
 				53FE38A41EA961C80058B925 /* ZKCDHeader.m in Sources */,
 				53FE350D1EA961540058B925 /* NSString+Hex.m in Sources */,
 				5379DC4F1219E48800F426CD /* ChatUITableViewCell.m in Sources */,
+				3FF341DE2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift in Sources */,
 				5379DC501219E48800F426CD /* ChatViewController.m in Sources */,
 				53BB7ECA121B8D8F00BEE7E8 /* CustomUITextView.m in Sources */,
 				537B05B9256B03830008892C /* PadRootViewController.swift in Sources */,
@@ -2383,6 +2393,7 @@
 				53FE35ED1EA961540058B925 /* SnappySlider.m in Sources */,
 				53FE370C1EA961720058B925 /* ISMSAlbum.m in Sources */,
 				53FE37B41EA961720058B925 /* SUSNowPlayingLoader.m in Sources */,
+				3FF341DC2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift in Sources */,
 				53FE38AF1EA961C80058B925 /* ZKCDTrailer64Locator.m in Sources */,
 				53FE379F1EA961720058B925 /* SUSChatDAO.m in Sources */,
 				53266BFB2562D4D0002C64BB /* PageControlViewController.swift in Sources */,
@@ -2401,6 +2412,7 @@
 				53FE38A61EA961C80058B925 /* ZKCDHeader.m in Sources */,
 				53FE6791256DD0F00015FC83 /* GCDWebServerRequest.m in Sources */,
 				53FE350F1EA961540058B925 /* NSString+Hex.m in Sources */,
+				3FF341DF2B3DBBFE002BE891 /* CustomUINavigationControllerHelper.swift in Sources */,
 				53BC27F8139AF0DD00A825F1 /* ChatUITableViewCell.m in Sources */,
 				53BC27F9139AF0DD00A825F1 /* ChatViewController.m in Sources */,
 				537B05BA256B03830008892C /* PadRootViewController.swift in Sources */,

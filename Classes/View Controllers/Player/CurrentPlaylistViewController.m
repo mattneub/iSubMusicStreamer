@@ -60,11 +60,6 @@
     self.view.backgroundColor = [UIColor colorNamed:@"isubBackgroundColor"];
     self.title = @"Play Queue";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(dismiss:)];
-    UINavigationBarAppearance* appearance = [[UINavigationBarAppearance alloc] init];
-    [appearance configureWithOpaqueBackground];
-    self.navigationItem.compactAppearance = appearance;
-    self.navigationItem.standardAppearance = appearance;
-    self.navigationItem.scrollEdgeAppearance = appearance;
 
     [self registerForNotifications];
 				
