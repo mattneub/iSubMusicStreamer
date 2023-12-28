@@ -15,3 +15,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Fix call-super and related howlers.
 * Make some tap targets bigger on player view controller.
 * Rewrite auto scrolling label: better layout, correct use of content size, detect more situations where we need to stop
+* Improve visibility of nav bar and tab bar.
