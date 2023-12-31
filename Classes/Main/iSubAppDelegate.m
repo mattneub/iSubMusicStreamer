@@ -346,6 +346,9 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    if ([self.window.rootViewController.presentedViewController isKindOfClass:[UIAlertController class]]) {
+        [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{}];
+    }
 	[settingsS saveState];
 	
 	[NSUserDefaults.standardUserDefaults synchronize];
