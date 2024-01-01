@@ -16,3 +16,5 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Make some tap targets bigger on player view controller.
 * Rewrite auto scrolling label: better layout, correct use of content size, detect more situations where we need to stop
 * Improve visibility of nav bar and tab bar.
+* Playlist track list cell is also now self-sizing. Fixed bug in More view controller customization.
+* Change album/song/genre default default to true.
