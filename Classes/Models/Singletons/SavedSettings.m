@@ -179,7 +179,7 @@
 		[_userDefaults setInteger:0 forKey:@"autoDeleteCacheTypeSetting"];
 		[_userDefaults setInteger:3 forKey:@"cacheSongCellColorSetting"];
 		[_userDefaults setBool:NO forKey:@"lyricsEnabledSetting"];
-		[_userDefaults setBool:NO forKey:@"enableSongsTabSetting"];
+		[_userDefaults setBool:YES forKey:@"enableSongsTabSetting"];
 		[_userDefaults setBool:NO forKey:@"autoPlayerInfoSetting"];
 		[_userDefaults setBool:NO forKey:@"autoReloadArtistsSetting"];
 		[_userDefaults setFloat:0.5 forKey:@"scrobblePercentSetting"];
