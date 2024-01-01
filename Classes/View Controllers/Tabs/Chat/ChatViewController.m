@@ -7,7 +7,6 @@
 //
 
 #import "ChatViewController.h"
-// #import "ChatUITableViewCell.h"
 #import "ServerListViewController.h"
 #import "CustomUITextView.h"
 #import "iSubAppDelegate.h"
