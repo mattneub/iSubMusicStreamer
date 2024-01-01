@@ -17,13 +17,16 @@
     // Customize more tab
     UINavigationController* nav = tabBarController.moreNavigationController;
     CustomUINavigationControllerHelper* helper = [[CustomUINavigationControllerHelper alloc] init];
-    [helper fixNavBar: nav];
     UIViewController *moreController = nav.topViewController;
-    if ([moreController.view isKindOfClass:UITableView.class]) {
-        UITableView *moreTableView = (UITableView *)moreController.view;
-        moreTableView.backgroundColor = [UIColor colorNamed:@"isubBackgroundColor"];
-        moreTableView.rowHeight = Defines.rowHeight;
-        moreTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // ...only for the "secret" view controller that is _first_ in the More view
+    if ([NSStringFromClass([moreController class]) isEqualToString: @"UIMoreListController"]) {
+        [helper fixNavBar: nav];
+        if ([moreController.view isKindOfClass:UITableView.class]) {
+            UITableView *moreTableView = (UITableView *)moreController.view;
+            moreTableView.backgroundColor = [UIColor colorNamed:@"isubBackgroundColor"];
+            moreTableView.rowHeight = Defines.rowHeight;
+            moreTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
     }
 }
 

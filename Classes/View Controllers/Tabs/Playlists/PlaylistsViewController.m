@@ -144,9 +144,12 @@
     
 //	self.tableView.tableHeaderView = self.headerView;
     self.tableView.allowsMultipleSelectionDuringEditing = YES;
-    self.tableView.rowHeight = Defines.rowHeight;
-    [self.tableView registerClass:UniversalTableViewCell.class forCellReuseIdentifier:UniversalTableViewCell.reuseId];
-	    
+    [self.tableView registerClass:TrackTableViewCell.class forCellReuseIdentifier:UniversalTableViewCell.reuseId];
+    self.tableView.estimatedRowHeight = Defines.rowHeight;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.separatorColor = UIColor.labelColor;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+
     [NSNotificationCenter addObserverOnMainThread:self selector:@selector(addURLRefBackButton) name:UIApplicationDidBecomeActiveNotification];
 }
 

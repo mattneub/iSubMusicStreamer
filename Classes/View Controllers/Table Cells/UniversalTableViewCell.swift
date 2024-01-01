@@ -286,4 +286,20 @@ import SnapKit
             make.bottom.equalToSuperview().offset(UIDevice.isSmall() ? -5 : -10)
         }
     }
+
+    fileprivate override func makeCoverArtConstraints() {
+        coverArtView.snp.remakeConstraints { make in
+            if hideCoverArt {
+                make.width.equalTo(0)
+            }
+            else {
+                make.width.equalTo(coverArtView.snp.height)
+            }
+            make.leading.equalTo(numberLabel.snp.trailing).offset(hideCoverArt ? 0 : 5)
+            make.centerY.equalTo(contentView.snp.centerY)
+            make.height.lessThanOrEqualTo(40)
+            make.height.lessThanOrEqualTo(contentView.snp.height).offset(-10)
+            make.height.equalTo(40).priority(10)
+        }
+    }
 }
