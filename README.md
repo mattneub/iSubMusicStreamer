@@ -1,6 +1,6 @@
 Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 
-* Initial fork.  Can build and run on device (not on simulator).
+* Initial fork. Can build and run on device (not on simulator).
 * On initial server configuration screen, make URL field have `.URL` keyboard type for easier entry.
 * Album titles are sorted without regard for diacritics (like the Finder).
 * Nav bar above current playlist is no longer transparent.
@@ -18,3 +18,4 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Improve visibility of nav bar and tab bar.
 * Playlist track list cell is also now self-sizing. Fixed bug in More view controller customization.
 * Change album/song/genre default default to true.
+* Started translating into Swift; this process is also exposing some likely bugs that I'm marking up as I go.
