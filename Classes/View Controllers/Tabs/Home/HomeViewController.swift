@@ -106,7 +106,9 @@ import SnapKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // xib file has no purpose other than to give the tab bar controller this tab
+        view.backgroundColor = UIColor(named: "isubBackgroundColor")
+
         title = "Home"
         // Not sure why, but it's necessary to set this on the navigation item only in this controller
         navigationItem.title = "Home"
@@ -286,13 +288,15 @@ import SnapKit
                 let controller = HomeAlbumViewController(nibName: "HomeAlbumViewController", bundle: nil)
                 controller.modifier = modifier
                 controller.title = title
-                controller.listOfAlbums = loader.listOfAlbums
-                self.pushCustom(controller)
+                if let loaderList = loader.listOfAlbums as? [Album] {
+                    controller.listOfAlbums = loaderList
+                    self.pushCustom(controller)
+                }
             }
             self.quickAlbumsLoader = nil
         }
         loader.modifier = modifier
-        quickAlbumsLoader = loader
+        self.quickAlbumsLoader = loader
         loader.startLoad()
     }
     

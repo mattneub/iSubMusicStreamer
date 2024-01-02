@@ -25,7 +25,7 @@
 #import "ChatViewController.h"
 #import "SearchSongsViewController.h"
 #import "SearchAllViewController.h"
-#import "HomeAlbumViewController.h"
+#import "AlbumViewController.h"
 #import "CurrentPlaylistViewController.h"
 #import "EqualizerViewController.h"
 #import "ServerListViewController.h"
@@ -51,6 +51,7 @@
 #import "SUSServerShuffleLoader.h"
 #import "SUSQuickAlbumsLoader.h"
 #import "SUSStatusLoader.h"
+#import "SUSLoaderDelegate.h"
 
 // DAOs
 #import "SUSRootFoldersDAO.h"
