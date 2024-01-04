@@ -94,6 +94,7 @@ import SnapKit
     
     private func registerNotifications() {
         NotificationCenter.addObserverOnMainThread(self, selector: #selector(jukeboxOff), name: ISMSNotification_JukeboxDisabled)
+        NotificationCenter.addObserverOnMainThread(self, selector: #selector(jukeboxOn), name: ISMSNotification_JukeboxEnabled)
         NotificationCenter.addObserverOnMainThread(self, selector: #selector(initSongInfo), name: ISMSNotification_SongPlaybackStarted)
         NotificationCenter.addObserverOnMainThread(self, selector: #selector(initSongInfo), name: ISMSNotification_ServerSwitched)
         NotificationCenter.addObserverOnMainThread(self, selector: #selector(performServerShuffle(notification:)), name: "performServerShuffle")
@@ -171,12 +172,14 @@ import SnapKit
         jukeboxButton.setAction { [unowned self] in
             if Settings.shared().isJukeboxEnabled {
                 self.jukeboxButton.setIcon(image: UIImage(named: "home-jukebox-off"))
+                self.jukeboxButton.setTitle(title: "Jukebox\nMode OFF")
                 Settings.shared().isJukeboxEnabled = false
                 AppDelegate.shared().window.backgroundColor = ViewObjects.shared().windowColor
                 NotificationCenter.postNotificationToMainThread(name: ISMSNotification_JukeboxDisabled)
             } else {
                 AudioEngine.shared().player?.stop()
                 self.jukeboxButton.setIcon(image: UIImage(named: "home-jukebox-on"))
+                self.jukeboxButton.setTitle(title: "Jukebox\nMode ON")
                 Settings.shared().isJukeboxEnabled = true
                 Jukebox.shared().getInfo()
                 AppDelegate.shared().window.backgroundColor = ViewObjects.shared().jukeboxColor
@@ -197,7 +200,7 @@ import SnapKit
         spacerButton.isUserInteractionEnabled = false
         
         chatButton.setAction { [unowned self] in
-            let controller = ChatViewController(nibName: "ChatViewController", bundle: nil)
+            let controller = ChatViewController()
             navigationController?.pushViewController(controller, animated: true)
         }
         
@@ -262,7 +265,8 @@ import SnapKit
         
         let jukeboxImageName = Settings.shared().isJukeboxEnabled ? "home-jukebox-on" : "home-jukebox-off"
         jukeboxButton.setIcon(image: UIImage(named: jukeboxImageName))
-        
+        jukeboxButton.setTitle(title: jukeboxImageName == "home-jukebox-on" ? "Jukebox\nMode ON" : "Jukebox\nMode OFF")
+
         searchSegment.alpha = 0.0
         searchSegment.isEnabled = false
         searchSegmentContainer.alpha = 0.0
@@ -274,6 +278,16 @@ import SnapKit
         songInfoButton.update(song: PlayQueue.shared().currentSong() ?? PlayQueue.shared().prevSong())
     }
     
+    /*
+     Navidrome WebUI submits a "play" once a song is played for more than 50% duration.
+
+     If you're using external players/clients, it might be handled differently. Some players don't report any plays back to navidrome unless you specifically enable it (many players have an option called "enable scrobbling" - or something similarly-named)
+
+     An Albums playCount and lastPlayed value are always be derived from it's songs:
+
+     If you play 3 songs from an album, the playCount of the album will be increased by 3
+     The album will inherit the largest (latest) lastPlayed value of any song on the album
+     */
     private func loadQuickAlbums(modifier: String, title: String) {
         ViewObjects.shared().showAlbumLoadingScreen(AppDelegate.shared().window, sender: self)
         let loader = SUSQuickAlbumsLoader { _, error, loader in
@@ -285,7 +299,7 @@ import SnapKit
                     self.present(alert, animated: true, completion: nil)
                 }
             } else if let loader = loader as? SUSQuickAlbumsLoader {
-                let controller = HomeAlbumViewController(nibName: "HomeAlbumViewController", bundle: nil)
+                let controller = HomeAlbumViewController()
                 controller.modifier = modifier
                 controller.title = title
                 if let loaderList = loader.listOfAlbums as? [Album] {
@@ -333,6 +347,13 @@ import SnapKit
     
     @objc private func jukeboxOff() {
         jukeboxButton.setIcon(image: UIImage(named: "home-jukebox-off"))
+        jukeboxButton.setTitle(title: "Jukebox\nMode OFF")
+        initSongInfo()
+    }
+
+    @objc private func jukeboxOn() {
+        jukeboxButton.setIcon(image: UIImage(named: "home-jukebox-on"))
+        jukeboxButton.setTitle(title: "Jukebox\nMode ON")
         initSongInfo()
     }
     
@@ -403,14 +424,15 @@ extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
-        var query = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let query = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         var parameters = [String: String]()
         var action = ""
         if Settings.shared().isNewSearchAPI {
             // Due to a Subsonic bug, to get good search results, we need to add a * to the end of
             // Latin based languages, but not to unicode languages like Japanese.
+            // NOTE: Maybe, but Navidrome exhibits no such bug, killing the * for now
             if query.canBeConverted(to: .isoLatin1) {
-                query += "*"
+                // query += "*"
             }
             
             action = "search2"
@@ -446,28 +468,28 @@ extension HomeViewController: UISearchBarDelegate {
                         xmlParser.parse()
                         
                         if Settings.shared().isNewSearchAPI && self.searchSegment.selectedSegmentIndex == 3 {
-                            let controller = SearchAllViewController(nibName: "SearchAllViewController", bundle: nil)
+                            let controller = SearchAllViewController()
                             controller.listOfArtists = parser.listOfArtists
                             controller.listOfAlbums = parser.listOfAlbums
                             controller.listOfSongs = parser.listOfSongs
                             controller.query = query
                             self.pushCustom(controller)
                         } else {
-                            let controller = SearchSongsViewController(nibName: "SearchSongsViewController", bundle: nil)
+                            let controller = SearchSongsViewController()
                             controller.title = "Search"
                             if Settings.shared().isNewSearchAPI {
                                 if self.searchSegment.selectedSegmentIndex == 0 {
-                                    controller.listOfArtists = NSMutableArray(array: parser.listOfArtists)
+                                    controller.listOfArtists = parser.listOfArtists
                                 } else if self.searchSegment.selectedSegmentIndex == 1 {
-                                    controller.listOfAlbums = NSMutableArray(array: parser.listOfAlbums)
+                                    controller.listOfAlbums = parser.listOfAlbums
                                 } else if self.searchSegment.selectedSegmentIndex == 2 {
-                                    controller.listOfSongs = NSMutableArray(array: parser.listOfSongs)
+                                    controller.listOfSongs = parser.listOfSongs
                                 }
-                                controller.searchType = ISMSSearchSongsSearchType(rawValue: ISMSSearchSongsSearchType.RawValue(self.searchSegment.selectedSegmentIndex))
+                                controller.searchType = .init(rawValue: self.searchSegment.selectedSegmentIndex) ?? .songs
                                 controller.query = query
                             } else {
-                                controller.listOfSongs = NSMutableArray(array: parser.listOfSongs)
-                                controller.searchType = ISMSSearchSongsSearchType_Songs
+                                controller.listOfSongs = parser.listOfSongs
+                                controller.searchType = .songs
                                 controller.query = query
                             }
                             self.pushCustom(controller)
@@ -517,7 +539,7 @@ private final class HomeViewButton: UIView {
     }
     
     func setTitle(title: String) {
-        button.setTitle(title, for: .normal)
+        label.text = title
     }
     
     func setAction(handler: @escaping () -> ()) {

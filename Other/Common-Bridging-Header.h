@@ -23,8 +23,6 @@
 // View Controllers
 #import "CustomUINavigationController.h"
 #import "ChatViewController.h"
-#import "SearchSongsViewController.h"
-#import "SearchAllViewController.h"
 #import "AlbumViewController.h"
 #import "CurrentPlaylistViewController.h"
 #import "EqualizerViewController.h"
