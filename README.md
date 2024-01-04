@@ -19,3 +19,6 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Playlist track list cell is also now self-sizing. Fixed bug in More view controller customization.
 * Change album/song/genre default default to true.
 * Started translating into Swift; this process is also exposing some likely bugs that I'm marking up as I go.
+* More Swift translation.
+* Fixed search query bug.
+* Fixed Jukebox button bug.
