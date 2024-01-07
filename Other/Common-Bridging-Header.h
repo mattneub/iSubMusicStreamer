@@ -31,11 +31,14 @@
 #import "GenresViewController.h"
 #import "PlaylistsViewController.h"
 #import "BookmarksViewController.h"
-#import "FoldersViewController.h"
+// #import "FoldersViewController.h"
 #import "PlayingViewController.h"
 #import "AllAlbumsViewController.h"
 #import "AllSongsViewController.h"
 #import "CacheOfflineFoldersViewController.h"
+#import "FolderDropdownDelegate.h"
+#import "FolderDropdownControl.h"
+#import "SUSAllSongsLoader.h"
 
 // Views
 // #import "CellCachedIndicatorView.h"
