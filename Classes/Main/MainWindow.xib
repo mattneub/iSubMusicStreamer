@@ -36,7 +36,7 @@
             <color key="backgroundColor" systemColor="darkTextColor"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="52.173913043478265" y="28.794642857142854"/>
+            <point key="canvasLocation" x="-1648" y="-60"/>
         </window>
         <tabBarController id="21" customClass="CustomUITabBarController">
             <extendedEdge key="edgesForExtendedLayout"/>
@@ -209,7 +209,7 @@
             <connections>
                 <outlet property="delegate" destination="3" id="40"/>
             </connections>
-            <point key="canvasLocation" x="-192.75362318840581" y="-97.767857142857139"/>
+            <point key="canvasLocation" x="-876" y="-104"/>
         </tabBarController>
         <tabBarController id="105" customClass="CustomUITabBarController">
             <extendedEdge key="edgesForExtendedLayout"/>
@@ -288,7 +288,7 @@
             <connections>
                 <outlet property="delegate" destination="3" id="112"/>
             </connections>
-            <point key="canvasLocation" x="460.86956521739131" y="-17.410714285714285"/>
+            <point key="canvasLocation" x="-35" y="-47"/>
         </tabBarController>
     </objects>
     <resources>

@@ -30,6 +30,14 @@ final class FoldersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.frame = view.bounds
+        tableView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        tableView.backgroundColor = UIColor(named: "isubBackgroundColor")
+        view.addSubview(tableView)
+
         self.title = "Folders"
         self.view.backgroundColor = UIColor(named: "isubBackgroundColor")
 

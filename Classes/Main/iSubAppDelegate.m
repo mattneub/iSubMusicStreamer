@@ -57,6 +57,22 @@
 }
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
+    // WARNING: We really should be doing this only for non-iPad at the moment
+    self.window = [UIWindow new];
+    CustomUITabBarController* tbc = [[CustomUITabBarControllerHelper class] createMainTabBarController];
+    // tbc.delegate = self;
+    self.artistsNavigationController = [tbc viewControllers][1];
+    self.playlistsNavigationController = [tbc viewControllers][2];
+    self.cacheNavigationController = [tbc viewControllers][3];
+    self.allAlbumsNavigationController = [tbc viewControllers][4];
+    self.allSongsNavigationController = [tbc viewControllers][5];
+    self.bookmarksNavigationController = [tbc viewControllers][6];
+    self.playingNavigationController = [tbc viewControllers][7];
+    self.genresNavigationController = [tbc viewControllers][8];
+    self.chatNavigationController = [tbc viewControllers][9];
+    self.mainTabBarController = tbc;
+    self.offlineTabBarController = [[CustomUITabBarControllerHelper class] createOfflineTabBarController];
+
     // Make sure audio engine and cache singletons get loaded
 	[AudioEngine sharedInstance];
 	[CacheSingleton sharedInstance];

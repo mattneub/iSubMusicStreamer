@@ -117,8 +117,8 @@
 		53493F3815FC6C3A0059492E /* BassEffectDefaultPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53493F3715FC6C3A0059492E /* BassEffectDefaultPresets.plist */; };
 		53493F3A15FC6C3B0059492E /* BassEffectDefaultPresets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53493F3715FC6C3A0059492E /* BassEffectDefaultPresets.plist */; };
 		5349DF87161E408A0044A781 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D44F8415AA621A00CDD3B8 /* Accelerate.framework */; };
-		534B20DA25619936007FF1D7 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534B20D925619936007FF1D7 /* HomeViewController.xib */; };
-		534B20DB25619936007FF1D7 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534B20D925619936007FF1D7 /* HomeViewController.xib */; };
+		534B20DA25619936007FF1D7 /* HomeViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534B20D925619936007FF1D7 /* HomeViewControllerNOT.xib */; };
+		534B20DB25619936007FF1D7 /* HomeViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534B20D925619936007FF1D7 /* HomeViewControllerNOT.xib */; };
 		534B20E025619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B20DF25619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift */; };
 		534B20E125619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B20DF25619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift */; };
 		534B20E62561E444007FF1D7 /* LockScreenAudioControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B20E52561E444007FF1D7 /* LockScreenAudioControls.swift */; };
@@ -258,8 +258,8 @@
 		53D97406255BFD9100AABF7F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 53D97405255BFD9100AABF7F /* SnapKit */; };
 		53D9740A255BFDE900AABF7F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 53D97409255BFDE900AABF7F /* SnapKit */; };
 		53D9740B255BFDF900AABF7F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539148B92559E597004AAC3F /* CoreServices.framework */; };
-		53D97433255C0BDE00AABF7F /* FoldersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* FoldersViewController.xib */; };
-		53D97436255C0BDE00AABF7F /* FoldersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* FoldersViewController.xib */; };
+		53D97433255C0BDE00AABF7F /* FoldersViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* FoldersViewControllerNOT.xib */; };
+		53D97436255C0BDE00AABF7F /* FoldersViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* FoldersViewControllerNOT.xib */; };
 		53D9743A255C0DA900AABF7F /* AutoScrollingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D97439255C0DA900AABF7F /* AutoScrollingLabel.swift */; };
 		53D9743B255C0DA900AABF7F /* AutoScrollingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D97439255C0DA900AABF7F /* AutoScrollingLabel.swift */; };
 		53D97454255C51CA00AABF7F /* SwipeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D97453255C51CA00AABF7F /* SwipeAction.swift */; };
@@ -541,7 +541,7 @@
 		1D6058910D05DD3D006BFB54 /* iSub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		28F335F01007B36200424DE2 /* FoldersViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoldersViewController.xib; sourceTree = "<group>"; };
+		28F335F01007B36200424DE2 /* FoldersViewControllerNOT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoldersViewControllerNOT.xib; sourceTree = "<group>"; };
 		3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersViewController.swift; sourceTree = "<group>"; };
 		3F7CEE892B46E56D0048759C /* SearchAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllViewController.swift; sourceTree = "<group>"; };
 		3F808D2F2B34855700FDF660 /* bass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
@@ -616,7 +616,7 @@
 		53493F2615FC6AC40059492E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Other/main.m; sourceTree = "<group>"; };
 		53493F2C15FC6BD90059492E /* KeychainAccessGroups.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = KeychainAccessGroups.plist; path = Other/KeychainAccessGroups.plist; sourceTree = "<group>"; };
 		53493F3715FC6C3A0059492E /* BassEffectDefaultPresets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = BassEffectDefaultPresets.plist; path = Other/BassEffectDefaultPresets.plist; sourceTree = "<group>"; };
-		534B20D925619936007FF1D7 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		534B20D925619936007FF1D7 /* HomeViewControllerNOT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewControllerNOT.xib; sourceTree = "<group>"; };
 		534B20DF25619F3B007FF1D7 /* UIStackView+AddArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+AddArrangedSubviews.swift"; sourceTree = "<group>"; };
 		534B20E52561E444007FF1D7 /* LockScreenAudioControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenAudioControls.swift; sourceTree = "<group>"; };
 		534B20E8256202CF007FF1D7 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
@@ -1205,7 +1205,7 @@
 			isa = PBXGroup;
 			children = (
 				538C8FE92560C7AB005D6CA9 /* HomeViewController.swift */,
-				534B20D925619936007FF1D7 /* HomeViewController.xib */,
+				534B20D925619936007FF1D7 /* HomeViewControllerNOT.xib */,
 				3FE431522B439078006B9511 /* HomeAlbumViewController.swift */,
 				533C659015ABB9A9003EAF29 /* HomeAlbumViewControllerNOT.xib */,
 				3FD209BB2B44914500DBC320 /* SearchSongsViewController.swift */,
@@ -1220,7 +1220,7 @@
 			isa = PBXGroup;
 			children = (
 				3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */,
-				28F335F01007B36200424DE2 /* FoldersViewController.xib */,
+				28F335F01007B36200424DE2 /* FoldersViewControllerNOT.xib */,
 				53E82A951406D47F0051D44B /* FolderDropdownDelegate.h */,
 				53ADBBBE13352DB40098FAE6 /* FolderDropdownControl.h */,
 				53ADBBBF13352DB40098FAE6 /* FolderDropdownControl.m */,
@@ -1984,7 +1984,7 @@
 				5388A3B5119899260049BA9E /* BookmarksViewController.xib in Resources */,
 				53B52BA611ADE0A6005776B5 /* GenresViewController.xib in Resources */,
 				530B417311B607A200743C09 /* CacheViewController.xib in Resources */,
-				534B20DA25619936007FF1D7 /* HomeViewController.xib in Resources */,
+				534B20DA25619936007FF1D7 /* HomeViewControllerNOT.xib in Resources */,
 				531D3A03255AB5F6000CB0DF /* MainWindow-iPad.xib in Resources */,
 				536B5D5E11C8183D00CC1D69 /* LoadingScreen.xib in Resources */,
 				538229F711C98091003F1E23 /* CacheAlbumViewController.xib in Resources */,
@@ -2002,7 +2002,7 @@
 				533C65DC15ABB9F5003EAF29 /* EqualizerViewController.xib in Resources */,
 				539148E02559FEFD004AAC3F /* Launch Screen.storyboard in Resources */,
 				53493F3015FC6BD90059492E /* KeychainAccessGroups.plist in Resources */,
-				53D97433255C0BDE00AABF7F /* FoldersViewController.xib in Resources */,
+				53D97433255C0BDE00AABF7F /* FoldersViewControllerNOT.xib in Resources */,
 				53C3AB70257DD38400B35B99 /* open_source_licenses.html in Resources */,
 				53493F3815FC6C3A0059492E /* BassEffectDefaultPresets.plist in Resources */,
 			);
@@ -2013,7 +2013,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				533C65E515ABBA09003EAF29 /* AlbumViewController.xib in Resources */,
-				53D97436255C0BDE00AABF7F /* FoldersViewController.xib in Resources */,
+				53D97436255C0BDE00AABF7F /* FoldersViewControllerNOT.xib in Resources */,
 				530738F51FAF6A72005C2650 /* Media.xcassets in Resources */,
 				53BC26B6139AF0DD00A825F1 /* AllAlbumsViewController.xib in Resources */,
 				533C65AF15ABB9C6003EAF29 /* ServerListViewController.xib in Resources */,
@@ -2038,7 +2038,7 @@
 				533C65A115ABB9B3003EAF29 /* SearchAllViewControllerNOT.xib in Resources */,
 				53BC2796139AF0DD00A825F1 /* PlaylistSongsViewController.xib in Resources */,
 				533C65DE15ABB9F5003EAF29 /* EqualizerViewController.xib in Resources */,
-				534B20DB25619936007FF1D7 /* HomeViewController.xib in Resources */,
+				534B20DB25619936007FF1D7 /* HomeViewControllerNOT.xib in Resources */,
 				53493F3215FC6BD90059492E /* KeychainAccessGroups.plist in Resources */,
 				53C3AB71257DD38400B35B99 /* open_source_licenses.html in Resources */,
 				53493F3A15FC6C3B0059492E /* BassEffectDefaultPresets.plist in Resources */,

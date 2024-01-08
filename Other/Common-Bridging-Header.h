@@ -31,7 +31,6 @@
 #import "GenresViewController.h"
 #import "PlaylistsViewController.h"
 #import "BookmarksViewController.h"
-// #import "FoldersViewController.h"
 #import "PlayingViewController.h"
 #import "AllAlbumsViewController.h"
 #import "AllSongsViewController.h"
@@ -39,6 +38,7 @@
 #import "FolderDropdownDelegate.h"
 #import "FolderDropdownControl.h"
 #import "SUSAllSongsLoader.h"
+#import "CustomUITabBarController.h"
 
 // Views
 // #import "CellCachedIndicatorView.h"
