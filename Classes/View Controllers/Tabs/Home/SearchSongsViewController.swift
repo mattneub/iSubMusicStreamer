@@ -221,13 +221,13 @@ extension SearchSongsViewController /* UITableViewDataSource, UITableViewDelegat
         case .artists:
             if indexPath.row != self.listOfArtists.count {
                 let artist = self.listOfArtists[indexPath.row]
-                let albumView = AlbumViewController(artist: artist, orAlbum: nil)
+                let albumView = AlbumViewController(withArtist: artist, orAlbum: nil)
                 pushCustom(albumView)
             }
         case .albums:
             if indexPath.row != self.listOfAlbums.count {
                 let album = self.listOfAlbums[indexPath.row]
-                let albumView = AlbumViewController(artist: nil, orAlbum: album)
+                let albumView = AlbumViewController(withArtist: nil, orAlbum: album)
                 pushCustom(albumView)
             }
         case .songs:

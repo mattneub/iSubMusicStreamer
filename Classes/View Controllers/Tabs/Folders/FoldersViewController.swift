@@ -45,7 +45,7 @@ final class FoldersViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateFolders), name: .init(ISMSNotification_ServerCheckPassed), object: nil)
 
         tableView.refreshControl = RefreshControl { [weak self] in
-            if let self, let id = Settings.shared().rootFoldersSelectedFolderId {
+            if let self, let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
                 self.loadData(id)
             }
         }
@@ -74,7 +74,7 @@ final class FoldersViewController: UIViewController {
         }
 
         if !SUSAllSongsLoader.isLoading() && !ViewObjects.shared().isArtistsLoading {
-            if !dataModel.isRootFolderIdCached, let id = Settings.shared().rootFoldersSelectedFolderId {
+            if !dataModel.isRootFolderIdCached, let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
                 loadData(id)
             }
         }
@@ -86,11 +86,11 @@ final class FoldersViewController: UIViewController {
         self.dropdown.delegate = nil
     }
 
-    func loadData(_ folderId: NSNumber) {
+    func loadData(_ folderId: Int) {
         self.dropdown.updateFolders()
         ViewObjects.shared().isArtistsLoading = true
         ViewObjects.shared().showAlbumLoadingScreen(AppDelegate.shared().window, sender: self)
-        self.dataModel.selectedFolderId = folderId
+        self.dataModel.selectedFolderId = folderId as NSNumber
         self.dataModel.startLoad()
     }
 
@@ -100,7 +100,7 @@ final class FoldersViewController: UIViewController {
             self.tableView.reloadData()
             self.removeCount()
         }
-        self.folderDropdownSelectFolder(-1)
+        self.folderDropdownSelect(folderId: -1)
     }
 
     @objc func updateFolders() {}
@@ -120,7 +120,7 @@ final class FoldersViewController: UIViewController {
         }
     }
     @objc func reloadAction() {
-        if !SUSAllSongsLoader.isLoading(), let id = Settings.shared().rootFoldersSelectedFolderId {
+        if !SUSAllSongsLoader.isLoading(), let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
             self.loadData(id)
         } else if Settings.shared().isPopupsEnabled {
             let message = "You cannot reload the Artists tab while the Albums or Songs tabs are loading"
@@ -170,12 +170,14 @@ final class FoldersViewController: UIViewController {
 
         self.dropdown = FolderDropdownControl(frame: CGRect(x: 50, y: 61, width: 220, height: 40))
         self.dropdown.delegate = self
-        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() {
+        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] {
             self.dropdown.folders = dropdownFolders
         } else {
             self.dropdown.folders = [-1: "All Folders"]
         }
-        self.dropdown.selectFolder(withId: self.dataModel.selectedFolderId)
+        if let id = self.dataModel.selectedFolderId as? Int {
+            self.dropdown.selectFolder(withId: id)
+        }
         self.headerView.addSubview(self.dropdown)
 
         self.searchBar = UISearchBar(frame: CGRect(x: 0, y: 111, width: 320, height: 40))
@@ -214,31 +216,30 @@ final class FoldersViewController: UIViewController {
 }
 
 extension FoldersViewController: FolderDropdownDelegate {
-    func folderDropdownMoveViewsY(_ y: Float) {
+    func folderDropdownMoveViews(y: CGFloat) {
         self.tableView.performBatchUpdates {
-            self.tableView.tableHeaderView?.frame.size.height += CGFloat(y)
-            self.searchBar.frame.origin.y += CGFloat(y)
+            self.tableView.tableHeaderView?.frame.size.height += y
+            self.searchBar.frame.origin.y += y
             self.tableView.tableHeaderView = self.tableView.tableHeaderView
 
             let visibleSections = Set(self.tableView.indexPathsForVisibleRows?.map { $0.section } ?? [])
             for section in visibleSections {
                 let sectionHeader = self.tableView.headerView(forSection: section)
-                sectionHeader?.frame.origin.y += CGFloat(y)
+                sectionHeader?.frame.origin.y += y
             }
         }
     }
 
     func folderDropdownViewsFinishedMoving() {}
 
-    func folderDropdownSelectFolder(_ folderId: NSNumber!) {
-        // let folderId = folderId.intValue // well, that's aspirational
+    func folderDropdownSelect(folderId: Int) {
         self.dropdown.selectFolder(withId: folderId)
 
         // Save the default
-        Settings.shared().rootFoldersSelectedFolderId = folderId
+        Settings.shared().rootFoldersSelectedFolderId = folderId as NSNumber
 
         // Reload the data
-        self.dataModel.selectedFolderId = folderId
+        self.dataModel.selectedFolderId = folderId as NSNumber
         self.isSearching = false
         if self.dataModel.isRootFolderIdCached {
             self.tableView.reloadData()
@@ -462,7 +463,7 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
             return -1
         }
         if index == 0 {
-            if self.dropdown.folders == nil || self.dropdown.folders.count == 2 {
+            if self.dropdown.folders.isEmpty || self.dropdown.folders.count == 2 {
                 self.tableView.setContentOffset(CGPoint(x: 0, y: 104), animated: false)
             } else {
                 self.tableView.setContentOffset(CGPoint(x: 0, y: 54), animated: false)
@@ -473,7 +474,7 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        pushCustom(AlbumViewController(artist: artist(atIndexPath: indexPath), orAlbum: nil))
+        pushCustom(AlbumViewController(withArtist: artist(atIndexPath: indexPath), orAlbum: nil))
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

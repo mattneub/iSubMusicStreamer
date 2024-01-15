@@ -118,7 +118,7 @@ extension HomeAlbumViewController /* UITableViewDataSource, UITableViewDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != self.listOfAlbums.count {
             let album = self.listOfAlbums[indexPath.row]
-            let albumViewController = AlbumViewController(artist: nil, orAlbum: album)
+            let albumViewController = AlbumViewController(withArtist: nil, orAlbum: album)
             pushCustom(albumViewController)
         } else {
             tableView.deselectRow(at: indexPath, animated: false)
