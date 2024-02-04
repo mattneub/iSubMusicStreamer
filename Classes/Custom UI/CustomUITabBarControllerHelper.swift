@@ -19,9 +19,7 @@ final class CustomUITabBarControllerHelper: NSObject {
         appearance.stackedLayoutAppearance = itemAppearance
         appearance.compactInlineLayoutAppearance = itemAppearance
         controller.tabBar.standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            controller.tabBar.scrollEdgeAppearance = appearance
-        }
+        controller.tabBar.scrollEdgeAppearance = appearance
     }
 
     @objc class func createMainTabBarController() -> CustomUITabBarController {

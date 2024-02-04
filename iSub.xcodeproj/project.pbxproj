@@ -15,6 +15,7 @@
 		3F06EC0F2B4D870400DB3FA3 /* FolderDropdownControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06EC0D2B4D870400DB3FA3 /* FolderDropdownControl.swift */; };
 		3F0C10812B49AD1700C93BF5 /* FoldersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */; };
 		3F0C10822B49AD1700C93BF5 /* FoldersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */; };
+		3F7C06EE2B693BAF0000AE5C /* FMDB+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C06ED2B693BAF0000AE5C /* FMDB+Extensions.swift */; };
 		3F7CEE8A2B46E56D0048759C /* SearchAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7CEE892B46E56D0048759C /* SearchAllViewController.swift */; };
 		3F7CEE8B2B46E56D0048759C /* SearchAllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7CEE892B46E56D0048759C /* SearchAllViewController.swift */; };
 		3F808D322B3485F100FDF660 /* bass.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F808D302B34857A00FDF660 /* bass.xcframework */; };
@@ -29,6 +30,8 @@
 		3F9950C42B432C77009C615D /* ChatUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9950C22B432C77009C615D /* ChatUITableViewCell.swift */; };
 		3FD209BC2B44914500DBC320 /* SearchSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD209BB2B44914500DBC320 /* SearchSongsViewController.swift */; };
 		3FD209BD2B44914500DBC320 /* SearchSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD209BB2B44914500DBC320 /* SearchSongsViewController.swift */; };
+		3FDA196E2B56CA3D0041142C /* PlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA196D2B56CA3D0041142C /* PlaylistsViewController.swift */; };
+		3FDA196F2B56CA3D0041142C /* PlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDA196D2B56CA3D0041142C /* PlaylistsViewController.swift */; };
 		3FE431532B439078006B9511 /* HomeAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE431522B439078006B9511 /* HomeAlbumViewController.swift */; };
 		3FE431542B439078006B9511 /* HomeAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE431522B439078006B9511 /* HomeAlbumViewController.swift */; };
 		3FF17B182B4B1CF700F706DD /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF17B172B4B1CF700F706DD /* String.swift */; };
@@ -191,8 +194,7 @@
 		53A2BE2A147DF14600E44822 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A2BE27147DF13600E44822 /* OpenGLES.framework */; };
 		53ABE3631165C83900197877 /* PlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABE3611165C83900197877 /* PlayingViewController.m */; };
 		53ABE3641165C83900197877 /* PlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE3621165C83900197877 /* PlayingViewController.xib */; };
-		53ABE54311665B6B00197877 /* PlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABE54111665B6B00197877 /* PlaylistsViewController.m */; };
-		53ABE54411665B6B00197877 /* PlaylistsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE54211665B6B00197877 /* PlaylistsViewController.xib */; };
+		53ABE54411665B6B00197877 /* PlaylistsViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE54211665B6B00197877 /* PlaylistsViewControllerNOT.xib */; };
 		53B38C12147593FA00CD8A99 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B38C11147593F900CD8A99 /* AVFoundation.framework */; };
 		53B38C141475940700CD8A99 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B38C11147593F900CD8A99 /* AVFoundation.framework */; };
 		53B5298A11AD9B79005776B5 /* LoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5298911AD9B79005776B5 /* LoadingScreen.m */; };
@@ -202,7 +204,7 @@
 		53BC26B6139AF0DD00A825F1 /* AllAlbumsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539797FD1162D4D200F41D8B /* AllAlbumsViewController.xib */; };
 		53BC26B9139AF0DD00A825F1 /* AllSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53614BD7116467420088ABC0 /* AllSongsViewController.xib */; };
 		53BC26BB139AF0DD00A825F1 /* PlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE3621165C83900197877 /* PlayingViewController.xib */; };
-		53BC26C2139AF0DD00A825F1 /* PlaylistsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE54211665B6B00197877 /* PlaylistsViewController.xib */; };
+		53BC26C2139AF0DD00A825F1 /* PlaylistsViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE54211665B6B00197877 /* PlaylistsViewControllerNOT.xib */; };
 		53BC26CC139AF0DD00A825F1 /* BookmarksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5388A3B3119899260049BA9E /* BookmarksViewController.xib */; };
 		53BC26D1139AF0DD00A825F1 /* GenresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B52BA411ADE0A6005776B5 /* GenresViewController.xib */; };
 		53BC26D2139AF0DD00A825F1 /* CacheViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 530B417111B607A200743C09 /* CacheViewController.xib */; };
@@ -217,7 +219,6 @@
 		53BC27AE139AF0DD00A825F1 /* ServerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53614AC8116432DA0088ABC0 /* ServerListViewController.m */; };
 		53BC27B0139AF0DD00A825F1 /* AllSongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530388A8116571920043292D /* AllSongsViewController.m */; };
 		53BC27B3139AF0DD00A825F1 /* PlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABE3611165C83900197877 /* PlayingViewController.m */; };
-		53BC27B6139AF0DD00A825F1 /* PlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53ABE54111665B6B00197877 /* PlaylistsViewController.m */; };
 		53BC27BB139AF0DD00A825F1 /* CurrentPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F4A07B116FF7EE00BB8411 /* CurrentPlaylistViewController.m */; };
 		53BC27C4139AF0DD00A825F1 /* BookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5388A3B2119899260049BA9E /* BookmarksViewController.m */; };
 		53BC27CC139AF0DD00A825F1 /* LoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5298911AD9B79005776B5 /* LoadingScreen.m */; };
@@ -544,6 +545,7 @@
 		28F335F01007B36200424DE2 /* FoldersViewControllerNOT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoldersViewControllerNOT.xib; sourceTree = "<group>"; };
 		3F06EC0D2B4D870400DB3FA3 /* FolderDropdownControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDropdownControl.swift; sourceTree = "<group>"; };
 		3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersViewController.swift; sourceTree = "<group>"; };
+		3F7C06ED2B693BAF0000AE5C /* FMDB+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FMDB+Extensions.swift"; sourceTree = "<group>"; };
 		3F7CEE892B46E56D0048759C /* SearchAllViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllViewController.swift; sourceTree = "<group>"; };
 		3F808D2F2B34855700FDF660 /* bass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bass.h; sourceTree = "<group>"; };
 		3F808D302B34857A00FDF660 /* bass.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = bass.xcframework; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 		3F9950BF2B43253C009C615D /* CellCachedIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellCachedIndicatorView.swift; sourceTree = "<group>"; };
 		3F9950C22B432C77009C615D /* ChatUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUITableViewCell.swift; sourceTree = "<group>"; };
 		3FD209BB2B44914500DBC320 /* SearchSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSongsViewController.swift; sourceTree = "<group>"; };
+		3FDA196D2B56CA3D0041142C /* PlaylistsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsViewController.swift; sourceTree = "<group>"; };
 		3FE431522B439078006B9511 /* HomeAlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAlbumViewController.swift; sourceTree = "<group>"; };
 		3FF17B172B4B1CF700F706DD /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		3FF341DA2B3DB766002BE891 /* CustomUITabBarControllerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITabBarControllerHelper.swift; sourceTree = "<group>"; };
@@ -693,9 +696,7 @@
 		53ABE3601165C83900197877 /* PlayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingViewController.h; sourceTree = "<group>"; };
 		53ABE3611165C83900197877 /* PlayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlayingViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		53ABE3621165C83900197877 /* PlayingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayingViewController.xib; sourceTree = "<group>"; };
-		53ABE54011665B6B00197877 /* PlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistsViewController.h; sourceTree = "<group>"; };
-		53ABE54111665B6B00197877 /* PlaylistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PlaylistsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		53ABE54211665B6B00197877 /* PlaylistsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistsViewController.xib; sourceTree = "<group>"; };
+		53ABE54211665B6B00197877 /* PlaylistsViewControllerNOT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistsViewControllerNOT.xib; sourceTree = "<group>"; };
 		53ABE54511665B8500197877 /* PlaylistSongsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistSongsViewController.h; sourceTree = "<group>"; };
 		53B38C11147593F900CD8A99 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		53B5298811AD9B79005776B5 /* LoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingScreen.h; sourceTree = "<group>"; };
@@ -1268,9 +1269,8 @@
 		531D39EB255AB300000CB0DF /* Playlists */ = {
 			isa = PBXGroup;
 			children = (
-				53ABE54011665B6B00197877 /* PlaylistsViewController.h */,
-				53ABE54111665B6B00197877 /* PlaylistsViewController.m */,
-				53ABE54211665B6B00197877 /* PlaylistsViewController.xib */,
+				3FDA196D2B56CA3D0041142C /* PlaylistsViewController.swift */,
+				53ABE54211665B6B00197877 /* PlaylistsViewControllerNOT.xib */,
 				53ABE54511665B8500197877 /* PlaylistSongsViewController.h */,
 				536AB80F1353DCF700DABD83 /* PlaylistSongsViewController.m */,
 				536AB8101353DCF700DABD83 /* PlaylistSongsViewController.xib */,
@@ -1668,6 +1668,7 @@
 			children = (
 				53EA2DE4257D7F340003F38D /* Foundation */,
 				53FE342C1EA961540058B925 /* UIKit */,
+				3F7C06ED2B693BAF0000AE5C /* FMDB+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1974,7 +1975,7 @@
 				533C65AD15ABB9C6003EAF29 /* ServerListViewController.xib in Resources */,
 				53614BD9116467420088ABC0 /* AllSongsViewController.xib in Resources */,
 				53ABE3641165C83900197877 /* PlayingViewController.xib in Resources */,
-				53ABE54411665B6B00197877 /* PlaylistsViewController.xib in Resources */,
+				53ABE54411665B6B00197877 /* PlaylistsViewControllerNOT.xib in Resources */,
 				5388A3B5119899260049BA9E /* BookmarksViewController.xib in Resources */,
 				53B52BA611ADE0A6005776B5 /* GenresViewController.xib in Resources */,
 				530B417311B607A200743C09 /* CacheViewController.xib in Resources */,
@@ -2013,7 +2014,7 @@
 				533C65AF15ABB9C6003EAF29 /* ServerListViewController.xib in Resources */,
 				53BC26B9139AF0DD00A825F1 /* AllSongsViewController.xib in Resources */,
 				53BC26BB139AF0DD00A825F1 /* PlayingViewController.xib in Resources */,
-				53BC26C2139AF0DD00A825F1 /* PlaylistsViewController.xib in Resources */,
+				53BC26C2139AF0DD00A825F1 /* PlaylistsViewControllerNOT.xib in Resources */,
 				53BC26CC139AF0DD00A825F1 /* BookmarksViewController.xib in Resources */,
 				53BC26D1139AF0DD00A825F1 /* GenresViewController.xib in Resources */,
 				53BC26D2139AF0DD00A825F1 /* CacheViewController.xib in Resources */,
@@ -2101,7 +2102,6 @@
 				53FE37B81EA961720058B925 /* SUSQuickAlbumsLoader.m in Sources */,
 				53FE36EC1EA961720058B925 /* BassEqualizer.m in Sources */,
 				53ABE3631165C83900197877 /* PlayingViewController.m in Sources */,
-				53ABE54311665B6B00197877 /* PlaylistsViewController.m in Sources */,
 				53FE36EF1EA961720058B925 /* BassGaplessPlayer.m in Sources */,
 				533D181F255F72FF003F962C /* CacheOfflineFoldersViewController.m in Sources */,
 				53FE37161EA961720058B925 /* ISMSChatMessage.m in Sources */,
@@ -2163,10 +2163,12 @@
 				53FE37BE1EA961720058B925 /* SUSRootFoldersLoader.m in Sources */,
 				53523D9411CD61F7006AEA48 /* GenresArtistViewController.m in Sources */,
 				53FE38AA1EA961C80058B925 /* ZKCDTrailer64.m in Sources */,
+				3FDA196E2B56CA3D0041142C /* PlaylistsViewController.swift in Sources */,
 				53FE37A01EA961720058B925 /* SUSChatLoader.m in Sources */,
 				53FE67A2256DD0F00015FC83 /* GCDWebServerMultiPartFormRequest.m in Sources */,
 				53FE35EB1EA961540058B925 /* SnappySlider.m in Sources */,
 				53FE370A1EA961720058B925 /* ISMSAlbum.m in Sources */,
+				3F7C06EE2B693BAF0000AE5C /* FMDB+Extensions.swift in Sources */,
 				53246AB3256C918500E11EC4 /* LyricsViewController.swift in Sources */,
 				53FE37B21EA961720058B925 /* SUSNowPlayingLoader.m in Sources */,
 				53FE38AD1EA961C80058B925 /* ZKCDTrailer64Locator.m in Sources */,
@@ -2302,7 +2304,6 @@
 				53FE37BA1EA961720058B925 /* SUSQuickAlbumsLoader.m in Sources */,
 				53FE36EE1EA961720058B925 /* BassEqualizer.m in Sources */,
 				53BC27B3139AF0DD00A825F1 /* PlayingViewController.m in Sources */,
-				53BC27B6139AF0DD00A825F1 /* PlaylistsViewController.m in Sources */,
 				53FE36F11EA961720058B925 /* BassGaplessPlayer.m in Sources */,
 				538C8FE225606299005D6CA9 /* RefreshControl.swift in Sources */,
 				53329642255F2B960027C51A /* AlbumTableViewHeader.swift in Sources */,
@@ -2335,6 +2336,7 @@
 				3F9950C42B432C77009C615D /* ChatUITableViewCell.swift in Sources */,
 				53FE388E1EA961C80058B925 /* GMAppleDouble.m in Sources */,
 				53FE358A1EA961540058B925 /* EX2NetworkIndicator.m in Sources */,
+				3FDA196F2B56CA3D0041142C /* PlaylistsViewController.swift in Sources */,
 				53BC27C4139AF0DD00A825F1 /* BookmarksViewController.m in Sources */,
 				53FE38B51EA961C80058B925 /* ZKDefs.m in Sources */,
 				53FE38A31EA961C80058B925 /* ZKArchive.m in Sources */,
@@ -2666,7 +2668,7 @@
 					"\"$(SRCROOT)\"",
 					/usr/include/libxml2,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Classes\"",
 					"\"$(SRCROOT)\"",
@@ -2929,7 +2931,7 @@
 					"\"$(SRCROOT)\"",
 					/usr/include/libxml2,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Classes\"",
 					"\"$(SRCROOT)\"",
@@ -2997,7 +2999,7 @@
 					"\"$(SRCROOT)\"",
 					/usr/include/libxml2,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Classes\"",
 					"\"$(SRCROOT)\"",

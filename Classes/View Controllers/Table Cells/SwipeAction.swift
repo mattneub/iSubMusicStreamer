@@ -19,10 +19,17 @@ import UIKit
     }
     
     @objc static func downloadQueueAndDeleteConfig(model: TableCellModel, deleteHandler: @escaping () -> ()) -> UISwipeActionsConfiguration {
-        let actions = model.isCached ? [queue(model: model), delete(handler: deleteHandler)] : [download(model: model), queue(model: model), delete(handler: deleteHandler)];
+        let actions = model.isCached ? [queue(model: model), delete(handler: deleteHandler)] : [download(model: model), queue(model: model), delete(handler: deleteHandler)]
         let config = UISwipeActionsConfiguration(actions: actions)
-        config.performsFirstActionWithFullSwipe = false;
-        return config;
+        config.performsFirstActionWithFullSwipe = false
+        return config
+    }
+
+    @objc static func downloadAndDeleteConfig(model: TableCellModel, deleteHandler: @escaping () -> ()) -> UISwipeActionsConfiguration {
+        let actions = model.isCached ? [delete(handler: deleteHandler)] : [download(model: model), delete(handler: deleteHandler)]
+        let config = UISwipeActionsConfiguration(actions: actions)
+        config.performsFirstActionWithFullSwipe = false
+        return config
     }
     
     @objc static func downloadQueueAndDeleteConfig(downloadHandler: (() -> ())?, queueHandler: (() -> ())?, deleteHandler: (() -> ())?) -> UISwipeActionsConfiguration {

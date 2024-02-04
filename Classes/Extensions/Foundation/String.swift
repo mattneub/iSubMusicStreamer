@@ -8,3 +8,11 @@ extension Optional where Wrapped == String {
         }
     }
 }
+
+extension String {
+    // I tried to use attributed / markdown to do this automatically and it didn't work, and I
+    // don't know why: the code compiles, but the result is always the singular
+    func pluralized(count: Int) -> String {
+        String(count) + " " + self + (count == 1 ? "" : "s")
+    }
+}

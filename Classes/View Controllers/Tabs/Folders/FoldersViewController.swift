@@ -86,7 +86,7 @@ final class FoldersViewController: UIViewController {
         self.dropdown.delegate = nil
     }
 
-    func loadData(_ folderId: Int) {
+    private func loadData(_ folderId: Int) {
         self.dropdown.updateFolders()
         ViewObjects.shared().isArtistsLoading = true
         ViewObjects.shared().showAlbumLoadingScreen(AppDelegate.shared().window, sender: self)
@@ -94,7 +94,7 @@ final class FoldersViewController: UIViewController {
         self.dataModel.startLoad()
     }
 
-    @objc func serverSwitched() {
+    @objc private func serverSwitched() {
         self.dataModel = createModel()
         if !self.dataModel.isRootFolderIdCached {
             self.tableView.reloadData()
@@ -103,14 +103,14 @@ final class FoldersViewController: UIViewController {
         self.folderDropdownSelect(folderId: -1)
     }
 
-    @objc func updateFolders() {}
-    @objc func nowPlayingAction() {
+    @objc private func updateFolders() {}
+    @objc private func nowPlayingAction() {
         let player = PlayerViewController()
         player.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(player, animated: true)
     }
 
-    @objc func addURLRefBackButton() {
+    @objc private func addURLRefBackButton() {
         let appDelegate = AppDelegate.shared()
         if appDelegate.referringAppUrl != nil && appDelegate.mainTabBarController.selectedIndex != 4 {
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -119,7 +119,7 @@ final class FoldersViewController: UIViewController {
             )
         }
     }
-    @objc func reloadAction() {
+    @objc private func reloadAction() {
         if !SUSAllSongsLoader.isLoading(), let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
             self.loadData(id)
         } else if Settings.shared().isPopupsEnabled {
@@ -130,7 +130,7 @@ final class FoldersViewController: UIViewController {
         }
     }
 
-    func updateCount() {
+    private func updateCount() {
         let folder = " Folder" + (dataModel.count > 1 ? "s" : "")
         countLabel.text = String(dataModel.count) + folder
 
@@ -142,12 +142,12 @@ final class FoldersViewController: UIViewController {
         }
     }
 
-    func removeCount() {
+    private func removeCount() {
         tableView.tableHeaderView = nil
         isCountShowing = false
     }
 
-    func addCount() {
+    private func addCount() {
         self.isCountShowing = true
 
         self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 157))
@@ -207,7 +207,7 @@ final class FoldersViewController: UIViewController {
         self.tableView.tableHeaderView = self.headerView
     }
 
-    func cancelLoad() {
+    private func cancelLoad() {  // TODO: I don't see any evidence that this is ever called
         dataModel.cancelLoad()
         ViewObjects.shared().hideLoadingScreen()
         tableView.refreshControl?.endRefreshing()

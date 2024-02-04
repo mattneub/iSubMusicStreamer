@@ -74,7 +74,7 @@ import SnapKit
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = .systemBackground
-        
+
         headerLabel.textColor = .label
         headerLabel.backgroundColor = .systemGray
         headerLabel.font = .systemFont(ofSize: 12)
@@ -82,33 +82,33 @@ import SnapKit
         headerLabel.minimumScaleFactor = 0.5
         headerLabel.textAlignment = .center;
         contentView.addSubview(headerLabel)
-                
+
         numberLabel.textColor = .label
         numberLabel.font = .boldSystemFont(ofSize: 20)
         numberLabel.adjustsFontSizeToFitWidth = true
         numberLabel.minimumScaleFactor = 0.25
         numberLabel.textAlignment = .center
         contentView.addSubview(numberLabel)
-        
+
         coverArtView.isLarge = false
         coverArtView.backgroundColor = .systemGray
         contentView.addSubview(coverArtView)
-        
+
         primaryLabel.textColor = .label
         primaryLabel.font = .boldSystemFont(ofSize: UIDevice.isSmall() ? 16 : 17)
         contentView.addSubview(primaryLabel)
-        
+
         secondaryLabel.textColor = .secondaryLabel
         secondaryLabel.font = .systemFont(ofSize: UIDevice.isSmall() ? 13 : 14)
         contentView.addSubview(secondaryLabel)
-        
+
         durationLabel.textColor = .secondaryLabel
         durationLabel.font = .systemFont(ofSize: 14)
         durationLabel.adjustsFontSizeToFitWidth = true
         durationLabel.minimumScaleFactor = 0.25
         durationLabel.textAlignment = .center
         contentView.addSubview(durationLabel)
-        
+
         // TODO: Flip for RTL
         cachedIndicator.isHidden = true
         contentView.addSubview(cachedIndicator)
@@ -117,6 +117,10 @@ import SnapKit
             make.top.equalTo(headerLabel.snp.bottom)
         }
         
+        remakeConstraints()
+    }
+
+    private func remakeConstraints() {
         makeHeaderLabelConstraints()
         makeNumberLabelConstraints()
         makeCoverArtConstraints()
@@ -124,7 +128,7 @@ import SnapKit
         makeSecondaryLabelConstraints()
         makeDurationLabelConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("unimplemented")
     }
@@ -137,6 +141,7 @@ import SnapKit
             if !hideSecondaryLabel { secondaryLabel.text = model.secondaryLabelText }
             if !hideDurationLabel { durationLabel.text = model.durationLabelText }
             cachedIndicator.isHidden = hideCacheIndicator || !model.isCached
+            remakeConstraints()
         }
     }
     
@@ -177,7 +182,7 @@ import SnapKit
 //    }
     
     // MARK: AutoLayout
-    
+
     fileprivate func makeHeaderLabelConstraints() {
         headerLabel.snp.remakeConstraints { make in
             if hideHeaderLabel { make.height.equalTo(0) }
@@ -244,22 +249,46 @@ import SnapKit
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         primaryLabel.numberOfLines = 0
-        primaryLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        primaryLabel.setContentHuggingPriority(.required, for: .vertical)
-        if #available(iOS 14.0, *) {
-            primaryLabel.lineBreakStrategy = .init()
-        }
+//        primaryLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+//        primaryLabel.setContentHuggingPriority(.required, for: .vertical)
+//        primaryLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+//        primaryLabel.setContentHuggingPriority(.required, for: .horizontal)
+        primaryLabel.lineBreakStrategy = .init()
 
         secondaryLabel.numberOfLines = 0
-        secondaryLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        secondaryLabel.setContentHuggingPriority(.required, for: .vertical)
-        if #available(iOS 14.0, *) {
-            secondaryLabel.lineBreakStrategy = .init()
-        }
+//        secondaryLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+//        secondaryLabel.setContentHuggingPriority(.required, for: .vertical)
+//        secondaryLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+//        secondaryLabel.setContentHuggingPriority(.required, for: .horizontal)
+        secondaryLabel.lineBreakStrategy = .init()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    var oldHideSecondaryLabel: Bool?
+
+    /// Try to work around layout bug when entering edit mode, I don't understand it — it's as if
+    /// this just never worked properly or something
+//    override func setEditing(_ editing: Bool, animated: Bool) {
+//        super.setEditing(editing, animated: animated) // and why doesn't it obey the animation when stopping editing?
+//        if editing {
+//            oldHideSecondaryLabel = hideSecondaryLabel
+//            hideSecondaryLabel = true
+//        } else {
+//            if let oldHideSecondaryLabel {
+//                hideSecondaryLabel = oldHideSecondaryLabel
+//            }
+//        }
+//    }
+
+//    override func willTransition(to state: UITableViewCell.StateMask) {
+//
+//    }
+//
+//    override func didTransition(to state: UITableViewCell.StateMask) {
+//
+//    }
 
     fileprivate override func makePrimaryLabelConstraints() {
         primaryLabel.snp.remakeConstraints { make in
@@ -296,9 +325,9 @@ import SnapKit
                 make.width.equalTo(coverArtView.snp.height)
             }
             make.leading.equalTo(numberLabel.snp.trailing).offset(hideCoverArt ? 0 : 5)
-            make.centerY.equalTo(contentView.snp.centerY)
+            make.centerY.equalToSuperview()
             make.height.lessThanOrEqualTo(40)
-            make.height.lessThanOrEqualTo(contentView.snp.height).offset(-10)
+            make.height.lessThanOrEqualToSuperview().offset(-10)
             make.height.equalTo(40).priority(10)
         }
     }

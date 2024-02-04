@@ -11,9 +11,8 @@ final class CustomUINavigationControllerHelper: NSObject {
         controller.navigationBar.standardAppearance = appearance
         controller.navigationBar.compactAppearance = appearance
         controller.navigationBar.scrollEdgeAppearance = appearance
-        if #available(iOS 15.0, *) {
-            controller.navigationBar.compactScrollEdgeAppearance = appearance
-        }
+        controller.navigationBar.compactScrollEdgeAppearance = appearance
+
         let yellow = UIColor.systemYellow.resolvedColor(with: .init(userInterfaceStyle: .dark))
         controller.navigationBar.tintColor = yellow
     }

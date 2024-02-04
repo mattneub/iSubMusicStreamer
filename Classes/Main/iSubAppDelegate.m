@@ -276,9 +276,12 @@
     }
 	
 	// Do a server check every half hour
+    // I'd rather not!
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkServer) object:nil];
+    /*
 	NSTimeInterval delay = 30 * 60; // 30 minutes
 	[self performSelector:@selector(checkServer) withObject:nil afterDelay:delay];
+     */
 }
 
 #pragma mark SUS Loader Delegate

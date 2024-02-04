@@ -29,7 +29,7 @@
 #import "ServerListViewController.h"
 #import "CacheViewController.h"
 #import "GenresViewController.h"
-#import "PlaylistsViewController.h"
+// #import "PlaylistsViewController.h"
 #import "BookmarksViewController.h"
 #import "PlayingViewController.h"
 #import "AllAlbumsViewController.h"
@@ -41,6 +41,7 @@
 #import "CustomUITabBarController.h"
 #import "SUSDropdownFolderLoader.h"
 #import "SUSSubFolderDAO.h"
+#import "SUSServerPlaylistsDAO.h"
 
 // Views
 // #import "CellCachedIndicatorView.h"
@@ -85,6 +86,7 @@
 #import "UIDevice+Info.h"
 #import "NSNotificationCenter+MainThread.h"
 #import "NSString+FileSize.h"
+#import "NSString+MD5.h"
 
 /*
  * Singletons
@@ -105,10 +107,20 @@
  */
 
 #import "OBSlider.h"
-#import "FMDatabaseQueueAdditions.h"
-#import "FMDatabaseAdditions.h"
+#import "FMDB.h"
+//#import "FMDatabaseQueue.h"
+//#import "FMDatabaseQueueAdditions.h"
+//#import "FMDatabaseAdditions.h"
 #import "GCDWebServer.h"
 #import "GCDWebServerDataResponse.h"
 #import "GCDWebServerErrorResponse.h"
+
+#import "RXMLElement.h"
+#import "NSError+ISMSError.h"
+
+#import "SUSServerPlaylist.h"
+#import "ISMSLocalPlaylist.h"
+
+#import "PlaylistSongsViewController.h"
 
 #endif /* Common_Bridging_Header_h */

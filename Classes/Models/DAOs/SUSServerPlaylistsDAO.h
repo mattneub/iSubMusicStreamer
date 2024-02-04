@@ -8,7 +8,7 @@
 
 #import "SUSLoaderManager.h"
 
-@class SUSServerPlaylistsLoader, FMDatabase;
+@class SUSServerPlaylistsLoader, SUSServerPlaylist, FMDatabase;
 @interface SUSServerPlaylistsDAO : NSObject <SUSLoaderDelegate, SUSLoaderManager>
 
 @property (weak) NSObject <SUSLoaderDelegate> *delegate;
@@ -16,6 +16,6 @@
 
 #pragma mark - Public DAO Methods
 
-@property (strong) NSArray *serverPlaylists;
+@property (strong) NSArray<SUSServerPlaylist*> *serverPlaylists;
 
 @end

@@ -26,7 +26,7 @@ final class HomeAlbumViewController: UITableViewController {
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "HomeAlbumLoadCell")
     }
 
-    @objc func nowPlayingAction() {
+    @objc private func nowPlayingAction() {
         let playerViewController = PlayerViewController()
         playerViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(playerViewController, animated: true)
@@ -34,7 +34,7 @@ final class HomeAlbumViewController: UITableViewController {
 
     // TODO: the entire paginated loading approach used here appears broken
 
-    func loadMoreResults() {
+    private func loadMoreResults() {
         if self.isLoading {
             return
         }

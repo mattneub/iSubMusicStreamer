@@ -139,15 +139,16 @@
         
         FMResultSet *result = [db executeQuery:@"SELECT md5 FROM cachedSongs WHERE finished = 'NO'"];
         
+        NSByteCountFormatter* byter = [[NSByteCountFormatter alloc] init];
+
         while ([result next])
         {
             NSString *path = [settingsS.songCachePath stringByAppendingPathComponent:[result stringForColumn:@"md5"]];
             NSDictionary *attr = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
             size += [attr fileSize];
-//            NSLog(@"[CacheSingleton] Added %llu to size for partially downloaded song", [attr fileSize]);
+//            NSLog(@"[CacheSingleton] Added %@ to size for partially downloaded song", [byter stringFromByteCount: [attr fileSize]]);
         }
-        
-        NSLog(@"[CacheSingleton] Total cache size was found to be: %llu", size);
+        NSLog(@"[CacheSingleton] Total cache size was found to be: %@", [byter stringFromByteCount: size]);
         self->_cacheSize = size;
         
     }];

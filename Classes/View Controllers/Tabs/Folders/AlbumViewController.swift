@@ -2,13 +2,13 @@ import UIKit
 
 final class AlbumViewController: UITableViewController, SUSLoaderDelegate {
 
-    var sectionInfo: [(String, Int)]? // for each "section", the first letter and the start index
+    private var sectionInfo: [(String, Int)]? // for each "section", the first letter and the start index
 
-    let myId: String
-    let myArtist: Artist
-    let myAlbum: Album?
+    private let myId: String
+    private let myArtist: Artist
+    private let myAlbum: Album?
 
-    lazy var dataModel: SUSSubFolderDAO! = SUSSubFolderDAO(delegate: self, andId: self.myId, andArtist: self.myArtist)
+    private lazy var dataModel: SUSSubFolderDAO! = SUSSubFolderDAO(delegate: self, andId: self.myId, andArtist: self.myArtist)
 
     // for the two forms of this view controller, start with "folder" called Various Artists; that's the Artist alternative
     // then tap an album to see its tracks (songs); that's the Album alternative
@@ -108,20 +108,20 @@ final class AlbumViewController: UITableViewController, SUSLoaderDelegate {
         self.tableView.reloadData()
     }
 
-    func cancelLoad() {
+    private func cancelLoad() {
         self.dataModel.cancelLoad()
         self.refreshControl?.endRefreshing()
         ViewObjects.shared().hideLoadingScreen()
     }
 
-    @objc func nowPlayingAction() {
+    @objc private func nowPlayingAction() {
         let playerViewController = PlayerViewController()
         playerViewController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(playerViewController, animated: true)
     }
 
     // Autolayout solution described here: https://medium.com/@aunnnn/table-header-view-with-autolayout-13de4cfc4343
-    func addHeaderAndIndex() {
+    private func addHeaderAndIndex() {
         if self.dataModel.songsCount == 0 && self.dataModel.albumsCount == 0 {
             self.tableView.tableHeaderView = nil
         } else {

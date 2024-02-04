@@ -10,7 +10,9 @@ import UIKit
 import SnapKit
 
 @objc final class AlbumTableViewHeader: UIView {
-    private let coverArtView = AsyncImageView()
+    // NOTE: Set to false because scaling down very large images causes flickering
+    //       when the view is scaled while dismissing a modal view
+    private let coverArtView = AsyncImageView(isLarge: false)
     private let coverArtButton = UIButton(type: .custom)
     private let artistLabel = AutoScrollingLabel()
     private let albumLabel = AutoScrollingLabel()
@@ -24,9 +26,6 @@ import SnapKit
             make.height.equalTo(100)
         }
         
-        // NOTE: Set to false because scaling down very large images causes flickering
-        //       when the view is scaled while dismissing a modal view
-        coverArtView.isLarge = false
         coverArtView.coverArtId = album.coverArtId
         coverArtView.backgroundColor = .label
         addSubview(coverArtView)
@@ -48,33 +47,33 @@ import SnapKit
         coverArtButton.snp.makeConstraints { make in
             make.leading.trailing.top.bottom.equalTo(coverArtView)
         }
-        
+
         let labelContainer = UIView()
         addSubview(labelContainer)
         labelContainer.snp.makeConstraints { make in
             make.leading.equalTo(coverArtView.snp.trailing).offset(10)
-            make.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalToSuperview().offset(-10).priority(999)
             make.top.bottom.equalTo(coverArtView)
         }
-        
+
         artistLabel.text = album.artistName
         artistLabel.font = .boldSystemFont(ofSize: 18)
         artistLabel.textColor = .label
         labelContainer.addSubview(artistLabel)
         artistLabel.snp.makeConstraints { make in
-            make.width.leading.trailing.top.equalToSuperview()
+            make.leading.trailing.top.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.27)
         }
-        
+
         albumLabel.text = album.title
         albumLabel.font = .systemFont(ofSize: 16)
         albumLabel.textColor = .label
         labelContainer.addSubview(albumLabel)
         albumLabel.snp.makeConstraints { make in
-            make.width.height.leading.trailing.equalTo(artistLabel)
+            make.height.leading.trailing.equalTo(artistLabel)
             make.top.equalTo(artistLabel.snp.bottom)
         }
-        
+
         let tracksString = tracks == 1 ? "1 track" : "\(tracks) tracks"
         let durationString = NSString.formatTime(duration)
         var finalString = tracksString
@@ -134,7 +133,7 @@ private final class ModalCoverArtViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

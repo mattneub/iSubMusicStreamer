@@ -9,23 +9,23 @@ protocol FolderDropdownDelegate: AnyObject {
 }
 
 final class FolderDropdownControl: UIView {
-    let HEIGHT: CGFloat = 40
+    private let HEIGHT: CGFloat = 40
 
     weak var delegate: FolderDropdownDelegate?
 
-    var selectedFolderId = -1
+    private var selectedFolderId = -1
     var folders: [Int: String] = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] ?? [-1: "All Folders"] {
         didSet {
             didSetFolders()
         }
     }
-    var labels = [UILabel]()
-    var isOpen = false
-    var borderColor = UIColor.systemGray
-    var textColor   = UIColor.label
-    var lightColor  = UIColor(named: "isubBackgroundColor")
-    var darkColor   = UIColor(named: "isubBackgroundColor")
-    lazy var selectedFolderLabel: UILabel = {
+    private var labels = [UILabel]()
+    private var isOpen = false
+    private var borderColor = UIColor.systemGray
+    private var textColor   = UIColor.label
+    private var lightColor  = UIColor(named: "isubBackgroundColor")
+    private var darkColor   = UIColor(named: "isubBackgroundColor")
+    private lazy var selectedFolderLabel: UILabel = {
         let selectedFolderLabel = UILabel(frame: CGRect(x: 5, y: 0, width: self.frame.size.width - 10, height: HEIGHT))
         selectedFolderLabel.autoresizingMask = .flexibleWidth
         selectedFolderLabel.isUserInteractionEnabled = true
@@ -36,14 +36,14 @@ final class FolderDropdownControl: UIView {
         selectedFolderLabel.text = "All Folders"
         return selectedFolderLabel
     }()
-    lazy var arrowImage: CALayer = {
+    private lazy var arrowImage: CALayer = {
         let arrowImage = CALayer()
         arrowImage.frame = CGRect(x: 0, y: 0, width: 18, height: 18);
         arrowImage.contentsGravity = .resizeAspect
         arrowImage.contents = UIImage(named: "folder-dropdown-arrow")!.cgImage
         return arrowImage
     }()
-    lazy var dropdownButton: UIButton = {
+    private lazy var dropdownButton: UIButton = {
         let dropdownButton = UIButton(frame: CGRect(x: 0, y: 0, width: 220, height: HEIGHT))
         dropdownButton.autoresizingMask = .flexibleWidth
         dropdownButton.addTarget(self, action: #selector(toggleDropdown), for: .touchUpInside)
@@ -51,7 +51,7 @@ final class FolderDropdownControl: UIView {
         dropdownButton.accessibilityHint = "Switches folders"
         return dropdownButton
     }()
-    var sizeIncrease: CGFloat = 0
+    private var sizeIncrease: CGFloat = 0
 
 
     override init(frame: CGRect) {
@@ -82,15 +82,7 @@ final class FolderDropdownControl: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    /*
-    NSInteger folderSort2(id keyVal1, id keyVal2, void *context) {
-        NSString *folder1 = [(NSArray*)keyVal1 objectAtIndexSafe:1];
-        NSString *folder2 = [(NSArray*)keyVal2 objectAtIndexSafe:1];
-        return [folder1 caseInsensitiveCompare:folder2];
-    }
-     */
-
-    func didSetFolders() {
+    private func didSetFolders() {
         // Remove old labels
         for label in self.labels {
             label.removeFromSuperview()
@@ -99,13 +91,6 @@ final class FolderDropdownControl: UIView {
 
         self.sizeIncrease = CGFloat(folders.count) * HEIGHT
 
-//        var sortedValues = [(Int, String)]()
-//        for key in folders.keys {
-//            if key != -1 {
-//                let keyValuePair = (key, folders[key])
-//                sortedValues.append(keyValuePair)
-//            }
-//        }
         var sortedValues = folders.filter { $0.key != -1 }.map {($0.key, $0.value)}
 
         // Sort by folder name
