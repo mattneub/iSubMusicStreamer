@@ -736,20 +736,27 @@ final class PlaylistsViewController: UIViewController {
     /// Does not just select the current row; it puts up the no playlists screen if there are
     /// no rows.
     @objc private func selectCurrentRowOfCurrentPlaylist() {
-        if self.segmentedControl.selectedSegmentIndex == 0 {
-            self.tableView.reloadData()
-            self.updateCurrentPlaylistCount()
-            let currentIndex = PlayQueue.shared().currentIndex
-            if currentIndex >= 0 && currentIndex < self.currentPlaylistCount {
-                Task { @MainActor in
-                    try await Task.sleep(nanoseconds: 200_000_000) // needed esp. if launching
-                    // how to select and scroll to row with minimum scrolling
-                    self.tableView.selectRow(at: .init(row: currentIndex, section: 0), animated: false, scrollPosition: .none)
-                    self.tableView.scrollToRow(at: .init(row: currentIndex, section: 0), at: .none, animated: false)
+        guard !isEditing else { return }
+        guard self.segmentedControl.selectedSegmentIndex == 0 else { return }
+
+        self.removeNoPlaylistsScreen()
+        self.tableView.reloadData()
+        self.updateCurrentPlaylistCount()
+        let currentIndex = PlayQueue.shared().currentIndex
+        if currentIndex >= 0 && currentIndex < self.currentPlaylistCount {
+            if let selectedRows = self.tableView.indexPathsForSelectedRows {
+                if selectedRows.contains(.init(row: currentIndex, section: 0)) {
+                    return // no work to do, but I suspect that after the reload nothing will be selected anyway
                 }
-            } else if self.currentPlaylistCount == 0 {
-                self.addNoPlaylistsScreen()
             }
+            Task { @MainActor in
+                try await Task.sleep(nanoseconds: 200_000_000) // needed esp. if launching
+                // how to select and scroll to row with minimum scrolling
+                self.tableView.selectRow(at: .init(row: currentIndex, section: 0), animated: false, scrollPosition: .none)
+                self.tableView.scrollToRow(at: .init(row: currentIndex, section: 0), at: .none, animated: false)
+            }
+        } else if self.currentPlaylistCount == 0 {
+            self.addNoPlaylistsScreen()
         }
     }
 
