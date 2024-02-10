@@ -918,6 +918,7 @@ extension PlaylistsViewController {
                         print(error)
                     }
                     Task { @MainActor in
+                        self.tableView.isScrollEnabled = true
                         ViewObjects.shared().hideLoadingScreen()
                         if self.isEditing {
                             self.changeEditMode(false, animated: true) { [unowned self] in
