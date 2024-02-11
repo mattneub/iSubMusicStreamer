@@ -207,7 +207,7 @@ final class FoldersViewController: UIViewController {
         self.tableView.tableHeaderView = self.headerView
     }
 
-    private func cancelLoad() {  // TODO: I don't see any evidence that this is ever called
+    @objc func cancelLoad() { // called by the ViewObjects cancel button
         dataModel.cancelLoad()
         ViewObjects.shared().hideLoadingScreen()
         tableView.refreshControl?.endRefreshing()

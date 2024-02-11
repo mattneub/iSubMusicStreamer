@@ -475,6 +475,16 @@ final class PlaylistsViewController: UIViewController {
         self.changeEditMode(false, animated: false, andThen: {})
     }
 
+    @objc func cancelLoad() { // called by the ViewObjects cancel button
+        if self.segmentedControl.selectedSegmentIndex == 0 {
+            self.recreateEphemeralSession()
+        } else {
+            self.recreateEphemeralSession()
+            self.serverPlaylistsDataModel?.cancelLoad()
+            ViewObjects.shared().hideLoadingScreen()
+        }
+    }
+
     @objc private func addURLRefBackButton() {
         if AppDelegate.shared().referringAppUrl != nil {
             if AppDelegate.shared().mainTabBarController.selectedIndex != 4 { // ?
@@ -1175,22 +1185,19 @@ extension PlaylistsViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         case 1:
-            let playlistSongsViewController = PlaylistSongsViewController(
-                nibName: "PlaylistSongsViewController", bundle: nil
-            )
-            playlistSongsViewController.md5 = Database.shared().localPlaylistsDbQueue?.string(
+            if let md5 = Database.shared().localPlaylistsDbQueue?.string(
                 forQuery: "SELECT md5 FROM localPlaylists WHERE ROWID = ?",
                 arguments: [indexPath.row + 1]
-            )
-            self.pushCustom(playlistSongsViewController)
-        case 2:
-            let playlistSongsViewController = PlaylistSongsViewController(
-                nibName: "PlaylistSongsViewController", bundle: nil
-            )
-            if let playlist = self.serverPlaylistsDataModel?.serverPlaylists?[indexPath.row] {
-                playlistSongsViewController.md5 = playlist.playlistName.md5()
-                playlistSongsViewController.serverPlaylist = playlist
+            ) {
+                let playlistSongsViewController = PlaylistSongsViewController(md5: md5, serverPlaylist: nil)
                 self.pushCustom(playlistSongsViewController)
+            }
+        case 2:
+            if let playlist = self.serverPlaylistsDataModel?.serverPlaylists?[indexPath.row] {
+                if let md5 = playlist.playlistName.md5() {
+                    let playlistSongsViewController = PlaylistSongsViewController(md5: md5, serverPlaylist: playlist)
+                    self.pushCustom(playlistSongsViewController)
+                }
             }
         default: break
         }

@@ -335,7 +335,7 @@ import SnapKit
         serverShuffleLoader = loader
     }
     
-    @objc private func cancelLoad() {
+    @objc func cancelLoad() { // called by the ViewObjects cancel button
         quickAlbumsLoader?.cancelLoad()
         quickAlbumsLoader = nil
         serverShuffleLoader?.cancelLoad()

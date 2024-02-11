@@ -108,7 +108,7 @@ final class AlbumViewController: UITableViewController, SUSLoaderDelegate {
         self.tableView.reloadData()
     }
 
-    private func cancelLoad() {
+    @objc func cancelLoad() { // called by the ViewObjects cancel button
         self.dataModel.cancelLoad()
         self.refreshControl?.endRefreshing()
         ViewObjects.shared().hideLoadingScreen()

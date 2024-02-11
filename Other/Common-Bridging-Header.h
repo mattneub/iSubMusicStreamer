@@ -121,6 +121,4 @@
 #import "SUSServerPlaylist.h"
 #import "ISMSLocalPlaylist.h"
 
-#import "PlaylistSongsViewController.h"
-
 #endif /* Common_Bridging_Header_h */
