@@ -42,7 +42,7 @@ extension SearchAllViewController /* UITableViewDataSource, UITableViewDelegate 
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: UniversalTableViewCell.reuseId, for: indexPath
         ) as? UniversalTableViewCell else { fatalError("no cell") }
-        cell.update(primaryText: cellNames[indexPath.row].rawValue, secondaryText: nil)
+        cell.update(withPrimaryText: cellNames[indexPath.row].rawValue, secondaryText: nil)
         return cell
     }
 

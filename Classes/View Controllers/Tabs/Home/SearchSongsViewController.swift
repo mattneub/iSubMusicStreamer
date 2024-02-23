@@ -167,7 +167,7 @@ extension SearchSongsViewController /* UITableViewDataSource, UITableViewDelegat
                     cell.hideCoverArt = true
                     cell.hideSecondaryLabel = true
                     cell.hideDurationLabel = true
-                    cell.update(model: self.listOfArtists[indexPath.row])
+                    cell.update(withModel: self.listOfArtists[indexPath.row])
                     return cell
                 }
             } else if indexPath.row == self.listOfArtists.count {
@@ -182,7 +182,7 @@ extension SearchSongsViewController /* UITableViewDataSource, UITableViewDelegat
                     cell.hideCoverArt = false
                     cell.hideSecondaryLabel = false
                     cell.hideDurationLabel = true
-                    cell.update(model: self.listOfAlbums[indexPath.row])
+                    cell.update(withModel: self.listOfAlbums[indexPath.row])
                     return cell
                 }
             } else if indexPath.row == self.listOfAlbums.count {
@@ -197,7 +197,7 @@ extension SearchSongsViewController /* UITableViewDataSource, UITableViewDelegat
                     cell.hideCoverArt = false
                     cell.hideSecondaryLabel = false
                     cell.hideDurationLabel = false
-                    cell.update(model: self.listOfSongs[indexPath.row])
+                    cell.update(withModel: self.listOfSongs[indexPath.row])
                     return cell
                 }
             } else if indexPath.row == self.listOfSongs.count {

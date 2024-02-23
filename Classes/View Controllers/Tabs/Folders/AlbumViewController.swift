@@ -230,13 +230,13 @@ extension AlbumViewController /* UITableViewDataSource, UITableViewDelegate */ {
             cell.hideNumberLabel = true
             cell.hideCoverArt = false
             cell.hideDurationLabel = true
-            cell.update(model: self.dataModel.album(forTableViewRow: UInt(indexPath.row)))
+            cell.update(withModel: self.dataModel.album(forTableViewRow: UInt(indexPath.row)))
         } else { // song
             cell.hideSecondaryLabel = false
             cell.hideCoverArt = true
             cell.hideDurationLabel = false
             if let song = self.dataModel.song(forTableViewRow: UInt(indexPath.row)) {
-                cell.update(model: song)
+                cell.update(withModel: song)
                 guard let track = song.track else {
                     cell.hideNumberLabel = true
                     return cell

@@ -90,7 +90,7 @@ extension HomeAlbumViewController /* UITableViewDataSource, UITableViewDelegate 
                 cell.hideNumberLabel = true
                 cell.hideCoverArt = false
                 cell.hideDurationLabel = true
-                cell.update(model: self.listOfAlbums[indexPath.row])
+                cell.update(withModel: self.listOfAlbums[indexPath.row])
                 return cell
             }
         } else {

@@ -133,7 +133,7 @@ import SnapKit
         fatalError("unimplemented")
     }
 
-    @objc func update(model: TableCellModel?) {
+    @objc func update(withModel model: TableCellModel?) {
         tableCellModel = model;
         if let model = model {
             if !hideCoverArt { coverArtView.coverArtId = model.coverArtId }
@@ -145,7 +145,7 @@ import SnapKit
         }
     }
     
-    @objc func update(primaryText: String, secondaryText: String?) {
+    @objc func update(withPrimaryText primaryText: String, secondaryText: String?) {
         tableCellModel = nil;
         hideNumberLabel = true
         hideCoverArt = true
@@ -156,7 +156,7 @@ import SnapKit
         cachedIndicator.isHidden = true;
     }
     
-    @objc func update(primaryText: String, secondaryText: String?, coverArtId: String?) {
+    @objc func update(withPrimaryText primaryText: String, secondaryText: String?, coverArtId: String?) {
         tableCellModel = nil;
         hideNumberLabel = true
         hideSecondaryLabel = (secondaryText == nil)

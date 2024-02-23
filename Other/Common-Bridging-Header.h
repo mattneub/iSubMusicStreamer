@@ -32,7 +32,7 @@
 // #import "PlaylistsViewController.h"
 #import "BookmarksViewController.h"
 #import "PlayingViewController.h"
-#import "AllAlbumsViewController.h"
+// #import "AllAlbumsViewController.h"
 #import "AllSongsViewController.h"
 #import "CacheOfflineFoldersViewController.h"
 //#import "FolderDropdownDelegate.h"
@@ -41,6 +41,9 @@
 #import "CustomUITabBarController.h"
 #import "SUSDropdownFolderLoader.h"
 #import "SUSSubFolderDAO.h"
+#import "SUSServerPlaylistsDAO.h"
+#import "SUSAllSongsDAO.h"
+#import "SUSAllAlbumsDAO.h"
 #import "SUSServerPlaylistsDAO.h"
 
 // Views
@@ -120,5 +123,7 @@
 
 #import "SUSServerPlaylist.h"
 #import "ISMSLocalPlaylist.h"
+#import "ISMSIndex.h"
+#import "LoadingScreen.h"
 
 #endif /* Common_Bridging_Header_h */

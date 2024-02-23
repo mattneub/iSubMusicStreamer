@@ -1021,19 +1021,19 @@ extension PlaylistsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.hideDurationLabel = false
             cell.hideSecondaryLabel = false
             cell.number = indexPath.row + 1
-            cell.update(model: PlayQueue.shared().song(for: UInt(indexPath.row)))
+            cell.update(withModel: PlayQueue.shared().song(for: UInt(indexPath.row)))
         case 1: // Local playlist
             cell.hideNumberLabel = true
             cell.hideCoverArt = false
             cell.hideDurationLabel = true
             cell.hideSecondaryLabel = false
-            cell.update(model: self.localPlaylist(forIndex: indexPath.row))
+            cell.update(withModel: self.localPlaylist(forIndex: indexPath.row))
         case 2: // Server playlist
             cell.hideNumberLabel = true
             cell.hideCoverArt = false
             cell.hideDurationLabel = true
             cell.hideSecondaryLabel = true
-            cell.update(model: self.serverPlaylistsDataModel?.serverPlaylists?[indexPath.row])
+            cell.update(withModel: self.serverPlaylistsDataModel?.serverPlaylists?[indexPath.row])
         default: fatalError("There are no other segments")
         }
         return cell

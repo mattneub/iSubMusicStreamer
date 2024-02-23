@@ -405,7 +405,7 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
         cell.hideCoverArt = true
         cell.hideSecondaryLabel = true
         cell.hideDurationLabel = true
-        cell .update(model: self.artist(atIndexPath: indexPath))
+        cell.update(withModel: self.artist(atIndexPath: indexPath))
         return cell
     }
     

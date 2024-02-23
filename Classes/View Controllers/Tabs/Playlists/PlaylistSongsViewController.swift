@@ -257,7 +257,7 @@ final class PlaylistSongsViewController: UITableViewController {
         cell.hideDurationLabel = false
         cell.hideSecondaryLabel = false
         cell.number = indexPath.row + 1
-        cell.update(model: model)
+        cell.update(withModel: model)
         return cell
     }
 
