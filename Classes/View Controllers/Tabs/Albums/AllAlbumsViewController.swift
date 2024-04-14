@@ -1,7 +1,6 @@
 import UIKit
 
-final class AllAlbumsViewController: UIViewController {
-    private lazy var tableView = UITableView()
+final class AllAlbumsViewController: UITableViewController {
 
     private var dataModel: SUSAllAlbumsDAO?
     private var allSongsDataModel: SUSAllSongsDAO?
@@ -42,16 +41,7 @@ final class AllAlbumsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(tableView)
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.title = "Albums"
 
         createDataModel()
 
@@ -62,6 +52,7 @@ final class AllAlbumsViewController: UIViewController {
         tableView.refreshControl = UIRefreshControl(frame: .zero, primaryAction: .init { [weak self] _ in
             self?.reloadAction()
         })
+        tableView.refreshControl?.tintColor = .systemBackground
 
         tableView.rowHeight = Defines.rowHeight
         tableView.register(BlurredSectionHeader.self, forHeaderFooterViewReuseIdentifier: BlurredSectionHeader.reuseId)
@@ -341,14 +332,14 @@ extension AllAlbumsViewController: SUSLoaderDelegate {
     }
 }
 
-extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
+extension AllAlbumsViewController /* UITableViewDataSource, UITableViewDelegate */ {
 
     // Purely for these methods, to decide which version of the table to display.
     private var showingSearch: Bool {
         self.isSearching && (searcher?.searchBar.text?.count ?? 0) > 0
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if showingSearch {
             return 1
         } else {
@@ -370,7 +361,7 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if showingSearch {
             return 0
         }
@@ -380,7 +371,7 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         return Defines.rowHeight - 5
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if showingSearch {
             return Int(self.dataModel?.searchCount ?? 0)
         } else {
@@ -388,7 +379,7 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if showingSearch {
             return nil
         }
@@ -402,7 +393,7 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         return sectionHeader
     }
 
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         if showingSearch {
             return nil
         } else {
@@ -411,7 +402,7 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         if showingSearch { return -1 }
 
         if index == 0 { // oh, yeah, this again, yecch
@@ -422,7 +413,7 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         return index - 1
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UniversalTableViewCell.reuseId) as? UniversalTableViewCell else {
             fatalError("no cell")
         }
@@ -432,11 +423,11 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.pushCustom(AlbumViewController(withArtist: nil, orAlbum: album(at: indexPath)))
     }
 
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if let album = album(at: indexPath) {
             return SwipeAction.downloadAndQueueConfig(model: album)
         } else {

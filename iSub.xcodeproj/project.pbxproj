@@ -177,7 +177,6 @@
 		538E5256255A31F2000DF682 /* UIApplication+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 538E5254255A31F2000DF682 /* UIApplication+Helper.m */; };
 		539148BA2559E597004AAC3F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539148B92559E597004AAC3F /* CoreServices.framework */; };
 		539148E02559FEFD004AAC3F /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 539148DF2559FEFD004AAC3F /* Launch Screen.storyboard */; };
-		539797FE1162D4D200F41D8B /* AllAlbumsViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539797FD1162D4D200F41D8B /* AllAlbumsViewControllerNOT.xib */; };
 		5398F26D11DA61DA00007870 /* SettingsTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5398F26B11DA61DA00007870 /* SettingsTabViewController.m */; };
 		53A2BE24147DF09800E44822 /* EqualizerPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A2BE23147DF09800E44822 /* EqualizerPointView.m */; };
 		53A2BE26147DF09800E44822 /* EqualizerPointView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A2BE23147DF09800E44822 /* EqualizerPointView.m */; };
@@ -191,7 +190,6 @@
 		53B52BA511ADE0A6005776B5 /* GenresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B52BA311ADE0A6005776B5 /* GenresViewController.m */; };
 		53B52BA611ADE0A6005776B5 /* GenresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53B52BA411ADE0A6005776B5 /* GenresViewController.xib */; };
 		53BB7ECA121B8D8F00BEE7E8 /* CustomUITextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BB7EC9121B8D8F00BEE7E8 /* CustomUITextView.m */; };
-		53BC26B6139AF0DD00A825F1 /* AllAlbumsViewControllerNOT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539797FD1162D4D200F41D8B /* AllAlbumsViewControllerNOT.xib */; };
 		53BC26B9139AF0DD00A825F1 /* AllSongsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53614BD7116467420088ABC0 /* AllSongsViewController.xib */; };
 		53BC26BB139AF0DD00A825F1 /* PlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53ABE3621165C83900197877 /* PlayingViewController.xib */; };
 		53BC26CC139AF0DD00A825F1 /* BookmarksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5388A3B3119899260049BA9E /* BookmarksViewController.xib */; };
@@ -665,7 +663,6 @@
 		539148DF2559FEFD004AAC3F /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		539796E21162B68800F41D8B /* AllAlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllAlbumsViewController.h; sourceTree = "<group>"; };
 		539796E31162B68800F41D8B /* AllAlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AllAlbumsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		539797FD1162D4D200F41D8B /* AllAlbumsViewControllerNOT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AllAlbumsViewControllerNOT.xib; sourceTree = "<group>"; };
 		5398F26A11DA61DA00007870 /* SettingsTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTabViewController.h; sourceTree = "<group>"; };
 		5398F26B11DA61DA00007870 /* SettingsTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTabViewController.m; sourceTree = "<group>"; };
 		53A2BE22147DF09800E44822 /* EqualizerPointView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqualizerPointView.h; sourceTree = "<group>"; };
@@ -1222,7 +1219,6 @@
 				539796E21162B68800F41D8B /* AllAlbumsViewController.h */,
 				539796E31162B68800F41D8B /* AllAlbumsViewController.m */,
 				3FE059B62B8107F7003D639B /* AllAlbumsViewController.swift */,
-				539797FD1162D4D200F41D8B /* AllAlbumsViewControllerNOT.xib */,
 			);
 			path = Albums;
 			sourceTree = "<group>";
@@ -1938,7 +1934,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				539797FE1162D4D200F41D8B /* AllAlbumsViewControllerNOT.xib in Resources */,
 				533C65AD15ABB9C6003EAF29 /* ServerListViewController.xib in Resources */,
 				53614BD9116467420088ABC0 /* AllSongsViewController.xib in Resources */,
 				53ABE3641165C83900197877 /* PlayingViewController.xib in Resources */,
@@ -1968,7 +1963,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				530738F51FAF6A72005C2650 /* Media.xcassets in Resources */,
-				53BC26B6139AF0DD00A825F1 /* AllAlbumsViewControllerNOT.xib in Resources */,
 				533C65AF15ABB9C6003EAF29 /* ServerListViewController.xib in Resources */,
 				53BC26B9139AF0DD00A825F1 /* AllSongsViewController.xib in Resources */,
 				53BC26BB139AF0DD00A825F1 /* PlayingViewController.xib in Resources */,
