@@ -24,3 +24,5 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * Fixed Jukebox button bug.
 * More Swift translation, heavily rejiggering the Playlists interface. Increased the minimum requirement to iOS 15.
 * More translation (playlist songs).
+* More translation (albums).
+* Use standard search interface in Albums.
