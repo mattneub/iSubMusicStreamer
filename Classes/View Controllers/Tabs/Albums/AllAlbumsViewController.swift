@@ -7,11 +7,10 @@ final class AllAlbumsViewController: UIViewController {
     private var allSongsDataModel: SUSAllSongsDAO?
 
     private lazy var headerView: UIView = {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 110))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 60))
         headerView.autoresizingMask = .flexibleWidth
         headerView.addSubview(countLabel)
         headerView.addSubview(reloadTimeLabel)
-        headerView.addSubview(searchBar)
         return headerView
     }()
 
@@ -33,34 +32,7 @@ final class AllAlbumsViewController: UIViewController {
         return reloadTimeLabel
     }()
 
-    private lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar(frame: CGRect(x: 0, y: 61, width: 320, height: 40))
-        searchBar.searchBarStyle = .minimal
-        searchBar.autoresizingMask = .flexibleWidth
-        searchBar.delegate = self
-        searchBar.autocorrectionType = .no
-        searchBar.placeholder = "Album name"
-        return searchBar
-    }()
-
-    private lazy var searchOverlay: UIVisualEffectView = {
-        let effectStyle: UIBlurEffect.Style = traitCollection.userInterfaceStyle == .dark ? .systemUltraThinMaterialLight : .systemUltraThinMaterialDark;
-        let searchOverlay = UIVisualEffectView(effect: UIBlurEffect(style: effectStyle))
-        searchOverlay.translatesAutoresizingMaskIntoConstraints = false
-
-        let dismissButton = UIButton(type: .custom)
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
-        dismissButton.addTarget(self, action: #selector(searchBarSearchButtonClicked), for: .touchUpInside)
-        searchOverlay.contentView.addSubview(dismissButton)
-
-        NSLayoutConstraint.activate([
-            dismissButton.leadingAnchor.constraint(equalTo: searchOverlay.leadingAnchor),
-            dismissButton.trailingAnchor.constraint(equalTo: searchOverlay.trailingAnchor),
-            dismissButton.topAnchor.constraint(equalTo: searchOverlay.topAnchor),
-            dismissButton.bottomAnchor.constraint(equalTo: searchOverlay.bottomAnchor),
-        ])
-        return searchOverlay
-    }()
+    private var searcher: UISearchController?
 
     private var loadingScreen: LoadingScreen?
 
@@ -94,6 +66,15 @@ final class AllAlbumsViewController: UIViewController {
         tableView.rowHeight = Defines.rowHeight
         tableView.register(BlurredSectionHeader.self, forHeaderFooterViewReuseIdentifier: BlurredSectionHeader.reuseId)
         tableView.register(UniversalTableViewCell.self, forCellReuseIdentifier: UniversalTableViewCell.reuseId)
+
+        let searcher = UISearchController(searchResultsController: nil)
+        self.searcher = searcher
+        searcher.hidesNavigationBarDuringPresentation = false
+        searcher.obscuresBackgroundDuringPresentation = false
+        searcher.searchResultsUpdater = self
+        searcher.delegate = self
+        navigationItem.searchController = searcher
+        searcher.searchBar.searchTextField.backgroundColor = .systemBackground
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -206,6 +187,8 @@ final class AllAlbumsViewController: UIViewController {
         if let urlString = Settings.shared().urlString {
             if let when = UserDefaults.standard.string(forKey: "\(urlString)songsReloadTime") {
                 self.reloadTimeLabel.text = "last reload: \(when)"
+            } else {
+                self.reloadTimeLabel.text = "last reload: ---"
             }
         }
         tableView.tableHeaderView = headerView
@@ -238,7 +221,11 @@ final class AllAlbumsViewController: UIViewController {
                 guard let self else { return }
                 self.showLoadingScreen()
 
-                self.allSongsDataModel?.restartLoad()
+                self.allSongsDataModel?.restartLoad() // this is the weird part;
+                // he doesn't ask for the albums! he may be unaware that you can now ask for
+                // http://your-server/rest/getAlbumList with type "alphabeticalByName"
+                // Take a look at SUSQuickAlbumsLoader to see how to ask for `getAlbumList`
+                // Eventually I want to work out how to load this way
                 self.tableView.tableHeaderView = nil
                 self.tableView.reloadData()
 
@@ -342,81 +329,6 @@ final class AllAlbumsViewController: UIViewController {
     }
 }
 
-extension AllAlbumsViewController: UISearchBarDelegate {
-    // TODO: Use search controller instead some day!
-    fileprivate func createSearchOverlay() {
-
-        self.view.addSubview(self.searchOverlay)
-
-        NSLayoutConstraint.activate([
-            self.searchOverlay.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            self.searchOverlay.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.searchOverlay.topAnchor.constraint(equalTo: self.view.topAnchor, constant:50),
-            self.searchOverlay.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-        ])
-
-        self.searchOverlay.alpha = 0.0
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
-            self.searchOverlay.alpha = 1
-        }
-    }
-
-    fileprivate func hideSearchOverlay() {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut) {
-            self.searchOverlay.alpha = 0
-        } completion: { _ in
-            self.searchOverlay.removeFromSuperview()
-        }
-    }
-
-    @objc fileprivate func searchBarSearchButtonClicked() {
-        self.searchBar.text = ""
-        self.searchBar.resignFirstResponder()
-        self.hideSearchOverlay()
-        self.isSearching = false
-
-        self.navigationItem.leftBarButtonItem = nil
-        self.tableView.reloadData()
-        self.tableView.setContentOffset(CGPoint(x: 0, y: 56), animated: true)
-    }
-
-    func searchBarTextDidBeginEditing(_ theSearchBar: UISearchBar) {
-        guard !self.isSearching else { return }
-        self.isSearching = true
-
-        self.tableView.setContentOffset(CGPoint(x: 0, y: 56), animated: true)
-
-        if self.searchOverlay.window == nil {
-            self.createSearchOverlay()
-        }
-
-        // Add the done button.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self, action: #selector(searchBarSearchButtonClicked)
-        )
-    }
-
-    func searchBarTextDidEndEditing(_ theSearchBar: UISearchBar) {
-        theSearchBar.resignFirstResponder()
-    }
-
-    func searchBar(_ theSearchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count > 0 {
-            self.hideSearchOverlay()
-            self.dataModel?.search(forAlbumName: searchText)
-        } else {
-            self.tableView.setContentOffset(CGPoint(x: 0, y: 56), animated: true)
-            self.createSearchOverlay()
-            Database.shared().allAlbumsDbQueue?.inDatabase { db in
-                db.executeUpdate("DROP TABLE allAlbumsSearch")
-            }
-        }
-        self.tableView.reloadData()
-    }
-
-}
-
 extension AllAlbumsViewController: SUSLoaderDelegate {
     func loadingFailed(_ loader: SUSLoader!, withError error: Error!) {
         self.tableView.reloadData()
@@ -431,9 +343,9 @@ extension AllAlbumsViewController: SUSLoaderDelegate {
 
 extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
 
+    // Purely for these methods, to decide which version of the table to display.
     private var showingSearch: Bool {
-        guard let dataModel else { return false }
-        return self.isSearching && (dataModel.searchCount > 0 || (self.searchBar.text?.count ?? 0) > 0)
+        self.isSearching && (searcher?.searchBar.text?.count ?? 0) > 0
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -532,4 +444,31 @@ extension AllAlbumsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
+}
+
+extension AllAlbumsViewController: UISearchResultsUpdating, UISearchControllerDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let update = searchController.searchBar.text, !update.isEmpty {
+            self.dataModel?.search(forAlbumName: update)
+        } else {
+            Database.shared().allAlbumsDbQueue?.inDatabase { db in
+                db.executeUpdate("DROP TABLE allAlbumsSearch")
+            }
+        }
+        self.tableView.reloadData()
+    }
+
+    func willPresentSearchController(_ searchController: UISearchController) {
+        self.isSearching = true
+        self.tableView.reloadData()
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        self.isSearching = false
+        self.tableView.reloadData()
+    }
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        self.tableView.setContentOffset(.zero, animated: true)
+    }
 }
