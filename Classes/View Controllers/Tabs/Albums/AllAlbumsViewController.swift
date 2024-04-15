@@ -172,15 +172,12 @@ final class AllAlbumsViewController: UITableViewController {
         if let dataModel {
             countLabel.text = "\(dataModel.count) Albums"
         }
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        if let urlString = Settings.shared().urlString {
-            if let when = UserDefaults.standard.string(forKey: "\(urlString)songsReloadTime") {
-                self.reloadTimeLabel.text = "last reload: \(when)"
-            } else {
-                self.reloadTimeLabel.text = "last reload: ---"
-            }
+        if let urlString = Settings.shared().urlString,
+           let when = UserDefaults.standard.object(forKey: "\(urlString)songsReloadTime") as? Date {
+            let dateString = when.formatted(date: .abbreviated, time: .shortened)
+            self.reloadTimeLabel.text = "last reload: \(dateString)"
+        } else {
+            self.reloadTimeLabel.text = "last reload: ---"
         }
         tableView.tableHeaderView = headerView
         tableView.reloadData()
