@@ -535,6 +535,8 @@ final class PlaylistsViewController: UIViewController {
         self.segmentedControl.isEnabled = !editing // let's just make a simple rule about this
         // and now comes the Secret Sauce! these next lines cause cell height recalculation
         // plus we can do a completion handler after the animation
+        // but don't do this part if we're not even showing
+        guard view.window != nil else { return }
         self.tableView.performBatchUpdates {
             // none
         } completion: { _ in
