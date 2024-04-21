@@ -57,6 +57,7 @@ final class AllAlbumsViewController: UITableViewController {
         tableView.rowHeight = Defines.rowHeight
         tableView.register(BlurredSectionHeader.self, forHeaderFooterViewReuseIdentifier: BlurredSectionHeader.reuseId)
         tableView.register(UniversalTableViewCell.self, forCellReuseIdentifier: UniversalTableViewCell.reuseId)
+        tableView.sectionHeaderTopPadding = 0
 
         let searcher = UISearchController(searchResultsController: nil)
         self.searcher = searcher
@@ -395,19 +396,13 @@ extension AllAlbumsViewController /* UITableViewDataSource, UITableViewDelegate 
             return nil
         } else {
             guard let names = (self.dataModel?.index() as? [Index])?.map({ $0.name ?? "" }) else { return nil }
-            return ["{search}"] + names
+            return names
         }
     }
 
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         if showingSearch { return -1 }
-
-        if index == 0 { // oh, yeah, this again, yecch
-            tableView.scrollRectToVisible(CGRect(x: 0, y: 50, width: 320, height: 40), animated: true)
-            return -1
-        }
-
-        return index - 1
+        return index
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

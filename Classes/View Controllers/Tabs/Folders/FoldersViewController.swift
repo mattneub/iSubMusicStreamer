@@ -1,24 +1,14 @@
 import UIKit
 
-final class FoldersViewController: UIViewController {
-    @IBOutlet var tableView: UITableView!
+final class FoldersViewController: UITableViewController {
 
     private var isSearching = false
-
+    private var searcher: UISearchController?
     private var isCountShowing = false
-
     private var headerView = UIView()
-
-    private var searchBar = UISearchBar()
-
-    private var searchOverlay: UIVisualEffectView?
-
     private var countLabel = UILabel()
-
     private var reloadTimeLabel = UILabel()
-
-    private var dropdown = FolderDropdownControl()
-
+    // private var dropdown = FolderDropdownControl()
     private lazy var dataModel: SUSRootFoldersDAO = createModel()
 
     private func createModel() -> SUSRootFoldersDAO {
@@ -30,13 +20,7 @@ final class FoldersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.frame = view.bounds
-        tableView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         tableView.backgroundColor = UIColor(named: "isubBackgroundColor")
-        view.addSubview(tableView)
 
         self.title = "Folders"
         self.view.backgroundColor = UIColor(named: "isubBackgroundColor")
@@ -44,15 +28,21 @@ final class FoldersViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(serverSwitched), name: .init(ISMSNotification_ServerSwitched), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateFolders), name: .init(ISMSNotification_ServerCheckPassed), object: nil)
 
-        tableView.refreshControl = RefreshControl { [weak self] in
+        tableView.refreshControl = UIRefreshControl(frame: .zero, primaryAction: .init { [weak self] _ in
             if let self, let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
                 self.loadData(id)
             }
-        }
+        })
+        tableView.refreshControl?.tintColor = .systemBackground
+
 
         tableView.register(BlurredSectionHeader.self, forHeaderFooterViewReuseIdentifier: BlurredSectionHeader.reuseId)
-        tableView.register(UniversalTableViewCell.self, forCellReuseIdentifier: UniversalTableViewCell.reuseId)
-        tableView.rowHeight = Defines.rowHeight
+        tableView.register(TrackTableViewCell.self, forCellReuseIdentifier: UniversalTableViewCell.reuseId)
+        self.tableView.estimatedRowHeight = Defines.rowHeight
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.separatorColor = .label
+        self.tableView.separatorInset = .zero
+        self.tableView.sectionHeaderTopPadding = 0
 
         if self.dataModel.isRootFolderIdCached {
             self.addCount()
@@ -60,6 +50,15 @@ final class FoldersViewController: UIViewController {
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(addURLRefBackButton), name: .init(UIApplication.didBecomeActiveNotification), object: nil)
+
+        let searcher = UISearchController(searchResultsController: nil)
+        self.searcher = searcher
+        searcher.hidesNavigationBarDuringPresentation = false
+        searcher.obscuresBackgroundDuringPresentation = false
+        searcher.searchResultsUpdater = self
+        searcher.delegate = self
+        navigationItem.searchController = searcher
+        searcher.searchBar.searchTextField.backgroundColor = .systemBackground
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -83,11 +82,11 @@ final class FoldersViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
         self.dataModel.delegate = nil
-        self.dropdown.delegate = nil
+        // self.dropdown.delegate = nil
     }
 
     private func loadData(_ folderId: Int) {
-        self.dropdown.updateFolders()
+        // self.dropdown.updateFolders()
         ViewObjects.shared().isArtistsLoading = true
         ViewObjects.shared().showAlbumLoadingScreen(AppDelegate.shared().window, sender: self)
         self.dataModel.selectedFolderId = folderId as NSNumber
@@ -100,7 +99,7 @@ final class FoldersViewController: UIViewController {
             self.tableView.reloadData()
             self.removeCount()
         }
-        self.folderDropdownSelect(folderId: -1)
+        // self.folderDropdownSelect(folderId: -1)
     }
 
     @objc private func updateFolders() {}
@@ -150,11 +149,11 @@ final class FoldersViewController: UIViewController {
     private func addCount() {
         self.isCountShowing = true
 
-        self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 157))
+        self.headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 64))
         self.headerView.autoresizingMask = .flexibleWidth
         self.headerView.backgroundColor = self.view.backgroundColor
 
-        self.countLabel = UILabel(frame: CGRect(x: 0, y: 9, width: 320, height: 30))
+        self.countLabel = UILabel(frame: CGRect(x: 0, y: 10, width: 320, height: 30))
         self.countLabel.autoresizingMask = .flexibleWidth;
         self.countLabel.textColor = .label
         self.countLabel.textAlignment = .center
@@ -168,25 +167,17 @@ final class FoldersViewController: UIViewController {
         self.reloadTimeLabel.font = .systemFont(ofSize: 11)
         self.headerView.addSubview(self.reloadTimeLabel)
 
-        self.dropdown = FolderDropdownControl(frame: CGRect(x: 50, y: 61, width: 220, height: 40))
-        self.dropdown.delegate = self
-        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] {
-            self.dropdown.folders = dropdownFolders
-        } else {
-            self.dropdown.folders = [-1: "All Folders"]
-        }
-        if let id = self.dataModel.selectedFolderId as? Int {
-            self.dropdown.selectFolder(withId: id)
-        }
-        self.headerView.addSubview(self.dropdown)
-
-        self.searchBar = UISearchBar(frame: CGRect(x: 0, y: 111, width: 320, height: 40))
-        self.searchBar.autoresizingMask = .flexibleWidth
-        self.searchBar.searchBarStyle = .minimal
-        self.searchBar.delegate = self
-        self.searchBar.autocorrectionType = .no
-        self.searchBar.placeholder = "Folder name"
-        self.headerView.addSubview(self.searchBar)
+//        self.dropdown = FolderDropdownControl(frame: CGRect(x: 50, y: 61, width: 220, height: 40))
+//        self.dropdown.delegate = self
+//        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] {
+//            self.dropdown.folders = dropdownFolders
+//        } else {
+//            self.dropdown.folders = [-1: "All Folders"]
+//        }
+//        if let id = self.dataModel.selectedFolderId as? Int {
+//            self.dropdown.selectFolder(withId: id)
+//        }
+//        self.headerView.addSubview(self.dropdown)
 
         self.updateCount()
 
@@ -215,11 +206,11 @@ final class FoldersViewController: UIViewController {
 
 }
 
+/*
 extension FoldersViewController: FolderDropdownDelegate {
     func folderDropdownMoveViews(y: CGFloat) {
         self.tableView.performBatchUpdates {
             self.tableView.tableHeaderView?.frame.size.height += y
-            self.searchBar.frame.origin.y += y
             self.tableView.tableHeaderView = self.tableView.tableHeaderView
 
             let visibleSections = Set(self.tableView.indexPathsForVisibleRows?.map { $0.section } ?? [])
@@ -249,6 +240,7 @@ extension FoldersViewController: FolderDropdownDelegate {
         }
     }
 }
+*/
 
 extension FoldersViewController: SUSLoaderDelegate {
     func loadingFailed(_ loader: SUSLoader!, withError error: Error!) {
@@ -283,112 +275,21 @@ extension FoldersViewController: SUSLoaderDelegate {
     }
 }
 
-extension FoldersViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        guard !self.isSearching else { return }
-        self.isSearching = true
-
-        self.dataModel.clearSearchTable()
-        self.dropdown.closeDropdownFast()
-        self.tableView.setContentOffset(CGPoint(x: 0, y: 104), animated: true)
-
-        if searchBar.text.isEmpty {
-            self.createSearchOverlay()
-        }
-
-        // Add the done button.
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(searchBarSearchButtonClicked))
+extension FoldersViewController /* UITableViewDataSource, UITableViewDelegate */ {
+    // Purely for these methods, to decide which version of the table to display.
+    private var showingSearch: Bool {
+        self.isSearching && (searcher?.searchBar.text?.count ?? 0) > 0
     }
 
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if !searchText.isEmpty {
-            self.hideSearchOverlay()
-            self.dataModel.search(forFolderName: self.searchBar.text)
-        } else {
-            self.createSearchOverlay()
-            self.dataModel.clearSearchTable()
-            self.tableView.setContentOffset(CGPoint(x: 0, y: 104), animated: false)
-        }
-        self.tableView.reloadData()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.updateCount()
-
-        self.searchBar.text = ""
-        self.searchBar.resignFirstResponder()
-        self.hideSearchOverlay()
-        self.isSearching = false
-
-        self.navigationItem.leftBarButtonItem = nil
-        self.dataModel.clearSearchTable()
-        self.tableView.reloadData()
-        self.tableView.setContentOffset(CGPoint(x: 0, y: 104), animated: true)
-    }
-
-    private func createSearchOverlay() {
-        let effectStyle: UIBlurEffect.Style = self.traitCollection.userInterfaceStyle == .dark ? .systemUltraThinMaterialLight : .systemUltraThinMaterialDark
-        let searchOverlay = UIVisualEffectView(effect: UIBlurEffect(style: effectStyle))
-        searchOverlay.translatesAutoresizingMaskIntoConstraints = false
-
-        let dismissButton = UIButton(type: .custom)
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
-        dismissButton.addTarget(self, action: #selector(searchBarSearchButtonClicked), for: .touchUpInside)
-        searchOverlay.contentView.addSubview(dismissButton)
-
-        self.view.addSubview(searchOverlay)
-
-        NSLayoutConstraint.activate([
-            searchOverlay.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            searchOverlay.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            searchOverlay.topAnchor.constraint(equalTo: self.view.topAnchor, constant:50),
-            searchOverlay.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-
-            dismissButton.leadingAnchor.constraint(equalTo: searchOverlay.leadingAnchor),
-            dismissButton.trailingAnchor.constraint(equalTo: searchOverlay.trailingAnchor),
-            dismissButton.topAnchor.constraint(equalTo: searchOverlay.topAnchor),
-            dismissButton.bottomAnchor.constraint(equalTo: searchOverlay.bottomAnchor),
-        ])
-
-        // Animate the search overlay on screen
-        searchOverlay.alpha = 0.0
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            searchOverlay.alpha = 1
-        }
-        self.searchOverlay = searchOverlay
-    }
-
-    private func hideSearchOverlay() {
-        if self.searchOverlay != nil {
-            // Animate the search overlay off screen
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-                self.searchOverlay?.alpha = 0
-            } completion: { _ in
-                self.searchOverlay?.removeFromSuperview()
-                self.searchOverlay = nil
-            }
-        }
-    }
-}
-
-extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
-    var searchIsActive: Bool {
-        self.isSearching && (self.dataModel.searchCount > 0 || !self.searchBar.text.isEmpty)
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        guard !searchIsActive else {
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        guard !showingSearch else {
             return 1
         }
         return self.dataModel.indexNames.count
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard !searchIsActive else {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard !showingSearch else {
             return Int(self.dataModel.searchCount)
         }
         if let counts = self.dataModel.indexCounts as? [Int], counts.count > section {
@@ -397,7 +298,7 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
         return 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: UniversalTableViewCell.reuseId, for: indexPath
         ) as? UniversalTableViewCell else { fatalError("no cell") }
@@ -410,7 +311,7 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func artist(atIndexPath indexPath: IndexPath) -> Artist? {
-        guard !searchIsActive else {
+        guard !showingSearch else {
             return self.dataModel.artistForPosition(inSearch: UInt(indexPath.row) + 1)
         }
         if let indexPositions = self.dataModel.indexPositions as? [Int] {
@@ -422,8 +323,8 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
         return nil
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard !searchIsActive else {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard !showingSearch else {
             return nil
         }
         guard self.dataModel.indexNames.count > 0 else {
@@ -437,8 +338,8 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
         return sectionHeader
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard !searchIsActive else {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard !showingSearch else {
             return 0
         }
         guard self.dataModel.indexNames.count > 0 else {
@@ -448,39 +349,57 @@ extension FoldersViewController: UITableViewDataSource, UITableViewDelegate {
         return Defines.rowHeight - 5
     }
 
-    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        guard !searchIsActive else {
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        guard !showingSearch else {
             return nil
         }
         guard let names = self.dataModel.indexNames as? [String] else {
             return nil
         }
-        return ["{search}"] + names
+        // return ["{search}"] + names
+        return names
     }
 
-    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        guard !searchIsActive else {
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        guard !showingSearch else {
             return -1
         }
-        if index == 0 {
-            if self.dropdown.folders.isEmpty || self.dropdown.folders.count == 2 {
-                self.tableView.setContentOffset(CGPoint(x: 0, y: 104), animated: false)
-            } else {
-                self.tableView.setContentOffset(CGPoint(x: 0, y: 54), animated: false)
-            }
-            return -1
-        }
-        return index - 1
+        return index
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         pushCustom(AlbumViewController(withArtist: artist(atIndexPath: indexPath), orAlbum: nil))
     }
 
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if let model = artist(atIndexPath: indexPath) {
             return SwipeAction.downloadAndQueueConfig(model: model)
         }
         return nil
+    }
+}
+
+extension FoldersViewController: UISearchResultsUpdating, UISearchControllerDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let update = searchController.searchBar.text, !update.isEmpty {
+            self.dataModel.search(forFolderName: update)
+        } else {
+            self.dataModel.clearSearchTable()
+        }
+        self.tableView.reloadData()
+    }
+
+    func willPresentSearchController(_ searchController: UISearchController) {
+        self.isSearching = true
+        self.tableView.reloadData()
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+        self.isSearching = false
+        self.tableView.reloadData()
+    }
+
+    func didDismissSearchController(_ searchController: UISearchController) {
+        self.tableView.setContentOffset(.zero, animated: true)
     }
 }
