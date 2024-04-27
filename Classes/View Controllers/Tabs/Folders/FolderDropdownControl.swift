@@ -138,6 +138,9 @@ final class FolderDropdownControl: UIView {
     }
 
     func updateFolders() {
+        guard Settings.shared().urlString != nil else {
+            return
+        }
         let loader = SUSDropdownFolderLoader { success, error, loader in
             guard let loader = loader as? SUSDropdownFolderLoader else { return }
             if success, let folders = loader.updatedfolders as? [Int: String] {

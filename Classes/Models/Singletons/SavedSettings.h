@@ -77,7 +77,6 @@ NS_SWIFT_NAME(Settings)
 @property BOOL isUpdateCheckQuestionAsked;
 @property BOOL isNewSearchAPI;
 @property BOOL isVideoSupported;
-@property (readonly) BOOL isTestServer;
 @property BOOL isBasicAuthEnabled;
 @property BOOL isTapAndHoldEnabled;
 @property BOOL isSwipeEnabled;

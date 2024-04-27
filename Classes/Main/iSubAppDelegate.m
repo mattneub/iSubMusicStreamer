@@ -133,7 +133,7 @@
     }
 		
 	self.showIntro = NO;
-	if (settingsS.isTestServer) {
+	if (nil == settingsS.urlString) {
 		if (settingsS.isOfflineMode) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Welcome!" message:@"Looks like this is your first time using iSub or you haven't set up your Subsonic account info yet.\n\nYou'll need an internet connection to get started." preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];

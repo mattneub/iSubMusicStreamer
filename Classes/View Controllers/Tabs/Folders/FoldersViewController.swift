@@ -8,7 +8,14 @@ final class FoldersViewController: UITableViewController {
     private var headerView = UIView()
     private var countLabel = UILabel()
     private var reloadTimeLabel = UILabel()
-    // private var dropdown = FolderDropdownControl()
+
+    /*
+     We're in a very odd situation here; I don't want this bit of interface, but we can't
+     do an initial launch and load without it! So for now I'm keeping it, but my goal is to get
+     rid of it and just manipulate the SUSDropdownFolderLoader myself here. That's not easy to
+     disentangle so I'm leaving the dropdown in place but never showing it.
+     */
+    private var dropdown = FolderDropdownControl(frame: CGRect(x: 0, y: 0, width: 380, height: 300))
     private lazy var dataModel: SUSRootFoldersDAO = createModel()
 
     private func createModel() -> SUSRootFoldersDAO {
@@ -31,6 +38,15 @@ final class FoldersViewController: UITableViewController {
         tableView.refreshControl = UIRefreshControl(frame: .zero, primaryAction: .init { [weak self] _ in
             if let self, let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
                 self.loadData(id)
+            } else {
+                // well we need to load _something_! so I'm opting for the _last_ folder in the list
+                // the list is kept in the dropdown; that's something I'd like to fix of course
+                guard let self else { return }
+                let folders = dropdown.folders
+                let keys = folders.keys.sorted()
+                if let lastKey = keys.last {
+                    loadData(lastKey)
+                }
             }
         })
         tableView.refreshControl?.tintColor = .systemBackground
@@ -82,11 +98,11 @@ final class FoldersViewController: UITableViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
         self.dataModel.delegate = nil
-        // self.dropdown.delegate = nil
+        self.dropdown.delegate = nil
     }
 
     private func loadData(_ folderId: Int) {
-        // self.dropdown.updateFolders()
+        self.dropdown.updateFolders()
         ViewObjects.shared().isArtistsLoading = true
         ViewObjects.shared().showAlbumLoadingScreen(AppDelegate.shared().window, sender: self)
         self.dataModel.selectedFolderId = folderId as NSNumber
@@ -99,10 +115,13 @@ final class FoldersViewController: UITableViewController {
             self.tableView.reloadData()
             self.removeCount()
         }
-        // self.folderDropdownSelect(folderId: -1)
+        self.folderDropdownSelect(folderId: -1)
     }
 
-    @objc private func updateFolders() {}
+    @objc private func updateFolders() {
+        self.dropdown.updateFolders()
+    }
+
     @objc private func nowPlayingAction() {
         let player = PlayerViewController()
         player.hidesBottomBarWhenPushed = true
@@ -167,17 +186,18 @@ final class FoldersViewController: UITableViewController {
         self.reloadTimeLabel.font = .systemFont(ofSize: 11)
         self.headerView.addSubview(self.reloadTimeLabel)
 
-//        self.dropdown = FolderDropdownControl(frame: CGRect(x: 50, y: 61, width: 220, height: 40))
-//        self.dropdown.delegate = self
-//        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] {
-//            self.dropdown.folders = dropdownFolders
-//        } else {
-//            self.dropdown.folders = [-1: "All Folders"]
-//        }
-//        if let id = self.dataModel.selectedFolderId as? Int {
-//            self.dropdown.selectFolder(withId: id)
-//        }
-//        self.headerView.addSubview(self.dropdown)
+        self.dropdown = FolderDropdownControl(frame: CGRect(x: 50, y: 61, width: 220, height: 40))
+        self.dropdown.delegate = self
+        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] {
+            self.dropdown.folders = dropdownFolders
+        } else {
+            self.dropdown.folders = [-1: "All Folders"]
+        }
+        if let id = self.dataModel.selectedFolderId as? Int {
+            self.dropdown.selectFolder(withId: id)
+        }
+        self.headerView.addSubview(self.dropdown)
+        self.dropdown.isHidden = true // tee-hee, this way I get the functionality without showing it
 
         self.updateCount()
 
@@ -206,7 +226,7 @@ final class FoldersViewController: UITableViewController {
 
 }
 
-/*
+// /*
 extension FoldersViewController: FolderDropdownDelegate {
     func folderDropdownMoveViews(y: CGFloat) {
         self.tableView.performBatchUpdates {
@@ -240,7 +260,7 @@ extension FoldersViewController: FolderDropdownDelegate {
         }
     }
 }
-*/
+// */
 
 extension FoldersViewController: SUSLoaderDelegate {
     func loadingFailed(_ loader: SUSLoader!, withError error: Error!) {

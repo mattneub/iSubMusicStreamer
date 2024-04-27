@@ -29,6 +29,9 @@
 
 - (void)setupAllSongsDb
 {
+    if (nil == [settingsS urlString]) {
+        return;
+    }
 	NSString *urlStringMd5 = [[settingsS urlString] md5];
 	
 	// Setup the allAlbums database
@@ -58,6 +61,9 @@
 
 - (void)setupDatabases
 {
+    if (nil == [settingsS urlString]) {
+        return;
+    }
 	NSString *urlStringMd5 = [[settingsS urlString] md5];
     NSLog(@"[DatabaseSingleton] Database path: %@", self.databaseFolderPath);
     NSLog(@"[DatabaseSingleton] Database prefix: %@", urlStringMd5);

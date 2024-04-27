@@ -19,13 +19,9 @@
 #import "iSubAppDelegate.h"
 #import "Defines.h"
 
-
-
-// Test server details
 #define DEFAULT_SERVER_TYPE SUBSONIC
-#define DEFAULT_URL @"http://isubapp.com:9001"
-#define DEFAULT_USER_NAME @"isub-guest"
-#define DEFAULT_PASSWORD @"1sub1snumb3r0n3"
+
+// Other references to the iSub test server have been removed
 
 @interface SavedSettings() {
     NSUserDefaults *_userDefaults;
@@ -167,7 +163,7 @@
 	if (![_userDefaults boolForKey:@"areSettingsSetup"]) {
 		[_userDefaults setBool:YES forKey:@"areSettingsSetup"];
 		[_userDefaults setBool:NO forKey:@"manualOfflineModeSetting"];
-		[_userDefaults setInteger:0 forKey:@"recoverSetting"];
+		[_userDefaults setInteger:1 forKey:@"recoverSetting"];
 		[_userDefaults setInteger:7 forKey:@"maxBitrateWifiSetting"];
 		[_userDefaults setInteger:7 forKey:@"maxBitrate3GSetting"];
 		[_userDefaults setBool:YES forKey:@"enableSongCachingSetting"];
@@ -252,8 +248,7 @@
 }
 
 - (NSString *)urlString {
-    NSString *urlString = [_userDefaults stringForKey:@"url"];
-    return urlString ? urlString : DEFAULT_URL;
+    return [_userDefaults stringForKey:@"url"];
 }
 
 - (void)setUrlString:(NSString *)url {
@@ -262,8 +257,7 @@
 }
 
 - (NSString *)username {
-    NSString *username = [_userDefaults stringForKey:@"username"];
-    return username ? username : DEFAULT_USER_NAME;
+    return [_userDefaults stringForKey:@"username"];
 }
 
 - (void)setUsername:(NSString *)user {
@@ -272,8 +266,7 @@
 }
 
 - (NSString *)password {
-	NSString *password = [_userDefaults stringForKey:@"password"];
-    return password ? password : DEFAULT_PASSWORD;
+	return [_userDefaults stringForKey:@"password"];
 }
 
 - (void)setPassword:(NSString *)pass {
@@ -801,10 +794,6 @@
 - (void)setIsDisableUsageOver3G:(BOOL)isDisableUsageOver3G {
     [_userDefaults setBool:isDisableUsageOver3G forKey:@"isDisableUsageOver3G"];
     [_userDefaults synchronize];
-}
-
-- (BOOL)isTestServer {
-	return [self.urlString isEqualToString:DEFAULT_URL];
 }
 
 - (NSUInteger)oneTimeRunIncrementor {
