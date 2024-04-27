@@ -24,8 +24,8 @@ NS_SWIFT_NAME(Song)
 @property (nullable, copy) NSString *coverArtId;
 @property (nullable, copy) NSString *path;
 @property (nullable, copy) NSString *suffix;
-// @property (nullable, copy) NSString *comment;
 @property (nullable, copy) NSString *transcodedSuffix;
+@property (nullable, copy) NSString *comment;
 @property (nullable, copy) NSNumber *duration;
 @property (nullable, copy) NSNumber *bitRate;
 @property (nullable, copy) NSNumber *track;

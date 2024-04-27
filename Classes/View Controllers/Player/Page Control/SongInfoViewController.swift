@@ -142,9 +142,10 @@ final class SongInfoViewController: UIViewController {
                 stackView.addArrangedSubview(createTitleLabel(text: "Genre"))
                 stackView.addArrangedSubview(createInfoLabel(text: genre))
             }
-//            if let comment = song.comment {
-//                print("found a comment!", comment)
-//            }
+            if let comment = song.comment, !comment.isEmpty {
+                stackView.addArrangedSubview(createTitleLabel(text: "Comment"))
+                stackView.addArrangedSubview(createInfoLabel(text: comment))
+            }
             if let track = song.track {
                 stackView.addArrangedSubview(createTitleLabel(text: "Track Number"))
                 stackView.addArrangedSubview(createInfoLabel(text: track.stringValue))

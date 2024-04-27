@@ -450,7 +450,7 @@
             {
                 // Doesn't exist so fix the table definition
                 [db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE bookmarksTemp (bookmarkId INTEGER PRIMARY KEY, playlistIndex INTEGER, name TEXT, position INTEGER, %@, bytes INTEGER)", [ISMSSong standardSongColumnSchema]]];
-                [db executeUpdate:@"INSERT INTO bookmarksTemp SELECT bookmarkId, playlistIndex, name, position, title, songId, artist, album, genre, coverArtId, path, suffix, transcodedSuffix, duration, bitRate, track, year, size, parentId, 0, bytes FROM bookmarks"];
+                [db executeUpdate:@"INSERT INTO bookmarksTemp SELECT bookmarkId, playlistIndex, name, position, title, songId, artist, album, genre, coverArtId, path, suffix, transcodedSuffix, comment, duration, bitRate, track, year, size, parentId, 0, bytes FROM bookmarks"];
                 [db executeUpdate:@"DROP TABLE bookmarks"];
                 [db executeUpdate:@"ALTER TABLE bookmarksTemp RENAME TO bookmarks"];
                 [db executeUpdate:@"CREATE INDEX bookmarks_songId ON bookmarks (songId)"];
@@ -566,8 +566,8 @@
 			[db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE bookmarksTemp (bookmarkId INTEGER PRIMARY KEY, playlistIndex INTEGER, name TEXT, position INTEGER, %@, bytes INTEGER)", [ISMSSong standardSongColumnSchema]]];
 			
 			// Move the records
-			[db executeUpdate:@"INSERT INTO bookmarksTemp (playlistIndex, name, position, title, songId, artist, album, genre, coverArtId, path, suffix, transcodedSuffix, duration, bitRate, track, year, size) SELECT 0, name, position, title, songId, artist, album, genre, coverArtId, path, suffix, transcodedSuffix, duration, bitRate, track, year, size FROM bookmarks"];
-			
+			[db executeUpdate:@"INSERT INTO bookmarksTemp (playlistIndex, name, position, title, songId, artist, album, genre, coverArtId, path, suffix, transcodedSuffix, comment, duration, bitRate, track, year, size) SELECT 0, name, position, title, songId, artist, album, genre, coverArtId, path, suffix, transcodedSuffix, comment, duration, bitRate, track, year, size FROM bookmarks"];
+
 			// Swap the tables
 			[db executeUpdate:@"DROP TABLE IF EXISTS bookmarks"];
 			[db executeUpdate:@"ALTER TABLE bookmarksTemp RENAME TO bookmarks"];	
