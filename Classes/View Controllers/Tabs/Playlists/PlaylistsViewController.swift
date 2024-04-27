@@ -1026,7 +1026,10 @@ extension PlaylistsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.hideDurationLabel = false
             cell.hideSecondaryLabel = false
             cell.number = indexPath.row + 1
-            cell.update(withModel: PlayQueue.shared().song(for: UInt(indexPath.row)))
+            if let song = PlayQueue.shared().song(for: UInt(indexPath.row)) {
+                cell.update(withModel: song)
+                cell.secondaryLabel.text = song.album
+            }
         case 1: // Local playlist
             cell.hideNumberLabel = true
             cell.hideCoverArt = false

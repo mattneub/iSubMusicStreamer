@@ -258,6 +258,7 @@ final class PlaylistSongsViewController: UITableViewController {
         cell.hideSecondaryLabel = false
         cell.number = indexPath.row + 1
         cell.update(withModel: model)
+        cell.secondaryLabel.text = model.album
         return cell
     }
 

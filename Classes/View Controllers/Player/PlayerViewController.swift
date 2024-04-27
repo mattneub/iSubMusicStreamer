@@ -30,7 +30,8 @@ import SnapKit
     private let songInfoContainer = UIView()
     private let songNameLabel = AutoScrollingLabel(centerIfPossible: true)
     private let artistNameLabel = AutoScrollingLabel(centerIfPossible: true)
-    
+    private let albumNameLabel = UILabel()
+
     // Player controls
     private let controlsStack = UIStackView()
     private let playPauseButton = UIButton(type: .custom)
@@ -162,7 +163,7 @@ import SnapKit
         
         songInfoContainer.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalTo(UIDevice.isSmall() || UIDevice.isPad() ? 50 : 60)
+            make.height.equalTo(UIDevice.isSmall() || UIDevice.isPad() ? 60 : 60)
             make.centerX.equalToSuperview()
         }
         
@@ -170,7 +171,7 @@ import SnapKit
         songNameLabel.textColor = .label
         songInfoContainer.addSubview(songNameLabel)
         songNameLabel.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.height.equalToSuperview().multipliedBy(0.4)
             make.leading.trailing.top.equalToSuperview()
         }
         
@@ -178,10 +179,22 @@ import SnapKit
         artistNameLabel.textColor = .secondaryLabel
         songInfoContainer.addSubview(artistNameLabel)
         artistNameLabel.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.4)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.3)
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(songNameLabel.snp.bottom)
         }
-        
+
+        // I don't like any of this but it will do for now
+        albumNameLabel.font = .boldSystemFont(ofSize: UIDevice.isSmall() || UIDevice.isPad() ? 18 : 16)
+        albumNameLabel.textColor = .secondaryLabel
+        albumNameLabel.textAlignment = .center
+        songInfoContainer.addSubview(albumNameLabel)
+        albumNameLabel.snp.makeConstraints { make in
+            make.height.equalToSuperview().multipliedBy(0.3)
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(artistNameLabel.snp.bottom)
+        }
+
         //
         // Progress bar
         //
@@ -613,6 +626,7 @@ import SnapKit
             coverArtPageControl.coverArtImage = UIImage(named: "default-album-art")
             songNameLabel.text = nil
             artistNameLabel.text = nil
+            albumNameLabel.text = nil
             progressSlider.value = 0
             downloadProgressView.isHidden = true
             updateBookmarkButton()
@@ -624,6 +638,7 @@ import SnapKit
         coverArtPageControl.coverArtId = song.coverArtId
         songNameLabel.text = song.title
         artistNameLabel.text = song.artist
+        albumNameLabel.text = song.album
         progressSlider.maximumValue = song.duration?.floatValue ?? 0.0
         updateDownloadProgress(animated: false)
         updateBookmarkButton()

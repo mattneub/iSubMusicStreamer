@@ -18,8 +18,11 @@ import SnapKit
     fileprivate let cachedIndicator = CellCachedIndicatorView()
     fileprivate let numberLabel = UILabel()
     fileprivate let coverArtView = AsyncImageView()
-    fileprivate let primaryLabel = UILabel()
-    fileprivate let secondaryLabel = UILabel()
+    // made these public so that we can override what the `update(withModel:)` method does; the
+    // problem is that the "model" is not e.g. a model struct but a full-fledged class that might
+    // be used for other purposes — I'll deal with that later
+    let primaryLabel = UILabel()
+    let secondaryLabel = UILabel()
     fileprivate let durationLabel = UILabel()
 
 //    @objc var autoScroll: Bool {
