@@ -27,6 +27,7 @@
         _coverArtId = [[element attribute:@"coverArt"] cleanString];
         _path = [[element attribute:@"path"] cleanString];
         _suffix = [[element attribute:@"suffix"] cleanString];
+//        _comment = [[element attribute:@"comment"] cleanString];
         _transcodedSuffix = [[element attribute:@"transcodedSuffix"] cleanString];
         
         NSString *durationString = [element attribute:@"duration"];
@@ -63,7 +64,8 @@
 		_genre = [[attributeDict objectForKey:@"genre"] cleanString];
 		_coverArtId = [[attributeDict objectForKey:@"coverArt"] cleanString];
 		_path = [[attributeDict objectForKey:@"path"] cleanString];
-		_suffix = [[attributeDict objectForKey:@"suffix"] cleanString];
+        _suffix = [[attributeDict objectForKey:@"suffix"] cleanString];
+		// _comment = [[attributeDict objectForKey:@"comment"] cleanString];
 		_transcodedSuffix = [[attributeDict objectForKey:@"transcodedSuffix"] cleanString];
         
         NSString *durationString = [attributeDict objectForKey:@"duration"];
@@ -100,7 +102,8 @@
 	[encoder encodeObject:self.genre forKey:@"genre"];
 	[encoder encodeObject:self.coverArtId forKey:@"coverArtId"];
 	[encoder encodeObject:self.path forKey:@"path"];
-	[encoder encodeObject:self.suffix forKey:@"suffix"];
+    [encoder encodeObject:self.suffix forKey:@"suffix"];
+	// [encoder encodeObject:self.comment forKey:@"comment"];
 	[encoder encodeObject:self.transcodedSuffix forKey:@"transcodedSuffix"];
 	[encoder encodeObject:self.duration forKey:@"duration"];
 	[encoder encodeObject:self.bitRate forKey:@"bitRate"];
@@ -124,7 +127,8 @@
 			_coverArtId = [[decoder decodeObjectForKey:@"coverArtId"] copy];
 			_path = [[decoder decodeObjectForKey:@"path"] copy];
 			_suffix = [[decoder decodeObjectForKey:@"suffix"] copy];
-			_transcodedSuffix = [[decoder decodeObjectForKey:@"transcodedSuffix"] copy];
+            // _comment = [[decoder decodeObjectForKey:@"comment"] copy];
+            _transcodedSuffix = [[decoder decodeObjectForKey:@"transcodedSuffix"] copy];
 			_duration =[[decoder decodeObjectForKey:@"duration"] copy];
 			_bitRate = [[decoder decodeObjectForKey:@"bitRate"] copy];
 			_track = [[decoder decodeObjectForKey:@"track"] copy];
@@ -165,7 +169,8 @@
 	newSong.genre = self.genre;
 	newSong.coverArtId = self.coverArtId;
 	newSong.path = self.path;
-	newSong.suffix = self.suffix;
+    newSong.suffix = self.suffix;
+	// newSong.comment = self.comment;
 	newSong.transcodedSuffix = self.transcodedSuffix;
 	newSong.duration = self.duration;
 	newSong.bitRate = self.bitRate;
@@ -198,7 +203,8 @@
 		([self.album isEqualToString:otherSong.album] || (self.album == nil && otherSong.album == nil)) &&
 		([self.genre isEqualToString:otherSong.genre] || (self.genre == nil && otherSong.genre == nil)) &&
 		([self.coverArtId isEqualToString:otherSong.coverArtId] || (self.coverArtId == nil && otherSong.coverArtId == nil)) &&
-		([self.suffix isEqualToString:otherSong.suffix] || (self.suffix == nil && otherSong.suffix == nil)) &&
+        ([self.suffix isEqualToString:otherSong.suffix] || (self.suffix == nil && otherSong.suffix == nil)) &&
+		// ([self.comment isEqualToString:otherSong.comment] || (self.comment == nil && otherSong.comment == nil)) &&
 		([self.transcodedSuffix isEqualToString:otherSong.transcodedSuffix] || (self.transcodedSuffix == nil && otherSong.transcodedSuffix == nil)) &&
 		([self.duration isEqualToNumber:otherSong.duration] || (self.duration == nil && otherSong.duration == nil)) &&
 		([self.bitRate isEqualToNumber:otherSong.bitRate] || (self.bitRate == nil && otherSong.bitRate == nil)) &&

@@ -70,7 +70,7 @@ import SnapKit
         updateDownloadProgress(animated: false)
         if UIApplication.orientation().isPortrait || UIDevice.isPad() {
             coverArtPageControl.view.snp.remakeConstraints { make in
-                make.height.equalTo(coverArtPageControl.view.snp.width).offset(20)
+                make.height.equalTo(coverArtPageControl.view.snp.width).offset(26) // page control, experimentally
                 make.top.leading.equalToSuperview().offset(20)
                 make.trailing.equalToSuperview().offset(-20)
             }
@@ -126,7 +126,8 @@ import SnapKit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        edgesForExtendedLayout = [] // TODO: We crash without this, figure out why
+
         view.overrideUserInterfaceStyle = .dark
         view.backgroundColor = UIColor(named: "isubBackgroundColor")
         
@@ -139,7 +140,8 @@ import SnapKit
         coverArtPageControl.view.translatesAutoresizingMaskIntoConstraints = false
         addChild(coverArtPageControl)
         view.addSubview(coverArtPageControl.view)
-        
+        coverArtPageControl.didMove(toParent: self)
+
         
         //
         // Vertical Stack View

@@ -269,7 +269,8 @@ final class PlaylistsViewController: UIViewController {
                             self.tableView.reloadData()
                             let currentIndex = PlayQueue.shared().currentIndex
                             if currentIndex >= 0 && currentIndex < self.currentPlaylistCount {
-                                self.tableView.selectRow(at: .init(row: currentIndex, section: 0), animated: false, scrollPosition: .top)
+                                // abandon this feature for now, it's causing too much trouble
+                                // self.tableView.selectRow(at: .init(row: currentIndex, section: 0), animated: false, scrollPosition: .top)
                             }
                         }
                     }
@@ -392,6 +393,7 @@ final class PlaylistsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        edgesForExtendedLayout = []
 
         self.recreateEphemeralSession()
 
@@ -761,12 +763,13 @@ final class PlaylistsViewController: UIViewController {
                     return // no work to do, but I suspect that after the reload nothing will be selected anyway
                 }
             }
-            Task { @MainActor in
-                try await Task.sleep(nanoseconds: 200_000_000) // needed esp. if launching
-                // how to select and scroll to row with minimum scrolling
-                self.tableView.selectRow(at: .init(row: currentIndex, section: 0), animated: false, scrollPosition: .none)
-                self.tableView.scrollToRow(at: .init(row: currentIndex, section: 0), at: .none, animated: false)
-            }
+            // abandon this feature temporarily, it's causing too much trouble
+//            Task { @MainActor in
+//                try await Task.sleep(nanoseconds: 200_000_000) // needed esp. if launching
+//                // how to select and scroll to row with minimum scrolling
+//                self.tableView.selectRow(at: .init(row: currentIndex, section: 0), animated: false, scrollPosition: .none)
+//                self.tableView.scrollToRow(at: .init(row: currentIndex, section: 0), at: .none, animated: false)
+//            }
         } else if self.currentPlaylistCount == 0 {
             self.addNoPlaylistsScreen()
         }
@@ -1153,7 +1156,8 @@ extension PlaylistsViewController: UITableViewDelegate, UITableViewDataSource {
 
             // Highlight the current playing song
             if PlayQueue.shared().currentIndex >= 0 && PlayQueue.shared().currentIndex < self.currentPlaylistCount {
-                self.tableView.selectRow(at: .init(row: PlayQueue.shared().currentIndex, section: 0), animated: false, scrollPosition: .top)
+                // abandon this feature temporarily, it's causing too much trouble
+                // self.tableView.selectRow(at: .init(row: PlayQueue.shared().currentIndex, section: 0), animated: false, scrollPosition: .top)
             }
 
             if !Settings.shared().isJukeboxEnabled {

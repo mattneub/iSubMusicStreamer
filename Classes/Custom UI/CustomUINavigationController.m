@@ -38,7 +38,7 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     // Prevent view controllers from going under the navigation bar
-    viewController.edgesForExtendedLayout = UIRectEdgeNone;
+    // viewController.edgesForExtendedLayout = UIRectEdgeNone; // but this messes up search bar plus refresh control
 }
 
 @end

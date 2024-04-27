@@ -1,23 +1,6 @@
-//
-//  PageControlViewController.swift
-//  iSub
-//
-//  Created by Benjamin Baron on 11/16/20.
-//  Copyright © 2020 Ben Baron. All rights reserved.
-//
-
 import UIKit
-import SnapKit
 
-final class PageControlViewController: UIViewController {
-    private let scrollView = UIScrollView()
-    private let pageControl = UIPageControl()
-    private var pageControlUsed = false
-    private var isRotating = false
-    
-    private let numberOfPages = 4
-    private var viewControllers = [UIViewController]()
-    
+final class PageControlViewController: UIPageViewController {
     private var coverArtViewController: CoverArtViewController?
     var coverArtId: String? {
         get { return coverArtViewController?.coverArtId }
@@ -27,39 +10,18 @@ final class PageControlViewController: UIViewController {
         get { return coverArtViewController?.image }
         set { coverArtViewController?.image = newValue }
     }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        // Fix the scroll offset if the scrollview is resized during rotation
-        isRotating = true
-        coordinator.animate { _ in
-            self.changePage()
-        } completion: { _ in
-            self.isRotating = false
-        }
+
+    convenience init() {
+        self.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        coverArtViewController = CoverArtViewController()
+        setViewControllers([coverArtViewController!], direction: .forward, animated: false)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // a page is the width of the scroll view
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.scrollsToTop = false;
-        scrollView.bounces = false
-        scrollView.isMultipleTouchEnabled = true
-        scrollView.delaysContentTouches = false
-        scrollView.canCancelContentTouches = true
-        scrollView.isUserInteractionEnabled = true
-        scrollView.delegate = self;
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.height.equalTo(view.snp.width)
-            make.leading.trailing.top.equalToSuperview()
-        }
-        
+        self.dataSource = self
+    }
+    /*
         pageControl.numberOfPages = numberOfPages
         pageControl.currentPage = 0
         pageControl.addTarget(self, action: #selector(changePage), for: .valueChanged)
@@ -91,6 +53,7 @@ final class PageControlViewController: UIViewController {
     
                 addChild(controller)
                 scrollView.addSubview(controller.view)
+                controller.didMove(toParent: self)
                 controller.view.snp.makeConstraints { make in
                     make.width.height.equalTo(view.snp.width)
                     if let prevController = prevController {
@@ -106,39 +69,39 @@ final class PageControlViewController: UIViewController {
             }
         }
     }
-    
-    @objc private func changePage() {
-        let page = pageControl.currentPage;
-        
-        // update the scroll view to the appropriate page
-        scrollView.setContentOffset(CGPoint(x: scrollView.bounds.width * CGFloat(page), y: 0), animated: true)
-        
-        // Set the boolean used when scrolls originate from the UIPageControl. See scrollViewDidScroll.
-        pageControlUsed = true
-    }
+    */
 }
 
-extension PageControlViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // We don't want a "feedback loop" between the UIPageControl and the scroll delegate in
-        // which a scroll event generated from the user hitting the page control triggers updates from
-        // the delegate method. We use a boolean to disable the delegate logic when the page control is used.
-        if pageControlUsed || isRotating {
-            // do nothing - the scroll was initiated from the page control, not the user dragging
-            return;
+extension PageControlViewController: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        return switch viewController {
+        case is CoverArtViewController: LyricsViewController()
+        case is LyricsViewController: SongInfoViewController()
+        case is SongInfoViewController: CacheStatusViewController()
+        default: nil
         }
-        
-        // Switch the indicator when more than 50% of the previous/next page is visible
-        let pageWidth = scrollView.bounds.size.width;
-        let page = Int(floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1);
-        self.pageControl.currentPage = page;
     }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        pageControlUsed = false
+
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        return switch viewController {
+        case is LyricsViewController: coverArtViewController
+        case is SongInfoViewController: LyricsViewController()
+        case is CacheStatusViewController: SongInfoViewController()
+        default: nil
+        }
     }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        pageControlUsed = false
+
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        return 4
+    }
+
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        return switch pageViewController.viewControllers?.first ?? UIViewController() {
+        case is CoverArtViewController: 0
+        case is LyricsViewController: 1
+        case is SongInfoViewController: 2
+        case is CacheStatusViewController: 3
+        default: 0
+        }
     }
 }

@@ -80,6 +80,7 @@ static dispatch_once_t _sharedSessionDispatchOnce = 0;
             [self informDelegateLoadingFailed:error];
         } else {
             self.receivedData = data;
+            NSLog(@"%@", self);
             NSLog(@"[SUSLoader] loader type: %i response:\n%@", self.type, [[NSString alloc] initWithData:self.receivedData encoding:NSUTF8StringEncoding]);
             [self processResponse];
         }

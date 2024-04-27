@@ -113,7 +113,9 @@ import SnapKit
         title = "Home"
         // Not sure why, but it's necessary to set this on the navigation item only in this controller
         navigationItem.title = "Home"
-        
+
+        edgesForExtendedLayout = [] // eventually we should remove this and lay out with autolayout
+
         registerNotifications()
         
         quickAlbumsButton.setAction { [unowned self] in
