@@ -26,3 +26,7 @@ Personal fork from https://github.com/einsteinx2/iSubMusicStreamer.
 * More translation (playlist songs).
 * More translation (albums).
 * Use standard search interface in Albums.
+* Use standard search interface in Folders, remove folder selection dropdown.
+* Layout tweaks to player interface.
+* Added a new song property, "comment", displayed in player. **WARNING:** This is a breaking change! You must delete the app and start over.
+* Rejigger the opening dance when we launch with no server URL; remove hidden dependency on iSub test server (<http://isubapp.com:9001>).
