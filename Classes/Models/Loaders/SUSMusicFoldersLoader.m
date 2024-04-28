@@ -1,17 +1,17 @@
 //
-//  SUSDropdownFolderLoader.m
+//  SUSMusicFoldersLoader.m
 //  libSub
 //
 //  Created by Justin Hill on 2/6/13.
 //  Copyright (c) 2013 Einstein Times Two Software. All rights reserved.
 //
 
-#import "SUSDropdownFolderLoader.h"
+#import "SUSMusicFoldersLoader.h"
 #import "NSMutableURLRequest+SUS.h"
 #import "RXMLElement.h"
 #import "NSError+ISMSError.h"
 
-@implementation SUSDropdownFolderLoader
+@implementation SUSMusicFoldersLoader
 
 - (SUSLoaderType)type {
     return SUSLoaderType_DropdownFolder;
@@ -33,7 +33,7 @@
             NSString *message = [error attribute:@"message"];
             [self informDelegateLoadingFailed:[NSError errorWithISMSCode:code message:message]];
         } else {
-            NSMutableDictionary *musicFolders = [@{@-1: @"All Folders"} mutableCopy];
+            NSMutableDictionary *musicFolders = [[NSMutableDictionary alloc] init]; // [@{@-1: @"All Folders"} mutableCopy];
             [root iterate:@"musicFolders.musicFolder" usingBlock:^(RXMLElement *e) {
                 NSNumber *folderId = @([[e attribute:@"id"] intValue]);
                 musicFolders[folderId] = [e attribute:@"name"];

@@ -1,5 +1,5 @@
 //
-//  SUSDropdownFolderLoader.h
+//  SUSMusicFoldersLoader.h
 //  libSub
 //
 //  Created by Justin Hill on 2/6/13.
@@ -8,7 +8,7 @@
 
 #import "SUSLoader.h"
 
-@interface SUSDropdownFolderLoader : SUSLoader
+@interface SUSMusicFoldersLoader : SUSLoader
 
 @property (nonatomic, strong) NSDictionary *updatedfolders;
 

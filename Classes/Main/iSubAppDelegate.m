@@ -267,7 +267,7 @@
 	// if it's not then display an alert and allow user to change settings if they want.
 	// This is in case the user is, for instance, connected to a wifi network but does not 
 	// have internet access or if the host url entered was wrong.
-    if (!settingsS.isOfflineMode) {
+    if (!settingsS.isOfflineMode && nil != settingsS.urlString && nil != settingsS.username && nil != settingsS.password) {
         self.statusLoader = [[SUSStatusLoader alloc] initWithDelegate:self];
         self.statusLoader.urlString = settingsS.urlString;
         self.statusLoader.username = settingsS.username;

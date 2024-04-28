@@ -39,7 +39,7 @@
 //#import "FolderDropdownControl.h"
 #import "SUSAllSongsLoader.h"
 #import "CustomUITabBarController.h"
-#import "SUSDropdownFolderLoader.h"
+#import "SUSMusicFoldersLoader.h"
 #import "SUSSubFolderDAO.h"
 #import "SUSServerPlaylistsDAO.h"
 #import "SUSAllSongsDAO.h"

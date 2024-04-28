@@ -11,8 +11,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
-		3F06EC0E2B4D870400DB3FA3 /* FolderDropdownControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06EC0D2B4D870400DB3FA3 /* FolderDropdownControl.swift */; };
-		3F06EC0F2B4D870400DB3FA3 /* FolderDropdownControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F06EC0D2B4D870400DB3FA3 /* FolderDropdownControl.swift */; };
 		3F0C10812B49AD1700C93BF5 /* FoldersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */; };
 		3F0C10822B49AD1700C93BF5 /* FoldersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */; };
 		3F100AFF2B77CFBC00C8A9A2 /* PlaylistSongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F100AFE2B77CFBC00C8A9A2 /* PlaylistSongsViewController.swift */; };
@@ -390,8 +388,8 @@
 		53FE37A21EA961720058B925 /* SUSChatLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B01EA961720058B925 /* SUSChatLoader.m */; };
 		53FE37A31EA961720058B925 /* SUSCoverArtDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B21EA961720058B925 /* SUSCoverArtDAO.m */; };
 		53FE37A51EA961720058B925 /* SUSCoverArtDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B21EA961720058B925 /* SUSCoverArtDAO.m */; };
-		53FE37A61EA961720058B925 /* SUSDropdownFolderLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B41EA961720058B925 /* SUSDropdownFolderLoader.m */; };
-		53FE37A81EA961720058B925 /* SUSDropdownFolderLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B41EA961720058B925 /* SUSDropdownFolderLoader.m */; };
+		53FE37A61EA961720058B925 /* SUSMusicFoldersLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B41EA961720058B925 /* SUSMusicFoldersLoader.m */; };
+		53FE37A81EA961720058B925 /* SUSMusicFoldersLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B41EA961720058B925 /* SUSMusicFoldersLoader.m */; };
 		53FE37A91EA961720058B925 /* SUSLyricsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B81EA961720058B925 /* SUSLyricsDAO.m */; };
 		53FE37AB1EA961720058B925 /* SUSLyricsDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36B81EA961720058B925 /* SUSLyricsDAO.m */; };
 		53FE37AC1EA961720058B925 /* SUSLyricsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE36BA1EA961720058B925 /* SUSLyricsLoader.m */; };
@@ -524,7 +522,6 @@
 		1D6058910D05DD3D006BFB54 /* iSub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		3F06EC0D2B4D870400DB3FA3 /* FolderDropdownControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDropdownControl.swift; sourceTree = "<group>"; };
 		3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersViewController.swift; sourceTree = "<group>"; };
 		3F100AFE2B77CFBC00C8A9A2 /* PlaylistSongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongsViewController.swift; sourceTree = "<group>"; };
 		3F7C06ED2B693BAF0000AE5C /* FMDB+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FMDB+Extensions.swift"; sourceTree = "<group>"; };
@@ -839,8 +836,8 @@
 		53FE36B01EA961720058B925 /* SUSChatLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUSChatLoader.m; sourceTree = "<group>"; };
 		53FE36B11EA961720058B925 /* SUSCoverArtDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUSCoverArtDAO.h; sourceTree = "<group>"; };
 		53FE36B21EA961720058B925 /* SUSCoverArtDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUSCoverArtDAO.m; sourceTree = "<group>"; };
-		53FE36B31EA961720058B925 /* SUSDropdownFolderLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUSDropdownFolderLoader.h; sourceTree = "<group>"; };
-		53FE36B41EA961720058B925 /* SUSDropdownFolderLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUSDropdownFolderLoader.m; sourceTree = "<group>"; };
+		53FE36B31EA961720058B925 /* SUSMusicFoldersLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUSMusicFoldersLoader.h; sourceTree = "<group>"; };
+		53FE36B41EA961720058B925 /* SUSMusicFoldersLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUSMusicFoldersLoader.m; sourceTree = "<group>"; };
 		53FE36B51EA961720058B925 /* SUSErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUSErrorDomain.h; sourceTree = "<group>"; };
 		53FE36B71EA961720058B925 /* SUSLyricsDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUSLyricsDAO.h; sourceTree = "<group>"; };
 		53FE36B81EA961720058B925 /* SUSLyricsDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUSLyricsDAO.m; sourceTree = "<group>"; };
@@ -1185,7 +1182,6 @@
 			isa = PBXGroup;
 			children = (
 				3F0C10802B49AD1700C93BF5 /* FoldersViewController.swift */,
-				3F06EC0D2B4D870400DB3FA3 /* FolderDropdownControl.swift */,
 				3FF621382B54605500D9A171 /* AlbumViewController.swift */,
 				53329640255F2B960027C51A /* AlbumTableViewHeader.swift */,
 			);
@@ -1467,8 +1463,8 @@
 				53FE36551EA961720058B925 /* SUSLoaderManager.h */,
 				53FE36AF1EA961720058B925 /* SUSChatLoader.h */,
 				53FE36B01EA961720058B925 /* SUSChatLoader.m */,
-				53FE36B31EA961720058B925 /* SUSDropdownFolderLoader.h */,
-				53FE36B41EA961720058B925 /* SUSDropdownFolderLoader.m */,
+				53FE36B31EA961720058B925 /* SUSMusicFoldersLoader.h */,
+				53FE36B41EA961720058B925 /* SUSMusicFoldersLoader.m */,
 				53FE36AB1EA961720058B925 /* SUSAllSongsLoader.h */,
 				53FE36AC1EA961720058B925 /* SUSAllSongsLoader.m */,
 				53FE36B91EA961720058B925 /* SUSLyricsLoader.h */,
@@ -2024,7 +2020,7 @@
 				53FE37011EA961720058B925 /* DatabaseSingleton.m in Sources */,
 				53FE34E01EA961540058B925 /* NSNotificationCenter+MainThread.m in Sources */,
 				53246AB6256C975600E11EC4 /* CacheStatusViewController.swift in Sources */,
-				53FE37A61EA961720058B925 /* SUSDropdownFolderLoader.m in Sources */,
+				53FE37A61EA961720058B925 /* SUSMusicFoldersLoader.m in Sources */,
 				53FE36F21EA961720058B925 /* BassParamEqValue.m in Sources */,
 				53FE351F1EA961540058B925 /* NSString+URLEncode.m in Sources */,
 				3FD209BC2B44914500DBC320 /* SearchSongsViewController.swift in Sources */,
@@ -2127,7 +2123,6 @@
 				53FE35581EA961540058B925 /* UIImage+Tint.m in Sources */,
 				53FE67A0256DD0F00015FC83 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
 				5398F26D11DA61DA00007870 /* SettingsTabViewController.m in Sources */,
-				3F06EC0E2B4D870400DB3FA3 /* FolderDropdownControl.swift in Sources */,
 				53FE36E61EA961720058B925 /* BassEffectDAO.m in Sources */,
 				533295F2255EEFE50027C51A /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
 				53FE34FE1EA961540058B925 /* NSString+CompareWithoutIndefiniteArticles.m in Sources */,
@@ -2224,7 +2219,7 @@
 				53FE37031EA961720058B925 /* DatabaseSingleton.m in Sources */,
 				53FE6799256DD0F00015FC83 /* GCDWebServerErrorResponse.m in Sources */,
 				53FE34E21EA961540058B925 /* NSNotificationCenter+MainThread.m in Sources */,
-				53FE37A81EA961720058B925 /* SUSDropdownFolderLoader.m in Sources */,
+				53FE37A81EA961720058B925 /* SUSMusicFoldersLoader.m in Sources */,
 				53FE36F41EA961720058B925 /* BassParamEqValue.m in Sources */,
 				53FE35211EA961540058B925 /* NSString+URLEncode.m in Sources */,
 				53E04939255DB8F6007D4578 /* ISMSNSURLSessionStreamHandler.m in Sources */,
@@ -2320,7 +2315,6 @@
 				53FE38AF1EA961C80058B925 /* ZKCDTrailer64Locator.m in Sources */,
 				53FE379F1EA961720058B925 /* SUSChatDAO.m in Sources */,
 				53266BFB2562D4D0002C64BB /* PageControlViewController.swift in Sources */,
-				3F06EC0F2B4D870400DB3FA3 /* FolderDropdownControl.swift in Sources */,
 				53D9743B255C0DA900AABF7F /* AutoScrollingLabel.swift in Sources */,
 				3F9950C12B43253D009C615D /* CellCachedIndicatorView.swift in Sources */,
 				53FE379C1EA961720058B925 /* SUSAllSongsLoader.m in Sources */,

@@ -8,14 +8,8 @@ final class FoldersViewController: UITableViewController {
     private var headerView = UIView()
     private var countLabel = UILabel()
     private var reloadTimeLabel = UILabel()
+    private var folders = [Int: String]()
 
-    /*
-     We're in a very odd situation here; I don't want this bit of interface, but we can't
-     do an initial launch and load without it! So for now I'm keeping it, but my goal is to get
-     rid of it and just manipulate the SUSDropdownFolderLoader myself here. That's not easy to
-     disentangle so I'm leaving the dropdown in place but never showing it.
-     */
-    private var dropdown = FolderDropdownControl(frame: CGRect(x: 0, y: 0, width: 380, height: 300))
     private lazy var dataModel: SUSRootFoldersDAO = createModel()
 
     private func createModel() -> SUSRootFoldersDAO {
@@ -40,12 +34,29 @@ final class FoldersViewController: UITableViewController {
                 self.loadData(id)
             } else {
                 // well we need to load _something_! so I'm opting for the _last_ folder in the list
-                // the list is kept in the dropdown; that's something I'd like to fix of course
+                // but my experience is that navidrome has just one music folder anyway
                 guard let self else { return }
-                let folders = dropdown.folders
-                let keys = folders.keys.sorted()
-                if let lastKey = keys.last {
-                    loadData(lastKey)
+                if self.folders.count > 0 { // have we already fetched the music directory id?
+                    let keys = self.folders.keys.sorted()
+                    if let lastKey = keys.last {
+                        loadData(lastKey)
+                    }
+                } else { // no we haven't; so do the whole thing now
+                    // this is basically the same as `updateFolders` with an extra loadData
+                    let loader = SUSMusicFoldersLoader { [weak self] success, error, loader in
+                        guard let loader = loader as? SUSMusicFoldersLoader else { return }
+                        guard let self else { return }
+                        if success, let folders = loader.updatedfolders as? [Int: String] {
+                            self.folders = folders
+                            let keys = self.folders.keys.sorted()
+                            if let lastKey = keys.last {
+                                loadData(lastKey)
+                            }
+                        } else {
+                            NSLog("[FoldersViewController] failed to update folders: %@", error?.localizedDescription ?? "")
+                        }
+                    }
+                    loader.startLoad()
                 }
             }
         })
@@ -60,9 +71,12 @@ final class FoldersViewController: UITableViewController {
         self.tableView.separatorInset = .zero
         self.tableView.sectionHeaderTopPadding = 0
 
+        if let rootFolderId = Settings.shared().rootFoldersSelectedFolderId as? Int {
+            self.dataModel.selectedFolderId = rootFolderId as NSNumber
+        }
         if self.dataModel.isRootFolderIdCached {
             self.addCount()
-            self.tableView.contentOffset = .zero
+            self.tableView.contentOffset.y = -self.tableView.adjustedContentInset.top
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(addURLRefBackButton), name: .init(UIApplication.didBecomeActiveNotification), object: nil)
@@ -91,6 +105,9 @@ final class FoldersViewController: UITableViewController {
         if !SUSAllSongsLoader.isLoading() && !ViewObjects.shared().isArtistsLoading {
             if !dataModel.isRootFolderIdCached, let id = Settings.shared().rootFoldersSelectedFolderId as? Int {
                 loadData(id)
+            } else {
+                self.tableView.reloadData()
+                self.updateCount()
             }
         }
     }
@@ -98,13 +115,12 @@ final class FoldersViewController: UITableViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
         self.dataModel.delegate = nil
-        self.dropdown.delegate = nil
     }
 
     private func loadData(_ folderId: Int) {
-        self.dropdown.updateFolders()
         ViewObjects.shared().isArtistsLoading = true
         ViewObjects.shared().showAlbumLoadingScreen(AppDelegate.shared().window, sender: self)
+        Settings.shared().rootFoldersSelectedFolderId = folderId as NSNumber
         self.dataModel.selectedFolderId = folderId as NSNumber
         self.dataModel.startLoad()
     }
@@ -115,11 +131,20 @@ final class FoldersViewController: UITableViewController {
             self.tableView.reloadData()
             self.removeCount()
         }
-        self.folderDropdownSelect(folderId: -1)
     }
 
     @objc private func updateFolders() {
-        self.dropdown.updateFolders()
+        // this is nice, the "new" syntax lets you do the whole thing as a completion handler;
+        // I could make it even nicer by using async/await
+        let loader = SUSMusicFoldersLoader { success, error, loader in
+            guard let loader = loader as? SUSMusicFoldersLoader else { return }
+            if success, let folders = loader.updatedfolders as? [Int: String] {
+                self.folders = folders
+            } else {
+                NSLog("[FoldersViewController] failed to update folders: %@", error?.localizedDescription ?? "")
+            }
+        }
+        loader.startLoad()
     }
 
     @objc private func nowPlayingAction() {
@@ -186,19 +211,6 @@ final class FoldersViewController: UITableViewController {
         self.reloadTimeLabel.font = .systemFont(ofSize: 11)
         self.headerView.addSubview(self.reloadTimeLabel)
 
-        self.dropdown = FolderDropdownControl(frame: CGRect(x: 50, y: 61, width: 220, height: 40))
-        self.dropdown.delegate = self
-        if let dropdownFolders = SUSRootFoldersDAO.folderDropdownFolders() as? [Int: String] {
-            self.dropdown.folders = dropdownFolders
-        } else {
-            self.dropdown.folders = [-1: "All Folders"]
-        }
-        if let id = self.dataModel.selectedFolderId as? Int {
-            self.dropdown.selectFolder(withId: id)
-        }
-        self.headerView.addSubview(self.dropdown)
-        self.dropdown.isHidden = true // tee-hee, this way I get the functionality without showing it
-
         self.updateCount()
 
         // Special handling for voice over users
@@ -225,42 +237,6 @@ final class FoldersViewController: UITableViewController {
     }
 
 }
-
-// /*
-extension FoldersViewController: FolderDropdownDelegate {
-    func folderDropdownMoveViews(y: CGFloat) {
-        self.tableView.performBatchUpdates {
-            self.tableView.tableHeaderView?.frame.size.height += y
-            self.tableView.tableHeaderView = self.tableView.tableHeaderView
-
-            let visibleSections = Set(self.tableView.indexPathsForVisibleRows?.map { $0.section } ?? [])
-            for section in visibleSections {
-                let sectionHeader = self.tableView.headerView(forSection: section)
-                sectionHeader?.frame.origin.y += y
-            }
-        }
-    }
-
-    func folderDropdownViewsFinishedMoving() {}
-
-    func folderDropdownSelect(folderId: Int) {
-        self.dropdown.selectFolder(withId: folderId)
-
-        // Save the default
-        Settings.shared().rootFoldersSelectedFolderId = folderId as NSNumber
-
-        // Reload the data
-        self.dataModel.selectedFolderId = folderId as NSNumber
-        self.isSearching = false
-        if self.dataModel.isRootFolderIdCached {
-            self.tableView.reloadData()
-            self.updateCount()
-        } else {
-            self.loadData(folderId)
-        }
-    }
-}
-// */
 
 extension FoldersViewController: SUSLoaderDelegate {
     func loadingFailed(_ loader: SUSLoader!, withError error: Error!) {
@@ -291,7 +267,11 @@ extension FoldersViewController: SUSLoaderDelegate {
         ViewObjects.shared().isArtistsLoading = false
         // Hide the loading screen
         ViewObjects.shared().hideLoadingScreen()
+        // stop refreshing
         self.tableView.refreshControl?.endRefreshing()
+        // nice position
+        let top = -self.tableView.adjustedContentInset.top
+        self.tableView.setContentOffset(CGPoint(x: 0, y: top), animated: true)
     }
 }
 
@@ -377,7 +357,7 @@ extension FoldersViewController /* UITableViewDataSource, UITableViewDelegate */
             return nil
         }
         // return ["{search}"] + names
-        return names
+        return names.map { $0 == "[Unknown]" ? "[?]" : $0 }
     }
 
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
@@ -420,6 +400,7 @@ extension FoldersViewController: UISearchResultsUpdating, UISearchControllerDele
     }
 
     func didDismissSearchController(_ searchController: UISearchController) {
-        self.tableView.setContentOffset(.zero, animated: true)
+        let top = self.tableView.adjustedContentInset.top
+        self.tableView.setContentOffset(CGPoint(x: 0, y: -top), animated: true)
     }
 }
