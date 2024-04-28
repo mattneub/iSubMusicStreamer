@@ -71,17 +71,14 @@ import SnapKit
         updateDownloadProgress(animated: false)
         if UIApplication.orientation().isPortrait || UIDevice.isPad() {
             coverArtPageControl.view.snp.remakeConstraints { make in
-                make.height.equalTo(coverArtPageControl.view.snp.width).offset(26) // page control, experimentally
-                make.top.leading.equalToSuperview().offset(20)
-                make.trailing.equalToSuperview().offset(-20)
+                make.height.equalTo(coverArtPageControl.view.snp.width).offset(26) // page control
+                make.top.equalToSuperview().offset(20)
+                make.trailing.equalToSuperview().offset(-40)
+                make.centerX.equalToSuperview()
             }
             
             verticalStackContainer.snp.remakeConstraints { make in
-                if UIDevice.isPad() {
-                    make.width.equalTo(coverArtPageControl.view)
-                } else {
-                    make.width.equalTo(coverArtPageControl.view).multipliedBy(0.9)
-                }
+                make.width.equalTo(coverArtPageControl.view).offset(40)
                 make.centerX.equalTo(coverArtPageControl.view)
                 make.top.equalTo(coverArtPageControl.view.snp.bottom)
                 make.bottom.equalToSuperview()
@@ -163,7 +160,7 @@ import SnapKit
         
         songInfoContainer.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalTo(UIDevice.isSmall() || UIDevice.isPad() ? 60 : 60)
+            make.height.equalTo(70)
             make.centerX.equalToSuperview()
         }
         

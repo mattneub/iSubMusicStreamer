@@ -85,9 +85,9 @@ final class SongInfoViewController: UIViewController {
         func createInfoLabel(text: String) -> UILabel {
             let infoLabel = UILabel()
             infoLabel.textColor = .lightGray
-            infoLabel.font = .systemFont(ofSize: 16)
+            infoLabel.font = .systemFont(ofSize: 14)
             infoLabel.numberOfLines = 0
-            infoLabel.lineBreakMode = .byCharWrapping
+            infoLabel.lineBreakMode = .byWordWrapping
             infoLabel.text = text
             return infoLabel
         }
@@ -134,9 +134,9 @@ final class SongInfoViewController: UIViewController {
                 stackView.addArrangedSubview(createTitleLabel(text: "Album"))
                 stackView.addArrangedSubview(createInfoLabel(text: album))
             }
-            if let year = song.year {
+            if let year = song.year as? Int, year != 0 {
                 stackView.addArrangedSubview(createTitleLabel(text: "Year"))
-                stackView.addArrangedSubview(createInfoLabel(text: year.stringValue))
+                stackView.addArrangedSubview(createInfoLabel(text: String(year)))
             }
             if let genre = song.genre {
                 stackView.addArrangedSubview(createTitleLabel(text: "Genre"))
